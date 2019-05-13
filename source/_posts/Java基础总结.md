@@ -1,0 +1,593 @@
+---
+title: Java基础总结
+tag: Java
+---
+
+# Java基础总结
+
+**声明**：部分面试题来自微信公众号**码农每日一题**
+
+## 基本数据类型、String
+
+## 泛型
+
+[泛型相关总结](http://penghesheng.cn/?p=50)
+
+## 封装、多态、继承、接口
+
+[Java三大特性、抽象类以及接口相关](./Java三大特性、抽象类以及接口相关.md)
+
+## 内部类
+
+[内部类](http://penghesheng.cn/?p=81)
+
+## 枚举类
+
+参考[深入理解Java枚举类型(enum)](https://blog.csdn.net/javazejian/article/details/71333103)
+
+- 简单定义
+    `public enum Size { SMALL, MEDIUM, LARGE, EXTRA_LARGE };`
+
+- 定义一个有构造器、方法和域的枚举类
+
+    ```java
+    public enum Size {
+        SMALL("S"), MEDOIM("M"), LARGE("L"), EXTRA_LARGE("XL");
+    
+        private String abbreviation;
+    
+        private Size(String abbreviation) {
+            this.abbreviation = abbreviation;
+        }
+    
+        public String getAbbreviation() {
+            return abbreviation;
+        }
+    }
+    ```
+
+    所有的枚举类型都是Enum的子类，枚举类除了不能继承自一个enum以外，基本跟普通的类没有区别
+
+- 枚举类中的方法
+
+1. valueOf 返回指定名字、给定类的枚举常量
+    `static Enum valueOf(Class enumClass, String name)`
+2. toString 返回枚举常量名
+    `String toString()`
+3. ordinal 返回枚举常量在enum声明中的位置（位置从0开始）
+    `int ordinal()`
+4. compareTo 如果枚举常量出现在other之前，返回true；如果this==other，返回0，否则返回正值
+    `int compareTo(E other)`
+
+Java 枚举类比较用 == 还是 equals，有啥区别？
+ordinal方法返回的是int值，这是每个enum实例在声明时的次序，从0开始，所以可以直接用==来比较enum实例，编译器会自动提供equals和hashCode方法
+
+```java
+==在枚举类就是比较的基本类型int值，equals在enum中重写后，就是使用的==   public final boolean equals(Object other) {    return this == other;} 
+```
+
+- 面试问题
+
+1. 简单谈谈你理解的 Java 枚举本质原理？
+    枚举的本质是编译器处理成了类，枚举值为类的静态常量属性，其属性在类加载时的静态代码块中被初始化实例赋值。枚举可以有修饰符不大于默认修饰符的构造方法（修饰符可为 private，不可为 public 等）等，枚举只是一种语法糖，被编译器生成了最终的类而已。
+    [简单谈谈你理解的 Java 枚举本质原理？](https://juejin.im/entry/5a03ac77f265da432240a351)
+
+2. Java 枚举类与常量的区别有哪些，有啥优缺点？
+    枚举相对于常量类来说定义更简单，其不需要定义枚举值，而常量类中的每个常量必须要手动添加值。枚举作为参数使用时可以在编译时避免弱类型错误，而常量类中的常量作为参数使用时在编译时无法避免弱类型错误（譬如常量类型为 int，参数传递一个常量类中没定义的 int 值）。枚举自动具备内置方法（如 values 方法可以获得所有值的集合来遍历，ordinal 方法可以获得排序值，compareTo 方法可以基于 ordinal 比较），而常量类默认不具备这些方法。
+
+    枚举的缺点就是不能被继承（编译后生成的类是 final class 的），也不能通过 extends 继承其他类（枚举类编译后实质就是继承了 Enum 类，Java 是单继承机制），但是定义的枚举类可以通过 implements 实现其他接口，枚举值定义完毕后除非修改重构，否则无法做扩展，而常量类可以随意继承
+
+3. Java 枚举类可以继承其他类（或实现其他接口）或者被其他类继承吗，为什么？
+    枚举类可以实现其他接口但不能继承其他类，因为所有枚举类在编译后的字节码中都继承自 java.lang.Enum（由编译器添加），而 Java 不支持多继承，所以枚举类不可以继承其他类。
+
+    枚举类不可以被继承，因为所有枚举类在编译后的字节码中都是继承自 java.lang.Enum（由编译器添加）的 final class 类，final 的类是不允许被派生继承的。（不清楚的可以查看前一篇历史推送枚举原理题）
+
+4. Java switch 为什么能使用枚举类型？
+    枚举类型之所以能使用其实是编译器层面实现的，编译器会将枚举 switch 转换为类似 switch(s.ordinal()) { case Status.START.ordinal() } 形式，所以实质还是 int 参数类型
+
+5. Java 枚举会比静态常量更消耗内存吗？
+    会更消耗，一般场景下不仅编译后的字节码会比静态常量多，而且运行时也会比静态常量需要更多的内存，不过这个多取决于场景和枚举的规模等等，不能明确的定论多多少（一般都至少翻倍以上），此外更不能因为多就一刀切的认为静态常量应该优于枚举使用，枚举有自己的特性和场景，优化也不能过度。我们在上一篇枚举实质原理中已经解释了每个枚举类中的具体枚举类型都是对应类中的一个静态常量，该常量在 static 块中被初始实例化，此外枚举类还有自己的一些特有方法，而静态常量实质却很简单，所以从对象占用内存大小方面来计算肯定是枚举类比静态常量更加占体积和消耗运行时内存，
+
+6. Java 枚举是如何保证线程安全的？
+    static关键字，所有的属性都是static的。static类型的属性会在类被加载之后被初始化，当一个Java类第一次被真正使用到的时候静态资源被初始化、Java类的加载和初始化过程都是线程安全的。所以，创建一个enum类型是线程安全的。
+
+7. 为什么有人说在一些场景下通过枚举实现的单例是最好的方式，原因是什么？
+    （1）枚举写法简单
+    （2）枚举自己处理序列化
+
+    除过枚举实现的单例模式以外的其他实现方式都有一个比较大的问题是一旦实现了 Serializable 接口后就不再是单例了，因为每次调用 readObject() 方法返回的都是一个新创建出来的对象（当然可以通过使用 readResolve() 方法来避免，但是终归麻烦），而 Java 规范中保证了每一个枚举类型及其定义的枚举变量在 JVM 中都是唯一的，在枚举类型的序列化和反序列化上 Java 做了特殊处理，序列化时 Java 仅仅是将枚举对象的 name 属性输出到结果中，反序列化时则是通过 java.lang.Enum 的 valueOf 方法来根据名字查找枚举对象，同时禁用了 writeObject、readObject、readObjectNoData、writeReplace 和 readResolve 等方法
+
+8. Java 迭代器和枚举器的区别是什么？
+    （1）Enumeration 枚举器接口是 JDK 1.0 提供的，适用于传统类，而 Iterator 迭代器接口是 JDK 1.2 提供的，适用于 Collections。
+    （2）Enumeration 只有两个方法接口，我们只能读取集合的数据而不能对数据进行修改，而 Iterator 有三个方法接口，除了能读取集合的数据外也能对数据进行删除操作。
+    （3）Enumeration 不支持 fail-fast 机制，而 Iterator 支持 fail-fast 机制（一种错误检测机制，当多线程对集合进行结构上的改变的操作时就有可能会产生 fail-fast 机制，譬如 ConcurrentModificationException 异常）。
+
+## final相关
+
+final可以保护声明为public元素
+
+- 关于final的重要知识点
+    1. final关键字可以用于成员变量、本地变量、方法以及类。
+    2. final成员变量必须在声明的时候初始化或者在构造器中初始化，否则就会报编译错误。
+    3. 你不能够对final变量再次赋值。
+    4. 本地变量必须在声明时赋值。
+    5. 在匿名类中所有变量都必须是final变量。
+    6. final方法不能被重写。
+    7. final类不能被继承。
+    8. final关键字不同于finally关键字，后者用于异常处理。
+    9. final关键字容易与finalize()方法搞混，后者是在Object类中定义的方法，是在垃圾回收之前被JVM调用的方法。
+    10. 接口中声明的所有变量本身是final的。
+    11. final和abstract这两个关键字是反相关的，final类就不可能是abstract的。
+    12. final方法在编译阶段绑定，称为静态绑定(static binding)。
+    13. 没有在声明时初始化final变量的称为空白final变量(blank final variable)，它们必须在构造器中初始化，或者调用this()初始化。不这么做的话，编译器会报错“final变量(变量名)需要进行初始化”。
+    14. 将类、方法、变量声明为final能够提高性能，这样JVM就有机会进行估计，然后优化。
+    15. 按照Java代码惯例，final变量就是常量，而且通常常量名要大写
+    16. 对于集合对象声明为final指的是引用不能被更改，但是你可以向其中增加，删除或者改变内容
+
+参考[浅析Java中的final关键字](http://www.cnblogs.com/dolphin0520/p/3736238.html)
+
+1. final修饰变量、方法、类都有什么特性
+    当用final修饰一个类时，表明这个类不能被继承
+
+    使用final方法的原因有两个。第一个原因是把方法锁定，以防任何继承类修改它的含义；第二个原因是效率。在早期的Java实现版本中，会将final方法转为内嵌调用。但是如果方法过于庞大，可能看不到内嵌调用带来的任何性能提升。在最近的Java版本中，不需要使用final方法进行这些优化了
+
+    对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改；如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象
+
+2. 有一个类怎样改变内部final类型的变量
+    如果这个final型变量没有被初始化，而是在构造器中初始化，那么可以通过反射去修改
+    如果这个final型变量初始化是用的三目表达式，比如`final String FINAL = null == null ? "FINAL" : null`，那么也可以通过反射修改
+    除此以外，其他的都不能修改，即使通过反射修改了，使用时还是没有，也就没有意义，所有修改final类型的变量一定要避免编译时初始化，然后才能通过反射修改
+
+3. final，finally，finalize的区别
+    final 是一个修饰符，如果一个类被声明为 final 则其不能再派生出新的子类，所以一个类不能既被声明为 abstract 又被声明为 final 的；将变量或方法声明为 final 可以保证它们在使用中不被改变（对于对象变量来说其引用不可变，即不能再指向其他的对象，但是对象的值可变），被声明为 final 的变量必须在声明时给定初值，而在以后的引用中只能读取不可修改，被声明为 final 的方法也同样只能使用不能重载。使用 final 关键字如果编译器能够在编译阶段确定某变量的值则编译器就会把该变量当做编译期常量来使用，如果需要在运行时确定（譬如方法调用）则编译器就不会优化相关代码；将类、方法、变量声明为 final 能够提高性能，这样 JVM 就有机会进行估计并进行优化；接口中的变量都是 public static final 的。
+
+    finally 用来在异常处理时提供块来执行任何清除操作，如果抛出一个异常，则相匹配的 catch 子句就会执行，然后控制就会进入 finally 块。
+
+    finalize 是一个方法名，Java 允许使用 finalize() 方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作，这个方法是由垃圾收集器在确定这个对象没有被引用时对这个对象调用的，它是在 Object 类中定义的，因此所有的类都继承了它，子类覆盖 finalize() 方法以整理系统资源或者执行其他清理工作，finalize() 方法在垃圾收集器删除对象之前对这个对象调用的。
+
+## static相关
+
+[Java中的static关键字解析](https://www.cnblogs.com/dolphin0520/p/3799052.html)
+
+1. static修饰变量、方法、类都有什么特性。
+    static变量也称作静态变量，静态变量和非静态变量的区别是：静态变量被所有的对象所共享，在内存中只有一个副本，它当且仅当在类初次加载时会被初始化。而非静态变量是对象所拥有的，在创建对象的时候被初始化，存在多个副本，各个对象拥有的副本互不影响。
+    　　static成员变量的初始化顺序按照定义的顺序进行初始化
+
+    static方法一般称作静态方法，由于静态方法不依赖于任何对象就可以进行访问，因此对于静态方法来说，是没有this的，因为它不依附于任何对象，既然都没有对象，就谈不上this了。并且由于这个特性，在静态方法中不能访问类的非静态成员变量和非静态成员方法，因为非静态成员方法/变量都是必须依赖具体的对象才能够被调用
+
+    静态类不能直接引用外部类实例变量或实例方法，创建不需要依赖外部类，可以通过外部类的类名进行访问
+
+2. 静态代码块和构造方法哪个先执行？子类中的静态代码块和父类的静态代码块哪个先执行？
+    静态代码块（类加载中，静态代码块就执行，类还没加载完成，构造方法没有执行）
+    父类中先执行
+    参考[Java提高篇——静态代码块、构造代码块、构造函数以及Java类初始化顺序](https://www.cnblogs.com/Qian123/p/5713440.html)
+
+3. 静态块何时运行
+    它是随着类的加载而执行，只执行一次，并优先于主函数。具体说，静态代码块是由类调用的。类调用时，先执行静态代码块，然后才执行主函数的
+
+4. java 中 static、final、static final 的区别是什么？
+    final 可以修饰属性、方法、类、局部变量（方法中的变量），修饰属性的初始化可以在编译期，也可以在运行期，初始化后不能被改变；修饰的属性表明是一个常数；修饰方法表示方法不能在子类中被重写；修饰类表示类不能被继承。
+
+    static 可以修饰属性、方法、代码段、内部类（静态内部类或嵌套内部类），修饰属性的初始化在编译期（类加载的时候），初始化后可以被修改值；修饰的属性、方法、代码段跟该类的具体对象无关，不创建对象也能调用 static 修饰的属性、方法等；static 不可以修饰局部变量。
+
+    static final（或者 final static）是组合修饰，static 修饰的属性强调它们只有一个，final 修饰的属性表明是一个常数（创建后不能被修改），static final 修饰的属性表示一旦给值就不可修改并且可以通过类名访问，static final 也可以修饰方法，表示该方法不能重写，可以在不 new 对象的情况下调用。
+
+## JDK相关
+
+[Java官网](https://www.oracle.com/corporate/pressrelease/Java-10-032018.html)
+
+### Java 10新特性
+
+- 局部变量类型推断
+- 整合 JDK 代码仓库
+- 统一的垃圾回收接口
+- 并行全垃圾回收器 G1
+- 应用程序类数据共享 AppCDS
+- 线程-局部管控
+- 移除 Native-Header 自动生成工具
+- 额外的 Unicode 语言标签扩展
+- 备用存储装置上的堆分配
+
+详细参考[Java 10 新特性介绍](https://www.ibm.com/developerworks/cn/java/the-new-features-of-Java-10/index.html)
+
+### Java 9新特性
+
+- 模块系统：模块是一个包的容器，Java 9 最大的变化之一是引入了模块系统（Jigsaw 项目）
+- REPL (JShell)：交互式编程环境。
+- HTTP 2 客户端：HTTP/2标准是HTTP协议的最新版本，新的 HTTPClient API 支持 WebSocket 和 HTTP2 流以及服务器推送特性。
+- 改进的 Javadoc：Javadoc 现在支持在 API 文档中的进行搜索。另外，Javadoc 的输出现在符合兼容 HTML5 标准。
+- 多版本兼容 JAR 包：多版本兼容 JAR 功能能让你创建仅在特定版本的 Java 环境中运行库程序时选择使用的 class 版本。
+- 集合工厂方法：List，Set 和 Map 接口中，新的静态工厂方法可以创建这些集合的不可变实例。
+- 私有接口方法：在接口中使用private私有方法。我们可以使用 private 访问修饰符在接口中编写私有方法。
+- 进程 API: 改进的 API 来控制和管理操作系统进程。引进 java.lang.ProcessHandle 及其嵌套接口 Info 来让开发者逃离时常因为要获取一个本地进程的 PID 而不得不使用本地代码的窘境。
+- 改进的 Stream API：改进的 Stream API 添加了一些便利的方法，使流处理更容易，并使用收集器编写复杂的查询。
+- 改进 try-with-resources：如果你已经有一个资源是 final 或等效于 final 变量,您可以在 try-with-resources 语句中使用该变量，而无需在 try-with-resources 语句中声明一个新变量。
+- 改进的弃用注解 @Deprecated：注解 @Deprecated 可以标记 Java API 状态，可以表示被标记的 API 将会被移除，或者已经破坏。
+- 改进钻石操作符(Diamond Operator) ：匿名类可以使用钻石操作符(Diamond Operator)。
+- 改进 Optional 类：java.util.Optional 添加了很多新的有用方法，Optional 可以直接转为 stream。
+- 多分辨率图像 API：定义多分辨率图像API，开发者可以很容易的操作和展示不同分辨率的图像了。
+- 改进的 CompletableFuture API ： CompletableFuture 类的异步机制可以在 ProcessHandle.onExit 方法退出时执行操作。
+- 轻量级的 JSON API：内置了一个轻量级的JSON API
+- 响应式流（Reactive Streams) API: Java 9中引入了新的响应式流 API 来支持 Java 9 中的响应式编程。
+
+### Java 8新特性
+
+- Lambda表达式和函数式接口
+    函数式接口（functional interface 也叫功能性接口，其实是同一个东西）。简单来说，函数式接口是只包含一个方法的接口。比如Java标准库中的java.lang.Runnable和 java.util.Comparator都是典型的函数式接口。java 8提供 @FunctionalInterface作为注解,这个注解是非必须的，只要接口符合函数式接口的标准（即只包含一个方法的接口），虚拟机会自动判断，但最好在接口上使用注解@FunctionalInterface进行声明，以免团队的其他人员错误地往接口中添加新的方法。
+    使用了函数式接口的匿名类可以使用Lambda来优化代码
+
+- 接口的默认方法与静态方法
+    接口中可以有实现方法；并且接口也可以有静态方法，工具类也可以使用接口来实现。
+    默认方法和抽象方法之间的区别在于抽象方法需要实现，而默认方法不需要。接口提供的默认方法会被接口的实现类继承或者覆写
+
+- 方法引用
+    在学习lambda表达式之后，我们通常使用lambda表达式来创建匿名方法。然而，有时候我们仅仅是调用了一个已存在的方法。如下：
+    `Arrays.sort(stringsArray,(s1,s2)->s1.compareToIgnoreCase(s2));`
+    在Java8中，我们可以直接通过方法引用来简写lambda表达式中已经存在的方法。这种特性就叫方法引用：
+    `Arrays.sort(stringsArray, String::compareToIgnoreCase);`
+
+    第一种方法引用的类型是构造器引用，语法是Class::new，或者更一般的形式：Class::new
+    第二种方法引用的类型是静态方法引用，语法是Class::static_method
+    第三种方法引用的类型是某个类的成员方法的引用，语法是Class::method
+    第四种方法引用的类型是某个实例对象的成员方法的引用，语法是instance::method
+
+- 重复注解
+    允许在同一个地方多次使用同一个注解
+
+- 更好的类型推断
+    编译器可以推导出某个参数的数据类型
+
+- 拓宽注解的应用场景
+    注解几乎可以使用在任何元素上：局部变量、接口类型、超类和接口实现类，甚至可以用在函数的异常定义上
+
+- 参数名称
+    为了在运行时获得Java程序中方法的参数名称，老一辈的Java程序员必须使用不同方法，例如Paranamer liberary。Java 8终于将这个特性规范化，在语言层面（使用反射API和Parameter.getName()方法）和字节码层面（使用新的javac编译器以及-parameters参数）提供支持。
+
+- Java官方库的新特性
+    Java 8增加了很多新的工具类（date/time类），并扩展了现存的工具类，以支持现代的并发编程、函数式编程等
+
+- 新工具
+    新的编译工具，如：Nashorn引擎 jjs、 类依赖分析器jdeps
+
+- Stream API
+
+- Date Time API
+
+- Optional 类 用来解决空指针异常
+
+- Nashorn, JavaScript 引擎
+
+### Java 7新特性
+
+- switch中可以使用字串了
+
+- 运用List tempList = new ArrayList<>(); 即泛型实例化类型自动推断
+
+- 语法上支持集合，而不一定是数组
+    `final List<Integer> piDigits = [ 1,2,3,4,5,8 ];`
+
+- 新增一些取环境信息的工具方法
+
+    > File System.getJavaIoTempDir() // IO临时文件夹
+    > File System.getJavaHomeDir() // JRE的安装目录
+    > File System.getUserHomeDir() // 当前用户目录
+    > File System.getUserDir() // 启动java进程时所在的目录5
+
+- Boolean类型反转，空指针安全,参与位运算
+
+    > Boolean Booleans.negate(Boolean booleanObj)
+    > True => False , False => True, Null => Null
+    > boolean Booleans.and(boolean[] array)
+    > boolean Booleans.or(boolean[] array)
+    > boolean Booleans.xor(boolean[] array)
+    > boolean Booleans.and(Boolean[] array)
+    > boolean Booleans.or(Boolean[] array)
+    > boolean Booleans.xor(Boolean[] array)
+
+- 两个char间的equals
+    boolean Character.equalsIgnoreCase(char ch1, char ch2)
+
+- 安全的加减乘除
+
+    > int Math.safeToInt(long value)
+    > int Math.safeNegate(int value)
+    > long Math.safeSubtract(long value1, int value2)
+    > long Math.safeSubtract(long value1, long value2)
+    > int Math.safeMultiply(int value1, int value2)
+    > long Math.safeMultiply(long value1, int value2)
+    > long Math.safeMultiply(long value1, long value2)
+    > long Math.safeNegate(long value)
+    > int Math.safeAdd(int value1, int value2)
+    > long Math.safeAdd(long value1, int value2)
+    > long Math.safeAdd(long value1, long value2)
+    > int Math.safeSubtract(int value1, int value2)
+
+- map集合支持并发请求，且可以写成 Map map = {name:”xxx”,age:18};
+
+附：指针和引用的联系与区别
+
+- 相同点：
+    1. 都是地址的概念；
+        指针指向一块内存，它的内容是所指内存的地址；引用是某块内存的别名。
+- 区别：
+    1. 指针是一个实体，而引用仅是个别名；
+    2. 引用使用时无需解引用(*)，指针需要解引用；
+    3. 引用只能在定义时被初始化一次，之后不可变；指针可变；
+    4. 引用没有 const，指针有 const；
+    5. 引用不能为空，指针可以为空；
+    6. “sizeof 引用”得到的是所指向的变量(对象)的大小，而“sizeof 指针”得到的是指针本身(所指向的变量或对象的地址)的大小；
+    7. 指针和引用的自增(++)运算意义不一样；
+    8. 从内存分配上看：程序为指针变量分配内存区域，而引用不需要分配内存区域。
+
+### Java 6新特性
+
+- 在awt中新增Desktop类与SystemTray类
+- 使用JAXB2来实现对象与XML之间的映射
+- 使用Compiler API实现动态编译
+- 轻量级Http Server API
+- 插入式注解处理API
+- 用Console开发控制台程序
+- 对脚本语言的支持 如：ruby,groovy,JavaScript
+- Common Annotations
+
+### Java 5新特性
+
+- 自动装箱拆箱
+- 可变参数
+- for-each
+- 枚举
+- 静态导入
+- 泛型
+- 线程并发库concurrent
+- 注解
+
+### 相关面试题
+
+1. Java1.7与1.8新特性
+    如上
+
+2. java8新特性，as怎么让他变成1.8编译
+    Lambda表达式和函数式接口、接口的默认方法与静态方法、方法引用、重复注解
+
+    在app下的build.gradle中添加如下代码：
+
+    ```java
+    android {
+    
+        defaultConfig {
+            ...
+        }
+    
+        compileOptions {
+            //使用JAVA8语法解析
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    
+    }
+    ```
+
+3. java 1.5 的自动装箱拆箱机制是编译特性还是虚拟机运行时特性？分别是怎么实现的？
+    java 1.5 开始的自动装箱拆箱机制其实是编译时自动完成替换的，装箱阶段自动替换为了 valueOf 方法，拆箱阶段自动替换为了 xxxValue 方法。对于 Integer 类型的 valueOf 方法参数如果是 -128~127 之间的值会直接返回内部缓存池中已经存在对象的引用，参数是其他范围值则返回新建对象；而 Double 类型与 Integer 类型类似，一样会调用 Double 的 valueOf 方法，但是 Double 的区别在于不管传入的参数值是多少都会 new 一个对象来表达该数值（因为在指定范围内浮点型数据个数是不确定的，整型等个数是确定的，所以可以 Cache）。
+
+## JAVA序列化
+
+## 克隆（拷贝）
+
+[Java拷贝相关知识](http://penghesheng.cn/?p=85)
+
+## 运算符
+
+## 编码
+
+参考 发展史[常见编码方式之间的区别](https://blog.csdn.net/HeatDeath/article/details/78620330)
+[Java:Unicode简介](https://blog.csdn.net/lubiaopan/article/details/4714909)
+
+- Unicode
+    Java中的标准编码方式，使用16进制，2字节，不兼容iso8859-1，不便于传输和存储（占用空间过大，英文也是2字节），兼容UTF-8、UTF-16、UTF-32
+- ASCII
+    美国信息互换标准代码，单字节编码系统，表示英文，ASCII是用7位表示的，能表示128个字符；其扩展使用8位表示，表示256个字符。
+- UTF-8
+    不定长编码，每个字符长度1-6个字节不等，兼容ISO8859-1，UTF系列面向传输，一个中文字符占3个字节
+- GBK/GB2312
+    GB2312是简体中文的国际编码，专门用于表示汉字，兼容ASCII，2字节。
+    GBK是GB2312的扩展
+- ISO8859-1
+    单字节编码，最多表示0~255的字符范围，主要用于英文，表示汉字时乱码（汉字2字节）
+- BIG5
+    繁体字编码，2字节
+
+1. 常见编码方式
+    Unicode、ASCII、UTF-8、ISO8859-1、GBK
+
+2. utf-8编码中的中文占几个字节
+    utf-8中占3字节，Unicode中占2字节
+
+3. 怎样将 GB2312 编码的字符串转换为 ISO-8859-1 编码的字符串？
+
+    ```java
+    String s1 = "你好";
+    String s2 = new String(s1.getBytes("GB2312"), "ISO_8859-1");
+    ```
+
+4. 造成乱码的原因（基本都是编码原因）
+    （1）程序使用的编码与本机的编码不统一
+    （2）网络中，客户端与服务端的编码不统一
+
+## 其他
+
+1. 静态代理和动态代理的区别，什么场景使用？
+    [Java静态代理和动态代理](https://www.jianshu.com/p/2f518a4a4c2b)
+    [Java代理和动态代理机制分析和应用](https://www.jianshu.com/p/861223789d53)
+
+2. try catch finally，try里有return，finally还执行么？
+    执行，try里的return会等到finally执行完后才返回，finally块的语句在try或catch中的return语句执行之后返回之前执行且finally里的修改语句可能影响也可能不影响try或catch中，如果finally中也有return语句，会覆盖try或catch里的return语句。
+
+3. foreach与正常for循环效率对比
+    由于for循环的特性，每次循环都会进行比较，所以效率上不如foreach。
+    但这个结论并不是绝对的，选择for或者foreach，还要考虑几点：
+
+    如果只是读数据，优先选择foreach，因为效率高，而且代码简单，方便；（ArrayList）
+    如果要写数据，即替换指定索引位置处的对象，就只能选择for了。（数组结构）
+
+4. 谈下你对面向对象的理解
+    面向对象是相对于面向过程而言的，面向过程强调的是功能，面向对象强调的是将功能封装进对象强调具备功能的对象，
+
+    - 思想特点好处：
+        - 是符合人们思考习惯的一种思想；
+        - 将复杂的事情简单化了；
+        - 将程序员从执行者变成了指挥者
+
+5. java和JavaScript的区别
+    Java 是一种 OOP 编程语言，而 Java Script 是一种 OOP 脚本语言。
+    Java 创建在虚拟机或浏览器中运行的应用程序，而 JavaScript 代码仅在浏览器中运行。
+    Java 代码需要进行编译，而 JavaScript 代码都在文本中。
+    它们需要不同的插件
+
+6. printf的执行过程
+    [printf执行脑图](http://naotu.baidu.com/file/8d503729584f01d4bb08e0ae80a909fe?token=0c738cb0ac5ffecb)
+    [System.out 源码分析](https://blog.csdn.net/asivy/article/details/18703417)
+
+7. Java与C++对比
+
+    > 指针
+    > Java 没有指针的概念，从而有效地防止了在 C/C++语言中，容易出现的指针操作失误（如指针悬空所造成的系统崩溃）。在 C/C++中，指针操作内存时，经常会出现错误。在Java 中没有指针，更有利于 Java 程序的安全。
+    >
+    > 多重继承
+    >
+    > C++支持多重继承，它允许多父类派生一个子类。也就是说，一个类允许继承多个父类。尽管多重继承功能很强，但使用复杂，而且会引起许多麻烦，编译程序实现它也很不容易。所以 Java 不支持多重继承，但允许一个类实现多个接口。可见，Java 既实现了 C++多重继承的功能，又避免了 C++的许多缺陷。
+    >
+    > 数据类型
+    >
+    > Java 是完全面向对象的语言，所有方法和数据都必须是类的一部分。除了基本数据类型之外，其余类型的数据都作为对象型数据。例如对象型数据包括字符串和数组。类将数据和方法结合起来，把它们封装在其中，这样每个对象都可实现具有自己特点的行为。而 C++将函数和变量定义为全局的，然后再来调用这些函数和变量，从而增加了程序的负担。此外，Java 还取消了 C/C++中的结构和联合，使编译程序更简洁。
+    >
+    > 自动内存管理
+    > Java 程序中所有的对象都是用 new 操作符建立在堆栈上的，这个操作符类似于 C++的“new”操作符。Java 自动进行无用内存回收操作，不需要程序员进行删除。当 Java 中一个对象不再被用到时，无须使用内存回收器，只需要给它加上标签以示删除。无用内存的回收器在后台运行，利用空闲时间工作。而 C++中必须由程序释放内存资源，增加了程序设计者的负担。
+    >
+    > 操作符重载
+    >
+    > Java 不支持操作符重载，操作符重载被认为是 C++的突出特征。在 Java 中虽然类可以实现这样的功能，但不支持操作符重载，这样是为了保持 Java 语言尽可能简单。
+    >
+    > 预处理功能
+    >
+    > C/C++在编译过程中都有一个预编译阶段，即预处理器。预处理器为开发人员提供了方便，但增加了编译的复杂性。Java 允许预处理，但不支持预处理器功能，因为 Java 没有预处理器，所以为了实现预处理，它提供了引入语句（import），它与 C++预处理器的功能类似。
+    >
+    > Java 不支持缺省函数参数，而 C++支持。
+    > 在 C 中，代码组织在函数中，函数可以访问程序的全局变量。C++增加了类，提供了类算法，该算法是与类相连的函数，C++类方法与 Java 类方法十分相似。由于 C++仍然支持 C，所以 C++程序中仍然可以使用 C 的函数，结果导致函数和方法混合使用，使得 C++程序比较混乱。
+    >
+    > Java 没有函数，作为一个比 C++更纯的面向对象的语言。Java 强迫开发人员把所有例行程序包括在类中。事实上，用方法实现例行程序可激励开发人员更好地组织编码。
+    >
+    > 字符串
+    >
+    > C 和 C++不支持字符串变量，在 C 和 C++程序中使用“Null”终止符代表字符串的结束，在 Java 中字符串是用类对象（String 和 StringBuffer）来实现的，在整个系统中建立字符串和访问字符串元素的方法是一致的。Java 字符串类是作为 Java 语言的一部分定义的，而不是作为外加的延伸部分。此外，Java 还可以对字符串用“+”进行连接操作。
+    >
+    > goto 语句
+    >
+    > “可怕”的 goto 语句是 C 和 C++的“遗物”。它是该语言技术上的合法部分，引用 goto语句造成了程序结构的混乱，不易理解。goto 语句一般用于无条件转移子程序和多结构分支技术。Java 不提供 goto 语句，其虽然指定 goto 作为关键字，但不支持它的使用，这使程序更简洁易读。
+    >
+    > 类型转换
+    >
+    > 在 C 和 C++中，有时出现数据类型的隐含转换，这就涉及了自动强制类型转换问题。例如，在 C++中可将一个浮点值赋予整型变量，并去掉其尾数。Java 不支持 C++中的自动强制类型转换，如果需要，必须由程序显式进行强制类型转换。
+    >
+    > [Java和C++的对照](https://zh.wikipedia.org/wiki/Java和C%2B%2B的對照)
+
+8. 说说你对 Java 中 Jar 包的理解
+    Jar 包的本质是将多个文件聚集为一个 ZIP 包，与传统的 ZIP 文件不同的是 Jar 包不仅用于压缩和发布，而且还用于部署和封装库、组件和插件程序，并可被编译器和 JVM 等工具直接使用。在 Jar 包中包含特殊的文件，如 manifests 和部署描述符，用来指示工具如何处理特定的 Jar 包。此外 Jar 包提供了许多 ZIP 文件没有的优势和功能，譬如 Jar 包可以保证安全性（对 Jar 文件内容加上数字化签名）、增加传输平台扩展性（作为 Java 扩展框架）、密封性和跨平台特性。
+
+9. Jar 包中 META-INF 目录下都有什么作用？
+    很多 Jar 包包含一个 META-INF 目录，它用来存储包和扩展的配置数据（如安全性和版本信息），Java 平台会识别并解释 META-INF 目录下的文件来配置应用程序、扩展和类装载器。META-INF 目录包含的常见文件如下：
+
+    MANIFEST.MF：这个 manifest 文件定义了与扩展和包相关的数据（譬如 java -jar 命令执行的 MainClass 就在这里面指定）。
+
+    XXX.SF：这是 Jar 包的签名文件，其中 XXX 表示签名者。
+
+    XXX.DSA：这是与签名文件相关联的签名程序块文件，它存储了用于签名 Jar 文件的公共签名。
+
+10. Jar 包签名是怎么回事，谈谈你的看法
+    签名的jar可以检测代码是否被篡改，还可以通过给有可信签名的jar赋予更多的操作权限。Jar 包可以用 jarsigner 工具或者直接通过 java.security API 进行签名来保证安全性。一个签名的 Jar 包与原来的 Jar 包代码部分完全相同，只是更新了它的 manifest 且在 META-INF 目录中增加了一个签名文件和一个签名块文件。
+    Jar包签名采用公钥/密钥机制。密钥就类似用于文件上签字的钢笔。只有你自己有，而与秘钥相对应的公钥可以被其他人拥有。通过公钥对被秘钥加密的文件进行解密，来验证文件的安全性。但是即使jar包含有匹配的公钥/密钥，你还是需要验证公钥是否来自真实的文件加密者（一个人可以伪造某个机构，用自己的密钥对jar进行加密，然后把公钥放入jar,这样同样能进行解密）
+
+11. 简单谈谈你对 Java 中 null 的理解与认识
+    null 在 java 中是一个老大难问题，最容易翻车的就是 NPE 问题，而譬如 kotlin 等语言的出现填补了 java 的这一弊端。关于 java 的 null 理解总结如下。
+
+    null 是 java 的关键字。
+
+    null 是 java 中引用类型的默认值。
+
+    null 既不是对象也不是一种类型，仅是一种特殊的值，我们可以将其赋予任何引用类型，也可以将 null 强转化成任何类型。
+
+    null 可以赋值给引用变量，但不能赋给基本类型变量，否则编译会报错。但是如果将 null 赋值给包装类型，然后将包装类型赋给各自的基本类型，编译器不会报，但在运行时会抛出空指针异常，这是因为 Java中 自动拆箱导致的。
+
+    instanceof 中使用带有 null 值的引用类型变量将会返回 false，这是 instanceof 操作符一个很重要的特性。
+
+    不能使用值为 null 的引用类型变量来调用对象的非静态方法（NPE 问题），但是可以使用值为 null 的引用类型变量来调用对象的静态方法，因为静态方法使用静态绑定，编译时就决定了，所以运行时不会抛出空指针异常。
+
+    可以使用 == 或 != 操作符来比较 null 值，但是不能使用其他操作符或者逻辑操作（譬如 < 或 > 等）来比较 null 值（会发生 NPE 问题），在 Java 中 null == null 会返回 true。
+
+12. java.sql.Date 和 java.util.Date 有什么区别
+    java.util.Date 就是在除了SQL语句的情况下面使用, java.sql.Date 是针对SQL语句使用的，它只包含日期而没有时间部分,它都有getTime方法返回毫秒数，自然就可以直接构建
+    java.util.Date 是 java.sql.Date 的父类（注意拼写）；前者是常用的表示时间的类，我们通常格式化或者得到当前时间都是用他；后者之后在读写数据库的时候用
+
+13. 说说 Java 中 ScheduledExecutorService 与 Timer 的区别
+    Timer 计时器具备使任务延迟执行以及周期性执行的功能，但是 Timer 天生存在一些缺陷，所以从 JDK 1.5 开始就推荐使用 ScheduledThreadPoolExecutor（ScheduledExecutorService 实现类）作为其替代工具。
+
+    首先 Timer 对提交的任务调度是基于绝对时间而不是相对时间的，所以通过其提交的任务对系统时钟的改变是敏感的（譬如提交延迟任务后修改了系统时间会影响其执行）；而 ScheduledThreadExecutor 只支持相对时间，对系统时间不敏感。
+
+    接着 Timer 的另一个问题是如果 TimerTask 抛出未检查异常则 Timer 将会产生无法预料的行为，因为 Timer 线程并不捕获异常，所以 TimerTask 抛出的未检查异常会使 Timer 线程终止，所以后续提交的任务得不到执行；而 ScheduledThreadPoolExecutor 不存在此问题。
+
+14. Math.round(15.5) 等于多少？Math.round(-15.5) 等于多少
+    分别等于 16 和 -15。
+    因为四舍五入的原理是在参数上加 0.5 然后进行下取整。所以类似的 Math.round(15.6) 计算方式为 15.6 + 0.5 = 16.1，接着向下取整数为 16；Math.round(-15.6) 计算方式为 -15.6 + 0.5 = -15.1，接着向下取整数为 -16。
+    这是一个很小但是很坑的知识点，切记不是四舍五入，是加 0.5 向下取整数。
+
+15. 如何用最有效的方式计算 2 乘以 8 等于几
+    2 << 3
+
+16. 定义一个赋值为 null 的类类型变量名 a，能否通过 a 不进行实例化而直接访问其 static 属性或者方法
+    可以，当通过一个对象的引用访问静态成员属性或方法时，访问操作只与声明的类型相关，与引用对象是否为null无关，因为访问静态属性或方法不需要实例化对象，即便引用不为null，也与运行时的多态无关，静态成员是类相关的
+
+17. Java 中一个方法可以存在多个变长参数吗？
+    不可以，当方法有多个参数时，可变长参数必须位于最后。个方法只能有一个可变长参数，且这个可变长参数必须是该方法的最后一个参数，java 不允许存在一个方法具备多个变长参数或者变长参数不是方法的最后位置的情况
+
+18. Java 代码块是什么？代码块的分类有哪些？作用是什么？
+    所谓代码块就是用大括号 {} 将多行代码封装在一起形成一个独立的数据体，用于实现特定的需求，一般来说代码块是不能单独运行的，它必须要有运行主体。
+
+    （1）普通代码块（局部代码快）是在方法名后面用 {} 括起来的代码段，不能够单独存在，必须要紧跟在方法名后面且必须使用方法名调用它，作用是限定变量的生命周期和提高效率。
+
+    （2）构造代码块是在类中方法外用 {} 括起来的代码，作用是把所有构造方法中相同的内容抽取出来，将来在调用构造方法的时候会去自动调用构造代码块，构造代码快优先于构造方法。
+
+    （3）静态代码块是在类中方法外用 {} 括起来且添加了 static 前缀修饰的代码，作用是随着类的加载而加载且只加载一次。
+
+    （4）同步代码块是方法中使用 synchronized 关键字修饰并使用 {} 括起来的代码片段，表示同一时间只能有一个线程进入到该代码块中，作用是一种多线程并发保护机制。
+
+19. Java 中静态代码块、构造代码块、构造方法的执行顺序是什么？
+    因为静态代码块作用于类级别，构造代码块和构造方法作用于对象级别，所以静态代码块是随着类的加载而被执行，只要类被加载了就会执行，而且只会加载一次，主要用于给类进行初始化；构造代码块在每次创建一个对象时就会执行一次且优先于构造函数，主要用于初始化不同对象共性的初始化内容和初始化实例环境；构造方法在每次创建一个对象时就会执行一次，同时构造方法是给特定对象进行初始化，而构造代码是给所有对象进行初始化；所以通过分析得出他们三者的执行顺序为 静态代码块 > 构造代码块 > 构造方法。
+
+20. java 中什么时候使用断言（assert）？
+    如果希望在不满足某些条件时阻止代码的执行，就可以考虑用断言来阻止它
+    以一个函数为例，它要求在开始执行的时候满足一系列条件，这些条件被称为“前条件”或者“先验条件”，比如，参数不为空，某全局变量应该为1，等等。不满足前条件，是不能调用此函数的，如果出现了前条件不满足仍然调用了此函数，可以认为这是一个设计错误。检查前条件，可以使用assert
+
+21. 说说 java 的 instanceof 与 obj.instanceof(class) 的区别
+    java 中的 instanceof 运算符用来在运行时指出对象是否是特定类的一个实例，通过返回一个布尔值来指出这个对象是否是这个特定类或者是它的子类的一个实例；用法为 result = object instanceof class，参数 result 布尔类型，object 为必选项的实例，class 为必选项的任意已定义的对象类，如果 object 是 class 的一个实例则 instanceof 运算符返回 true，如果 object 不是指定类的一个实例或者 object 是 null 则返回 false；但是 instanceof 在 java 的编译状态和运行状态是有区别的，在编译状态中 class 可以是 object 对象的父类、自身类、子类，在这三种情况下 java 编译时不会报错，在运行转态中 class 可以是 object 对象的父类、自身类但不能是子类，当为父类、自生类的情况下 result 结果为 true，为子类的情况下为 false。
+
+    Class.isInstance(obj) 表明这个对象能不能被转化为这个类，如果 obj 是调用这个方法的 Class 或接口的实例则返回true，这个方法是 instanceof 运算符的动态等价，如果 obj 为 null 则返回 false。
+
+22. 说说 java 的 instanceof 与 clazz.getClass() 的区别？
+    instanceof判断是否是某一类型的实例时，该类型可以是父类或者接口。而getclass 用于判断准确的类型。etclass判断的是该变量实际指向的对象的类型（即运行时类型），跟声明该变量的类型无关
+
+23. 简单说说 java 的 instanceof 实现原理？
+    首先 instanceof 直接对应一条虚拟机指令 instanceof 且为 java 语法保留关键字，而非通过反射实现；instanceof 在底层实现上维护了主要超类型（继承深度）小于一个固定数值（一般为 7）的主数组和次要超类型（判断的时候需要 super 链遍历查找），然后在字节码使用特殊指令对常量池中的相关符号引用进行判断，从而来决定是否某个类或者派生类，以此返回 true 或 false
+
+24. Java 创建对象的方式有哪几种？
+    （1）使用 new 关键字（调用构造方法）
+    （2）使用 Class 类的 newInstance 方法（调用构造方法）
+    （3）使用 Constructor 类的 newInstance 方法（调用构造方法）
+    （4）使用 clone 方法（没有调用构造方法）
+    （4）使用反序列化（没有调用构造方法）
+
+25. if和switch的区别：
+    if针对结果是布尔类型的判断，switch的类型是byte、short、int、char、String、枚举
+    if可以针对范围的判断（关系操作符、逻辑操作符等），switch比较的就是一个具体的值或常量，只能==
+    当只有分支比较少的时候，if效率比switch高（因为switch有跳转表），分支比较多，switch效率高
+
+26. java里带$的函数见过么，是什么意思
