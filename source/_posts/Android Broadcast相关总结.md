@@ -1,6 +1,6 @@
 ---
 title: Android Broadcast相关总结
-tag: Android、面试
+tag: Android
 ---
 
 # Broadcast相关总结

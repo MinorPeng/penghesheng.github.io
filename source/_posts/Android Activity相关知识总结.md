@@ -1,6 +1,6 @@
 ---
 title: Android Activity相关知识总结
-tag: Android、面试
+tag: Android 
 ---
 
 # Activity相关知识总结

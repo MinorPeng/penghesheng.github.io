@@ -1,6 +1,6 @@
 ---
 title: Android Service相关总结
-tag: Android、面试
+tag: Android
 ---
 
 # Service相关总结

@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: PHS1024's blog
-subtitle: PHS1024 blog 
+title: PHS1024
+subtitle: PHS1024 
 description: 黑色的眼睛在黑夜里前行
 keywords:
 author: PHS1024
-language: zh
+language: zh-Hans
 timezone:
 
 # URL
@@ -38,6 +38,7 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
+# 代码块的设置
 highlight:
   enable: true
   line_number: true
@@ -73,7 +74,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
