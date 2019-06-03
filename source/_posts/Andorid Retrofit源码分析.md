@@ -27,16 +27,23 @@ Retrofit2是Retrofit的一个升级版，底层基于OkHttp3的一个网络请�
 
  **看一下一些重要的类**
 
-- Call：interface，像服务器发送请求并返回响应的调用
+- Call：interface，向服务器发送请求并返回响应的调用
 - CallAdapter：interface，Call的适配器，用来包装Call
 - CallBack：interface，Call执行时的回调
 - Converter：interface，数据转换器，将一个对象转换为另一个对象
 - CallAdapter.Factory：abstract class，数据转换器Converter的工厂，可以转换结果和请求
 - RequestFactory：class，创建OkHttp请求的Request
 - RequestFactoryParser ：class，解析GitHubService.listRepos()方法的注解和参数，生成RequestFactory。（会用到requestBodyConverter，stringConverter）
-- OkHttpCall：class，实现Call接口，获取传入的Call（代理Call，通过Retrofit.callFactory生成的）执行请求，获取数据并使用responseConverter进行解析
-- Retrofit：class，这个网络请求的配置和控制
+- OkHttpCall：class，实现Call接口，获取传入的Call（代理Call，通过Retrofit.callFactory生成的）执行请求，实际上内部会创建一个okhttp3.Call进行真正的网络请求，获取数据并使用responseConverter进行解析
+- Retrofit：class，整个网络请求的配置和控制，产生动态代理对象的地方
 - Retrofit.Builder：class，Builder模式创建Retrofit
+- ServiceMethod：cabstract lass，每一个网络请求方法就会对应已给ServiceMethod，在2.5.0中，具体实现采用了HttpServiceMethod进行了一个解耦
+- HttpServiceMethod：class，ServiceMethod的实现类，对应每一次网络请求，每一次请求都会通过动态代理，调用invoke方法，最后得到对应的Call对象，持有Retrofit的引用，并通过Retrofit和Method得到CallAdapterFactory和ConverterFactory（responseConverter）
+- Platform：class，平台对象，主要有Android、Java；用于获取一些默认值，比如CallAdapterFactory、ConverterFactory以及线程切换的Executor
+- ExecutorCallAdapterFactory：class，默认的CallAdapterFactory
+- ExecutorCallbackCall：class，一个Call对象 ，是ExecutorCallAdapterFactory的内部类，默认得到的Call；在调用时，内部的Call对象取决与invoke方法中的实例化，默认是OkHttpCall
+
+![Retrofit2](https://img-blog.csdnimg.cn/2019060320361839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70)
 
 ## 源码分析
 
@@ -362,20 +369,21 @@ public final class Retrofit {
     //返回动态代理对象
     return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[] { service },
         new InvocationHandler() {
-          private final Platform platform = Platform.get();
-          private final Object[] emptyArgs = new Object[0];
+            private final Platform platform = Platform.get();
+          	private final Object[] emptyArgs = new Object[0];
 
-          @Override public Object invoke(Object proxy, Method method, @Nullable Object[] args)
+          	@Override public Object invoke(Object proxy, Method method, @Nullable Object[] args)
               throws Throwable {
-            // If the method is a method from Object then defer to normal invocation.
-            if (method.getDeclaringClass() == Object.class) {
-              return method.invoke(this, args);
-            }
-            if (platform.isDefaultMethod(method)) {
-              return platform.invokeDefaultMethod(method, service, proxy, args);
-            }
-            return loadServiceMethod(method).invoke(args != null ? args : emptyArgs);
-          }
+            	// If the method is a method from Object then defer to normal invocation.
+            	if (method.getDeclaringClass() == Object.class) {
+              		return method.invoke(this, args);
+            	}
+            	//这是是针对API大于等于24的时候的一个优化
+            	if (platform.isDefaultMethod(method)) {
+              		return platform.invokeDefaultMethod(method, service, proxy, args);
+            	}
+            	return loadServiceMethod(method).invoke(args != null ? args : emptyArgs);
+          	}
         });
     }
 }
@@ -928,6 +936,105 @@ Response<T> parseResponse(okhttp3.Response rawResponse) throws IOException {
 
 在解析结果的时候，会先进行一些状态码的判断，然后通过包装一层ResponseBody，再交给我们HttpServiceMethod中的responseConverter解析成对应的数据类型，然后返回，通过前面的callback回调到
 
+我们看看默认的BuiltInConverters
+
+```java
+final class BuiltInConverters extends Converter.Factory {
+    @Override public @Nullable Converter<ResponseBody, ?> responseBodyConverter(
+      Type type, Annotation[] annotations, Retrofit retrofit) {
+    	if (type == ResponseBody.class) {
+      		return Utils.isAnnotationPresent(annotations, Streaming.class)
+          		? StreamingResponseBodyConverter.INSTANCE
+          		: BufferingResponseBodyConverter.INSTANCE;
+    	}
+    	if (type == Void.class) {
+      		return VoidResponseBodyConverter.INSTANCE;
+    	}
+    	if (checkForKotlinUnit) {
+      		try {
+        		if (type == Unit.class) {
+          			return UnitResponseBodyConverter.INSTANCE;
+        		}
+      		} catch (NoClassDefFoundError ignored) {
+        		checkForKotlinUnit = false;
+      		}
+    	}
+    	return null;
+  	}
+
+  	@Override public @Nullable Converter<?, RequestBody> requestBodyConverter(Type type,
+      Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+    	if (RequestBody.class.isAssignableFrom(Utils.getRawType(type))) {
+      		return RequestBodyConverter.INSTANCE;
+    	}
+    	return null;
+  	}
+}
+```
+
+requestBodyConverter方法就根据判断，返回不同类型的RequestBody，比如Void型、Unit型、或者不变的；从下面的convert方法就可以看到
+
+```java
+static final class VoidResponseBodyConverter implements Converter<ResponseBody, Void> {
+    static final VoidResponseBodyConverter INSTANCE = new VoidResponseBodyConverter();
+
+    @Override public Void convert(ResponseBody value) {
+      	value.close();
+      	return null;
+    }
+}
+
+static final class UnitResponseBodyConverter implements Converter<ResponseBody, Unit> {
+    static final UnitResponseBodyConverter INSTANCE = new UnitResponseBodyConverter();
+
+    @Override public Unit convert(ResponseBody value) {
+      	value.close();
+      	return Unit.INSTANCE;
+    }
+}
+
+static final class RequestBodyConverter implements Converter<RequestBody, RequestBody> {
+    static final RequestBodyConverter INSTANCE = new RequestBodyConverter();
+
+    @Override public RequestBody convert(RequestBody value) {
+      	return value;
+    }
+}
+
+static final class StreamingResponseBodyConverter
+      implements Converter<ResponseBody, ResponseBody> {
+    static final StreamingResponseBodyConverter INSTANCE = new StreamingResponseBodyConverter();
+
+    @Override public ResponseBody convert(ResponseBody value) {
+      	return value;
+    }
+}
+
+static final class BufferingResponseBodyConverter
+      implements Converter<ResponseBody, ResponseBody> {
+    static final BufferingResponseBodyConverter INSTANCE = new BufferingResponseBodyConverter();
+
+    @Override public ResponseBody convert(ResponseBody value) throws IOException {
+      	try {
+        	// Buffer the entire body to avoid future I/O.
+        	return Utils.buffer(value);
+      	} finally {
+        	value.close();
+      	}
+    }
+}
+
+static final class ToStringConverter implements Converter<Object, String> {
+    static final ToStringConverter INSTANCE = new ToStringConverter();
+
+    @Override public String convert(Object value) {
+      	return value.toString();
+    }
+}
+```
+
+看每一个convert方法，对应着不同的实现，
+
 ###  2.5.0和之前版本的区别
 
 - 抽离了ServiceMethod，使用了具体实现HttpServiceMethod，减轻了ServiceMethod的负重，更多的放到了HttpServiceMethod中，以及通过层层参数的传递，进行了解耦
@@ -935,11 +1042,44 @@ Response<T> parseResponse(okhttp3.Response rawResponse) throws IOException {
 
 ## 总结
 
-- Retrofit的创建
-- 动态代理得到接口对象
-- 执行enqueue
-- 真正通过OkHttpCall进行网络请求
-- 数据解析和转换
+- Retrofit的创建：
+
+    通过Builder模式，设置请求地址url，选择性设置callbackExecutor、client、callAdapterFactory、converterFactory等，通过build方法创建Retrofit，同时设置配置的参数
+
+    如果没有设置client（OkClient）、callbackExecutor（将回调接口传递到UI线程）、callAdapterFactory（call适配器工厂）、converterFactory（结果转换器工厂）等；client默认是new一个OkClient对象；callbackExecutor是通过Platform获取的默认值，具体是通过Android平台的Platform得到的一个拥有主线程Looper的Executor；callAdapterFactory是通过Platform和callbackExecutor得到的一个默认实现ExecutorCallAdapterFactory，如果API 大于等于24，还会有一个CompletableFutureCallAdapterFactory；converterFactory也是通过Android的Platform得到一个默认的，但是是一个空list，同样大于等于24会多一个OptionalConverterFactory，当让converterFactory真正默认的是BuiltInConverters
+
+    通过Retrofit的创建配置了相应的参数到Retrofit中，后面每一个方法ServiceMethod创建的时候会从这里面拿到需要的callAdapter、converter
+
+- 动态代理得到接口对象：
+
+    接着通过Retrofit的create方法来得到Service请求接口的代理对象；具体在create方法中，用了Java的动态代理` Proxy.newProxyInstance`，通过这个动态代理呢，运行时在具体调用某个请求方法的时候，会生成对应得代理对象，最后会调用到这个动态代理类的invoke方法，在这个invoke方法中，能够获取到我们调用请求方法的所有信息；最后返回的是`loadServiceMethod(method).invoke(args != null ? args : emptyArgs)`
+
+    先是通过loadServiceMethod方法获取ServiceMethod，具体就是先是在Retrofit的缓存serviceMethodCache（线程安全的HashMap）中获取，没有的话，就通过ServiceMethod的parseAnnotations方法创建一个ServieMethod方法（根据retrofit引用和method），在ServiceMethod的parseAnnotations方法先是根据Retrofit和method解析注解，创建一个RequestFactory，接着检查返回类型，通过HttpServiceMethod来创建一个ServiceMethod；HttpServiceMethod就是继承自ServiceMethod的，同样在parseAnnotations方法中：
+
+    - 通过retrofit和method，从retrofit的callAdapterFactories中获取到对应的callAdapterFactory，同时检查responseType和requestFactory中的httpMethod；
+    - 通过retrofit和method及方法的注解，从converterFactories中得到对应的converterFactory（responseConverter）；
+    - 获取Retrofit中的okClient
+    - 最后new了HttpServiceMethod
+
+    然后就是调用ServiceMethod的invoke方法，动态代理对象也是返回的这个；具体就是调用HttpServiceMethod的invoke方法，在HttpServiceInvoke中返回了callAdapter的adapt方法，同时根据HttpServiceMethod持有的`requestFactory，callFactory，responseConverter`以及动态代理的参数`args`创建了OkHttpCall对象，并传到了adapt中；
+
+    由于默认的callAdapterFactory是ExecutorCallAdapterFactory，所以在ExecutorCallAdapterFactory的adapt方法中根据实例化的OkHttpCall创建了ExecutorCallbackCall并返回，整个create方法到此结束
+
+- 执行enqueue：
+
+    通过Call的enqueue方法执行，实际上调用的是ExecutorCallbackCall的enqueue方法（前面有总结到），在ExecutorCallbackCall的嗯queue方法中对callback进行了一层封装，通过OkHttpCall执行真正的enqueue方法进行网络请求，在OkHttpCall的匿名callback中，通过callbackExecutor来做线程切换，将最终的结果返回到UI线程，通过我们设置的callback返回
+
+- 真正通过OkHttpCall进行网络请求：
+
+    OkHttpCall的enqueue方法中，主要做了两件事：
+
+    - 获取okhttp3.Call
+
+        通过设置的OkClient创建一个Call实例，通过RequestFactory创建一个okhttp3.Request，通过okhttp3.Call进行请求
+
+    - 解析结果
+
+        在返回结果之前，会通过设置的responseConverter（converterFactory）来进行对应的数据转换
 
 ## 特别鸣谢
 
