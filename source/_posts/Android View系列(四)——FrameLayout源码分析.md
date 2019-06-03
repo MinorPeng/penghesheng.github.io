@@ -4,13 +4,9 @@ tag: Android
 date: 2019-05-04
 ---
 
-# FrameLayout源码分析
+[TOC]
 
-- [简介](#简介)
-- [onMeasure](#onMeasure)
-- [onLayout](#onLayout)
-- [onDraw](#onDraw)
-- [特别鸣谢](#特别鸣谢)
+# FrameLayout源码分析
 
 ## 简介
 

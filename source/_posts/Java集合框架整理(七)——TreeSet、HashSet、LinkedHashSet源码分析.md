@@ -3,6 +3,8 @@ title: Java集合框架整理(七)——TreeSet、HashSet、LinkedHashSet源码�
 tag: Java
 ---
 
+[TOC]
+
 # TreeSet、HashSet、LinkedHashSet源码分析
 
 TreeSet是基于TreeMap实现的有序的集合，HashSet是基于HashMap实现的，而LinkedHashSet更是继承自HashSet，所以他们的源码都不会太复杂，所以在看这篇文章之前需要先看[**TreeMap源码分析**](http://blog.penghesheng.cn/2019/04/25/Java集合框架整理(七)——TreeSet、HashSet、LinkedHashSet源码分析/)、[**HashMap的源码分析**](http://blog.penghesheng.cn/2019/04/25/Java集合框架整理(七)——TreeSet、HashSet、LinkedHashSet源码分析/)

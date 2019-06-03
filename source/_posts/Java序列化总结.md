@@ -3,6 +3,8 @@ title: Java序列化总结
 tag: Java
 ---
 
+[TOC]
+
 # Java序列化
 
 对象的序列化可以实现轻量级持久性

@@ -3,12 +3,9 @@ title: Android View系列(一)——View源码分析——DecorView
 tag: Android
 ---
 
-# View源码分析——DecorView为例
+[TOC]
 
-- [measureSpec](#MeasureSpec)
-- [measure过程](#measure)
-- [layout过程](#layout)
-- [draw过程](#draw)
+# View源码分析——DecorView为例
 
 **基本概念**：ViewRoot对应于ViewRootImpl类，它是连接WindowManager和DecorView的纽带。View的三大流程measure、layout、draw都是通过ViewRoot来完成。在ActivityThread中，当Activity对象被创建，会将DecorView添加到Window，同时会创建ViewRootImpl对象，并将两个关联
 

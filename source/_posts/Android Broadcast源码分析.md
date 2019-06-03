@@ -3,6 +3,8 @@ title: Android Broadcast源码分析
 tag: Android
 ---
 
+[TOC]
+
 # Broadcast源码分析
 
 [源码脑图](http://naotu.baidu.com/file/f218c472d4ef7b60b1ad1f5d9dfa5646?token=3e3820b1e30ce0a2)

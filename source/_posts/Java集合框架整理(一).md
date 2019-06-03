@@ -3,6 +3,8 @@ title: Java集合框架整理(一)
 tag: Java
 ---
 
+[TOC]
+
 # Java Map、List、Vector源码分析
 
 [脑图](http://naotu.baidu.com/file/195a5d4c7010b778a85631f5f61ab92c?token=f5c0ec8bbaa0f24e)
@@ -450,6 +452,9 @@ class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
 
 - LinkedList
     LinkedList是继承自AbstractSequenceList这个抽象类，而AbstractSequenceList又是继承自AbstractList的
+    
+    [Java集合框架整理(五)——LinkedList源码分析](./Java集合框架整理(五)——LinkedList源码分析.md)
+    
 - ArrayList
     1. 动态数组，线程非安全，允许null
     2. 可以手动调用扩容
@@ -457,6 +462,9 @@ class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
     4. 扩容默认扩容1.5倍
     5. add通过移动数组，remove也是移动数组进行覆盖，数组的拷贝是通过native方法（System.arraycopy）
     6. clear操作就是置为null
+    
+    [Java集合框架整理(八)——ArrayList源码分析](./Java集合框架整理(八)——ArrayList源码分析.md)
+    
 - SparseArray
     1. int型的key，Object型的value，HashMap则是任意类型
     2. 一个数组存放key，一个数组存放value；key是有序的
@@ -465,10 +473,14 @@ class RandomAccessSubList<E> extends SubList<E> implements RandomAccess {
     5. 通过二分查找法来查找插入的下标index，如果返回的是负值表明该位置没有被占用，可以直接取反获取下标
     6. 删除数据后不会直接移动数据进行覆盖，而是将删除的位置标记为DELETE，标明当前位置没有数据，那么在put时，有原值直接覆盖且不会返回，HashMap会返回原值，发现要插入的位置是DELETE，就直接插入，但是如果发现该位置已经有值了（key值不一样），那么触发gc，调整其他位置的DELETE并删除无用的key，重新计算下标再进行插入；如果容量已经满了，则扩容后插入
     7. 扩容时，当前容量小于等于4，则扩容后容量为8.否则为当前容量的两倍
+    
 - Vector
     1. 默认容量10，增长系数0，扩容翻倍
     2. 通过synchronized 来保证线程安全
     3. 允许元素为null
+    
+    [Java集合框架整理(六)——Vector和Stack源码分析](./Java集合框架整理(六)——Vector和Stack源码分析.md)
+    
 - Stack
     继承自Vector
 
@@ -564,6 +576,8 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
 - LinkedHashSet
 - TreeSet
 
+[Java集合框架整理(七)——TreeSet、HashSet、LinkedHashSet源码分析](./Java集合框架整理(七)——TreeSet、HashSet、LinkedHashSet源码分析.md)
+
 ### Queue
 
 ```java
@@ -636,9 +650,9 @@ public abstract class AbstractQueue<E>
 接着看看几种Queue和Deque常用类吧
 
 - 线程安全的Queue
-    ConcurrentLinkedDeque、ConcurrentLinkedQueue、LinkedBlockingQueue、LinkedBlockingDeque、PriorityBlockingQueue、ArrayBlockingQueue
+    ConcurrentLinkedDeque、ConcurrentLinkedQueue、LinkedBlockingQueue、LinkedBlockingDeque、[Java集合框架整理(一)——PriorityBlockingQueue、ArrayBlockingQueue源码分析](./Java集合框架整理(一)——PriorityBlockingQueue、ArrayBlockingQueue源码分析.md)
 - 线程非安全的Queue
-    PriorityQueue、DelayQueue、LinkedTransferQueue
+    [Java集合框架整理(四)——PriorityQueue、DelayQueue源码分析](./Java集合框架整理(四)——PriorityQueue、DelayQueue源码分析.md)、LinkedTransferQueue
 
 ## Map
 
@@ -856,6 +870,8 @@ public interface Map<K,V> {
 ```
 
 ### HashMap
+
+[Java集合框架整理(二)——HashMap源码分析](./Java集合框架整理(二)——HashMap源码分析.md)
 
 #### 1.7和1.8的区别
 

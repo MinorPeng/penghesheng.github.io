@@ -3,10 +3,9 @@ title: Android Activity的启动过程（API27 源码分析）
 tag: Android
 ---
 
-# Activity的启动过程（API27 源码分析）
+[TOC]
 
-- [正常启动](#正常启动)
-- [APP启动过程](#APP启动过程（从点击桌面开始）)
+# Activity的启动过程（API27 源码分析）
 
 ## 正常启动
 

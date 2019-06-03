@@ -3,6 +3,8 @@ title: Java集合框架整理(四)——PriorityQueue、DelayQueue源码分析
 tag: Java
 ---
 
+[TOC]
+
 # PriorityQueue、DelayQueue源码分析
 
 本文将会讲解两个Queue的源码，分别是PriorityQueue和DelayQueue

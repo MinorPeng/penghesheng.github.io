@@ -4,6 +4,8 @@ tag: Android
 date: 2019-04-29
 ---
 
+[TOC]
+
 # LinearLayout 源码分析
 
 ## 简介

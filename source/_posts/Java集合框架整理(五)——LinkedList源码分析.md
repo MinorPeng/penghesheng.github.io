@@ -3,6 +3,8 @@ title: Java集合框架整理(五)——LinkedList源码分析
 tag: Java
 ---
 
+[TOC]
+
 # LinkedList源码分析
 
 LinkedList：链表实现的集合

@@ -3,6 +3,8 @@ title: Java内部类
 tag: Java
 ---
 
+[TOC]
+
 # 内部类
 
 内部类是定义在另一个类中的类。

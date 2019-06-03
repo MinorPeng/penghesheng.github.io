@@ -3,6 +3,8 @@ title: Java基本数据类型、String总结
 tag: Java
 ---
 
+[TOC]
+
 # Java基本数据类型、String总结
 
 **声明**：部分面试题来自微信公众号**码农每日一题**

@@ -3,6 +3,8 @@ title: Android Activity相关知识总结
 tag: Android 
 ---
 
+[TOC]
+
 # Activity相关知识总结
 
 ## Activity的用法

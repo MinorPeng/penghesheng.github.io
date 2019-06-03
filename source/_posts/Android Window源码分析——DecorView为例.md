@@ -3,11 +3,9 @@ title: Android Window源码分析——DecorView为例
 tag: Android
 ---
 
-# Window源码分析——DecorView为例
+[TOC]
 
-- [Window的添加](#window的添加)
-- [Window的删除](#window的删除)
-- [Window的更新](#window的更新)
+# Window源码分析——DecorView为例
 
 ## window的添加
 

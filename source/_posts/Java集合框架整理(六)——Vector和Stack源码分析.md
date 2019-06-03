@@ -3,6 +3,8 @@ title: Java集合框架整理(六)——Vector和Stack源码分析
 tag: Java
 ---
 
+[TOC]
+
 # Vector和Stack源码分析
 
 ## Vector源码

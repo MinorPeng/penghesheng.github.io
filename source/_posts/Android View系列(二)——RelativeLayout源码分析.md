@@ -4,21 +4,9 @@ tag: Android
 date: 2019-05-01
 ---
 
-# RelativeLayout源码分析
+[TOC]
 
-- [简介](http://blog.penghesheng.cn/2019/05/01/Android View系列(二)——RelativeLayout源码分析/#简介)
-- onMeasure
-    - [排序](#排序)
-    - [排序后的变量初始化](#排序后初始化)
-    - [水平方向](#水平方向)
-    - [垂直方向](#垂直方向)
-    - [Baseline的计算](#Baseline的计算)
-    - [修正](#一些修正)
-- [onLayout](#onLayout)
-- [onDraw](#onDraw)
-- [总结](#总结)
-- [LinearLayout和RelativeLayout的性能对比](#LinearLayout和RelativeLayout的性能对比)
-- [特别鸣谢](#特别鸣谢)
+# RelativeLayout源码
 
 ## 简介
 

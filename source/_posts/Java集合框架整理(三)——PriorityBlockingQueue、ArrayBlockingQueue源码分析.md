@@ -3,6 +3,8 @@ title: Java集合框架整理(一)——PriorityBlockingQueue、ArrayBlockingQue
 tag: Java
 ---
 
+[TOC]
+
 # PriorityBlockingQueue、ArrayBlockingQueue源码分析
 
 ## PriorityBlockingQueue源码分析

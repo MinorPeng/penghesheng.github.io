@@ -3,6 +3,8 @@ title: Java反射、注解总结
 tag: Java
 ---
 
+[TOC]
+
 # Java反射、注解
 
 ## 反射

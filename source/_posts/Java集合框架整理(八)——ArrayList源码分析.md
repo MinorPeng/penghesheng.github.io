@@ -4,6 +4,8 @@ tag: Java
 date: 
 ---
 
+[TOC]
+
 # ArrayList源码分析
 
 ArrayList（动态数组）：

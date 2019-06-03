@@ -3,6 +3,8 @@ title: Java基础总结
 tag: Java
 ---
 
+[TOC]
+
 # Java基础总结
 
 **声明**：部分面试题来自微信公众号**码农每日一题**
@@ -11,7 +13,7 @@ tag: Java
 
 ## 泛型
 
-[泛型相关总结](http://penghesheng.cn/?p=50)
+[泛型相关总结](./Java泛型总结.md)
 
 ## 封装、多态、继承、接口
 
@@ -19,7 +21,7 @@ tag: Java
 
 ## 内部类
 
-[内部类](http://penghesheng.cn/?p=81)
+[内部类](./Java内部类.md)
 
 ## 枚举类
 
@@ -374,7 +376,7 @@ final可以保护声明为public元素
 
 ## 克隆（拷贝）
 
-[Java拷贝相关知识](http://penghesheng.cn/?p=85)
+[Java拷贝相关知识](./Java拷贝总结.md)
 
 ## 运算符
 

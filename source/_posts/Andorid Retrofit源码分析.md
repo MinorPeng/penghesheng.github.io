@@ -4,15 +4,9 @@ tag: Android第三方框架
 date: 2019-06-02
 ---
 
-# Android Retrofit2源码分析
+[TOC]
 
-- [介绍](##介绍)
-- [源码分析](##源码分析)
-    - [Retrofit的创建](###Retrofit的创建)
-    - [动态代理得到接口对象](###创建接口对象)
-    - [执行enqueue](###执行enqueue)
-    - [OkHttpCall和数据解析](###OkHttpCall)
-- [总结](##总结)
+# Android Retrofit2源码分析
 
 ## 介绍
 
