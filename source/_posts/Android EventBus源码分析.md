@@ -1,6 +1,6 @@
 ---
 title: Android——EventBus源码分析
-tag: Android
+tag: Android第三方框架
 date: 2019-04-30
 ---
 
