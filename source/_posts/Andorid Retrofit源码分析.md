@@ -6,6 +6,8 @@ date: 2019-06-02
 
 [TOC]
 
+
+
 # Android Retrofit2源码分析
 
 ## 介绍
@@ -26,8 +28,8 @@ Retrofit2是Retrofit的一个升级版，底层基于OkHttp3的一个网络请�
 - CallBack：interface，Call执行时的回调
 - Converter：interface，数据转换器，将一个对象转换为另一个对象
 - CallAdapter.Factory：abstract class，数据转换器Converter的工厂，可以转换结果和请求
-- RequestFactory：class，创建OkHttp请求的Request
-- RequestFactoryParser ：class，解析GitHubService.listRepos()方法的注解和参数，生成RequestFactory。（会用到requestBodyConverter，stringConverter）
+- RequestFactory：class，创建OkHttp请求的Request，通过解析Method
+- RequestFactoryParser ：class，解析网络请求方法的注解和参数，生成RequestFactory。（会用到requestBodyConverter，stringConverter）
 - OkHttpCall：class，实现Call接口，获取传入的Call（代理Call，通过Retrofit.callFactory生成的）执行请求，实际上内部会创建一个okhttp3.Call进行真正的网络请求，获取数据并使用responseConverter进行解析
 - Retrofit：class，整个网络请求的配置和控制，产生动态代理对象的地方
 - Retrofit.Builder：class，Builder模式创建Retrofit
