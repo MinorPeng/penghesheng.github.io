@@ -7,6 +7,10 @@ tag: Android
 
 # Window源码分析——DecorView为例
 
+在Activity创建完成后，通过`attach()`方法将Context、Application等绑定到Activity中，同时实例化一个PhoneWindow，并建立和WindowManager的关联，接着回调`onCreate()`方法，同时我们这里设置的`setContentView()`会调用到Activity的`setContentView()`，接着会调用其Window的`setContentView()`，最后就调用到PhoneWindow中，在PhoneWindow如果没有初始化DecorView就会先进行初始化DecorView，然后通过LayoutInflater去`inflate()`我们设置的view，在LayoutInflater中通过xml解析器，根据标签递归解析我们的布局，然后生成对应的view添加到DecorView中的parentView（这个是用于放置我们设置的view的地方），这样就得到了整个View树保存在DecorView中（DecorView保存在Windows中）；
+
+在ActivityThread的handleResumeActivity方法中，通过获取到WindowManager，然后在后面通过addView方法，将decor添加进去，WindowManager的实现类是WindowManagerImpl
+
 ## window的添加
 
 通过WindowManager的addView实现添加过程

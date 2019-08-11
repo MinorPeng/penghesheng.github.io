@@ -9,6 +9,8 @@ tag: Android
 
 **基本概念**：ViewRoot对应于ViewRootImpl类，它是连接WindowManager和DecorView的纽带。View的三大流程measure、layout、draw都是通过ViewRoot来完成。在ActivityThread中，当Activity对象被创建，会将DecorView添加到Window，同时会创建ViewRootImpl对象，并将两个关联
 
+在Activity创建完成后，通过`attach()`方法将Context、Application等绑定到Activity中，同时实例化一个PhoneWindow，并建立和WindowManager的关联，接着回调`onCreate()`方法，同时我们这里设置的`setContentView()`会调用到Activity的`setContentView()`，接着会调用其Window的`setContentView()`，最后就调用到PhoneWindow中，在PhoneWindow如果没有初始化DecorView就会先进行初始化DecorView，然后通过LayoutInflater去`inflate()`我们设置的view，在LayoutInflater中通过xml解析器，根据标签递归解析我们的布局，然后生成对应的view添加到DecorView中的parentView（这个是用于放置我们设置的view的地方），这样就得到了整个View树保存在DecorView中（DecorView保存在Windows中）；
+
 在ActivityThread的handleResumeActivity方法中，通过获取到WindowManager，然后在后面通过addView方法，将decor添加进去，WindowManager的实现类是WindowManagerImpl，这又是Window的添加过程，在这个过程中，有一个requestLayout方法（相关过程参考我的[Window源码分析](http://penghesheng.cn/?p=162)）
 
 ```java
@@ -1133,7 +1135,7 @@ private void draw(boolean fullRedrawNeeded) {
 }
 ```
 
-mDirty表示的是当前需要更新的区域，即脏区域。经过一些scroll相关的处理后，如果脏区域不为空或者有动画需要执行时，便会执行重绘窗口的工作。有两种绘制方式，硬件加速绘制方式和软件渲染绘制方式，在创建窗口流程的ViewRootImpl.setView()中，会根据不同情况，来选择是否创mAttachInfo.mHardwareRenderer对象。如果该对象不为空，则会进入硬件加速绘制方式，即调用到ThreadedRenderer.draw()；否则则会进入软件渲染的绘制方式，调用到ViewRootImpl.drawSoftware()方法。但是无论哪种方式，都会走到mView.draw()方法，即DecorView.draw()方法。
+mDirty表示的是当前需要更新的区域，即脏区域。经过一些scroll相关的处理后，如果脏区域不为空或者有动画需要执行时，便会执行重绘窗口的工作。有两种绘制方式，硬件加速绘制方式和软件渲染绘制方式，在创建窗口流程的ViewRootImpl.setView()中，会根据不同情况，来选择是否创mAttachInfo.mHardwareRenderer对象。如果该对象不为空，则会进入硬件加速绘制方式，即调用到ThreadedRenderer.draw()，这个ThreadedRenderer是不会block住UI线程，但是UI线程可以block住它，主要是在UI线程构建试图然后交给单独的线程通过OpenGL去绘制；否则则会进入软件渲染的绘制方式，调用到ViewRootImpl.drawSoftware()方法。但是无论哪种方式，都会走到mView.draw()方法，即DecorView.draw()方法。
 
 主要看看drawSoftWare方法吧
 
