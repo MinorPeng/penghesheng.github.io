@@ -2,7 +2,12 @@
 title: Linux学习(二)——shell编程
 tag: Linux
 date: 2018-03-26
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 # Linux学习(二)——shell编程
 

@@ -1,7 +1,12 @@
 ---
 title: Android ContentProvider相关总结
 tag: Android
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 # ContentProvider相关总结
 

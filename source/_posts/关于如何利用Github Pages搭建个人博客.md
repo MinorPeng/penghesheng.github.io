@@ -1,7 +1,12 @@
 ---
 title: 关于如何利用Github Pages搭建个人博客
 tag: other
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 ##### 前言
 

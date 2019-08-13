@@ -1,7 +1,12 @@
 ---
 title: Android Window源码分析——DecorView为例
 tag: Android
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 [TOC]
 

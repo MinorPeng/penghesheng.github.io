@@ -4,6 +4,8 @@ tag: Android
 date: 2019-06-02
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 
 
 # Android——Binder机制

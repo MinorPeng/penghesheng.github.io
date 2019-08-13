@@ -1,7 +1,12 @@
 ---
 title: Android实现滑动返回的几种方法总结
 tag: Android
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 # 关于Android实现滑动返回的几种方法总结
 

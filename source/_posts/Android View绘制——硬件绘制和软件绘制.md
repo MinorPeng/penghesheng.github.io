@@ -4,6 +4,8 @@ date: 2019-08-10
 tag: Android
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 
 
 # Android View绘制——硬件绘制和软件绘制

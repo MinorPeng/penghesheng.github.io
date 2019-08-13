@@ -4,6 +4,10 @@ tag: Android
 
 ---
 
+<meta name="referrer" content="no-referrer" />
+
+
+
 [TOC]
 
 # Service源码分析

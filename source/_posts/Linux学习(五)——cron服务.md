@@ -4,6 +4,10 @@ tag: Linux
 date: 2018-04-23
 ---
 
+<meta name="referrer" content="no-referrer" />
+
+
+
 # Linux学习(五)——cron服务
 
 **cron：**守护进程

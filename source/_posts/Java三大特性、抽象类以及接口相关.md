@@ -1,7 +1,12 @@
 ---
 title: Java三大特性、抽象类以及接口相关
 tag: Java
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 [TOC]
 
