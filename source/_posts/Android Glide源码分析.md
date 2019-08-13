@@ -490,7 +490,7 @@ private Request buildRequestRecursive(
 
 
 
-回到前面的into方法，得到了Request后，就会通过1`requestManager.track(target, request);`来执行这个Request
+回到前面的into方法，得到了Request后，就会通过`requestManager.track(target, request);`来执行这个Request
 
 ```java
 synchronized void track(@NonNull Target<?> target, @NonNull Request request) {
@@ -707,7 +707,7 @@ public synchronized <R> LoadStatus load(/**这里是参数，太多了*/) {
 
 ### 打开网络流
 
-在上一段内容中，我们知道了如果不能直接获取到结果，就会创建一个EngineJob和DecodeJob，将DecodeJob这个Runnable放到EngineJob的线程池中执行\
+在上一段内容中，我们知道了如果不能直接获取到结果，就会创建一个EngineJob和DecodeJob，将DecodeJob这个Runnable放到EngineJob的线程池中执行
 
 看看DecodeJob的run方法
 
@@ -1211,15 +1211,16 @@ private static Bitmap decodeStream(InputStream is, BitmapFactory.Options options
 
 
 
-### 将Drawable显示到ImageView上
-
-回到之前的DecodePath的decodefangfa
+回到之前的DecodePath的decode方法
 
 ```java
 public Resource<Transcode> decode(DataRewinder<DataType> rewinder, int width, int height,
                                   Options options, DecodeCallback<ResourceType> callback) throws GlideException {
+    //返回到这里来
     Resource<ResourceType> decoded = decodeResource(rewinder, width, height, options); // 1
+    //进行图片处理，如圆角等
     Resource<ResourceType> transformed = callback.onResourceDecoded(decoded); // 2
+    //这里会将处理后的Bitmap转为Drawable
     return transcoder.transcode(transformed, options); // 3
 }
 ```
@@ -1278,11 +1279,21 @@ public Resource<Transcode> decode(DataRewinder<DataType> rewinder, int width, in
 
 在上面的方法中对图形进行变换之后还会根据图片的缓存策略决定对图片进行缓存。然后这个方法就直接返回了我们变换之后的图象
 
-接着回到上一个的return：`return transcoder.transcode(transformed, options)`
+接着回到上一个的return：`return transcoder.transcode(transformed, options)`会返回`Resouces<BitmapDrawable>`对象，transcoder是`ResourceTranscoder<ResourceType, Transcode>`，那么我们这里就是一个BitmapDrawableTranscoder
 
-返回`Resouces<BitmapDrawable>`对象
+```java
+public Resource<BitmapDrawable> transcode(@NonNull Resource<Bitmap> toTranscode,
+                                          @NonNull Options options) {
+    //进行转换
+    return LazyBitmapDrawableResource.obtain(resources, toTranscode);
+}
+```
 
-然后就是不断向上 `return` 进行返回。所以，我们又回到了 `DecodeJob` 的 `decodeFromRetrievedData()` 方法
+通过BitmapDrawableTranscoder会返回一个`Resource<BitmapDrawable>`，也就是说这里就将Bitmap转换为了BitmapDrawable，然后一层一层返回
+
+### 将Drawable显示到ImageView上
+
+前面说到不断向上 `return` 进行返回。所以，我们又回到了 `DecodeJob` 的 `decodeFromRetrievedData()` 方法
 
 ```java
 private void decodeFromRetrievedData() {
