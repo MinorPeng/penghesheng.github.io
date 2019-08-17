@@ -2,7 +2,12 @@
 title: Linux学习(一)——常用命令
 tag: Linux
 date: 2018-04-18
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 # Linux学习(一)——常用命令
 

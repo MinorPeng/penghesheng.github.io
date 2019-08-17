@@ -1,7 +1,12 @@
 ---
 title: Android Broadcast相关总结
 tag: Android
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 # Broadcast相关总结
 

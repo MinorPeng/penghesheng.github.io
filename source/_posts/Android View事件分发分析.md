@@ -1,7 +1,12 @@
 ---
 title: Android View事件分发分析
 tag: Android
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 # View事件分发源码
 

@@ -1,7 +1,12 @@
 ---
 title: Java基本数据类型、String总结
 tag: Java
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 [TOC]
 

@@ -1,7 +1,12 @@
 ---
 title: Android Activity相关知识总结
 tag: Android 
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 [TOC]
 

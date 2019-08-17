@@ -1,7 +1,12 @@
 ---
 title: Android View系列(一)——View源码分析——DecorView
 tag: Android
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 [TOC]
 

@@ -4,6 +4,8 @@ date: 2019-08-11
 tag: Android
 ---
 
+<meta name="referrer" content="no-referrer" />
+
 
 
 # Android Glide源码分析（4.9.0）

@@ -1,7 +1,12 @@
 ---
 title: Java 泛型总结
 tag: Java
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 [TOC]
 

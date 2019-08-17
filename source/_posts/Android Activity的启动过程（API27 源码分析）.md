@@ -1,7 +1,12 @@
 ---
 title: Android Activity的启动过程（API27 源码分析）
 tag: Android
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 [TOC]
 

@@ -1,7 +1,12 @@
 ---
 title: Java序列化总结
 tag: Java
+
 ---
+
+<meta name="referrer" content="no-referrer" />
+
+
 
 [TOC]
 
