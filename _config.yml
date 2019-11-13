@@ -8,7 +8,8 @@ subtitle: PHS1024
 description: 黑色的眼睛在黑夜里前行
 keywords:
 author: PHS1024
-language: zh-CN
+# zh-CN
+language: zh-Hans
 timezone:
 
 # URL
@@ -74,7 +75,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next-7
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -82,3 +83,11 @@ deploy:
   type: git
   repo: git@github.com:PengHesheng/PengHesheng.github.io.git
   branch: master
+
+# Search
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 15
+  content: true
