@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] Java基本数据类型、String总结声明：部分面试题来自微信公众号码农每日一题 数据基本类型           内置数据类型 bit数 占用字节数 范围和默认值 封装类   byte 8 1 max：-2^7，min：2^7-1，默认值：0 Byte   short 16 2 max：-2^15，min：2^15，默认值：0 Short   int 32 4 max：-2^">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基本数据类型、String总结">
+<meta property="og:url" content="http://yoursite.com/2020/02/07/Java基本数据类型、String总结/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="[TOC] Java基本数据类型、String总结声明：部分面试题来自微信公众号码农每日一题 数据基本类型           内置数据类型 bit数 占用字节数 范围和默认值 封装类   byte 8 1 max：-2^7，min：2^7-1，默认值：0 Byte   short 16 2 max：-2^15，min：2^15，默认值：0 Short   int 32 4 max：-2^">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/11/162133576a03ec38?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-1e1434d621a9d331.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-9084ea13c1d09fd1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.286Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基本数据类型、String总结">
+<meta name="twitter:description" content="[TOC] Java基本数据类型、String总结声明：部分面试题来自微信公众号码农每日一题 数据基本类型           内置数据类型 bit数 占用字节数 范围和默认值 封装类   byte 8 1 max：-2^7，min：2^7-1，默认值：0 Byte   short 16 2 max：-2^15，min：2^15，默认值：0 Short   int 32 4 max：-2^">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/3/11/162133576a03ec38?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/07/Java基本数据类型、String总结/">
+
+
+
+
+
+  <title>Java基本数据类型、String总结 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/Java基本数据类型、String总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java基本数据类型、String总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<p>[TOC]</p>
+<h1 id="Java基本数据类型、String总结"><a href="#Java基本数据类型、String总结" class="headerlink" title="Java基本数据类型、String总结"></a>Java基本数据类型、String总结</h1><p><strong>声明</strong>：部分面试题来自微信公众号<strong>码农每日一题</strong></p>
+<h2 id="数据基本类型"><a href="#数据基本类型" class="headerlink" title="数据基本类型"></a>数据基本类型</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">内置数据类型</td>
+<td align="center">bit数</td>
+<td align="center">占用字节数</td>
+<td align="center">范围和默认值</td>
+<td align="center">封装类</td>
+</tr>
+<tr>
+<td align="center">byte</td>
+<td align="center">8</td>
+<td align="center">1</td>
+<td align="center">max：-2^7，min：2^7-1，默认值：0</td>
+<td align="center">Byte</td>
+</tr>
+<tr>
+<td align="center">short</td>
+<td align="center">16</td>
+<td align="center">2</td>
+<td align="center">max：-2^15，min：2^15，默认值：0</td>
+<td align="center">Short</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">32</td>
+<td align="center">4</td>
+<td align="center">max：-2^31，min：2^31-1，默认值：0</td>
+<td align="center">Integer</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">64</td>
+<td align="center">8</td>
+<td align="center">max：-2^63，min：2^63-1，默认值：0L</td>
+<td align="center">Long</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">32</td>
+<td align="center">4</td>
+<td align="center">单精度浮点数，默认值：0.0f</td>
+<td align="center">Float</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">64</td>
+<td align="center">8</td>
+<td align="center">双精度浮点数，浮点数的默认类型，默认值：0.0d</td>
+<td align="center">Double</td>
+</tr>
+<tr>
+<td align="center">boolean</td>
+<td align="center">8</td>
+<td align="center">1</td>
+<td align="center">只有true和false，默认值false</td>
+<td align="center">Boolean</td>
+</tr>
+<tr>
+<td align="center">char</td>
+<td align="center">16</td>
+<td align="center">2</td>
+<td align="center">max：\u0000 (0)，min：\uffff (65535)</td>
+<td align="center">Character</td>
+</tr>
+</tbody></table>
+<p><strong>自动类型转换优先级</strong> 参考<a href="http://www.runoob.com/java/java-basic-datatypes.html" target="_blank" rel="noopener">Java 基本数据类型</a><br>从低到高：byte，short，char -&gt; int -&gt; long -&gt; float -&gt; double<br>需要注意：</p>
+<blockquote>
+<ol>
+<li>不能对boolean类型进行转换</li>
+<li>不能把对象类型传换成不相关类的对象</li>
+<li>把容量大的类型转换为容量小的类型必须使用强制转换</li>
+<li>转换过程中可能会出现溢出或损失精度</li>
+<li>浮点数到整数的转换是通过舍弃小数得到的，而不是四舍五入</li>
+<li>强制类型转换的数据类型必须是兼容的</li>
+<li>隐含强制类型转换，整数的默认类型是int</li>
+</ol>
+</blockquote>
+<h3 id="相关面试题"><a href="#相关面试题" class="headerlink" title="相关面试题"></a>相关面试题</h3><ol>
+<li><p>int、char、long各占多少字节数<br> 如上表格：分别4、2、8</p>
+</li>
+<li><p>九种基本数据类型的大小，以及他们的封装类<br> 如上表，或者参考<a href="https://blog.csdn.net/rabbit_in_android/article/details/49793813" target="_blank" rel="noopener">九种基本数据类型，以及他们的封装类</a></p>
+<blockquote>
+<p>byte -&gt; Byte 1字节<br>short -&gt; Short 2字节<br>int -&gt; Integer 4字节<br>long -&gt; Long 8字节<br>float -&gt; Float 4字节<br>double -&gt; Double 8字节<br>boolean -&gt; Boolean 1字节<br>char -&gt; Character 2字节<br>void -&gt; Void 没有字节数</p>
+</blockquote>
+</li>
+<li><p>基本数据类型与对象的差别<br> 基本数据类型不是对象，也就是使用int、double、boolean等定义的变量、常量。<br> 基本数据类型没有可调用的方法。<br> 基本数据类型的值是直接保存在变量中，对象是引用类型，变量中保存的是实际对象的地址。参考<a href="https://www.jianshu.com/p/587625e390e1" target="_blank" rel="noopener">Java基本数据类型和引用类型的区别</a></p>
+<p> 赋值的区别：基本数据类型进行的赋值操作是复制、按值传递，修改一个的值不会影响另一个的值（赋值后是两个地址）；对象的赋值操作是引用，指向同一块地址，当其中一个对象进行修改后，修改的是地址里面的内容，另一个获取的内容也是修改后的。参考<a href="https://blog.csdn.net/xiongmaodeguju/article/details/54409495" target="_blank" rel="noopener">JAVA中基本数据类型的引用与对象赋值的区别</a></p>
+</li>
+<li><p>什么是自动装箱拆箱<br> 见下面</p>
+</li>
+<li><p>java 是否存在使得语句 i &gt; j || i &lt;= j 结果为 false 的 i、j 值<br> 存在，java 的数值 NaN 代表 not a number，无法用于比较，例如使 i = Double.NaN; j = i; 最后 i == j 的结果依旧为 false，</p>
+</li>
+<li><p>java 1.5 的自动装箱拆箱机制是编译特性还是虚拟机运行时特性？分别是怎么实现的？<br> 参考<a href="https://mp.weixin.qq.com/s/akaEG8SPwlyaF2eXY_-AUA" target="_blank" rel="noopener">Java 包装类型装箱拆箱基础面试题</a></p>
+</li>
+<li><p>java 的 switch 语句能否作用在 byte 类型变量上，能否作用在 long 类型变量上，能否作用在 String 类型变量上？<br> switch<strong>不支持</strong>long、boolean类型变量，支持byte、short、int、char、enum、Byte、Short、Integer、Character类型变量以及<strong>Java 1.7开始支持String类型</strong>。其中long类型的数据范围过大，大于int，会造成精度损失；byte范围小于int</p>
+<p> 原理：原来用在 switch 语句中的字符串被替换成了对应的哈希值，而 case 子句的值也被换成了原来字符串常量的哈希值。经过这样的转换，Java 虚拟机所看到的仍然是与整数类型兼容的类型。在这里值得注意的是，在 case 子句对应的语句块中仍然需要使用 String 的 equals 方法来进行字符串比较。这是因为哈希函数在映射的时候可能存在冲突，多个字符串的哈希值可能是一样的。进行字符串比较是为了保证转换之后的代码逻辑与之前完全一样。</p>
+</li>
+</ol>
+<ul>
+<li>byte、Byte</li>
+<li>long、Long</li>
+<li>boolean、Boolean</li>
+<li>int、Integer<ol>
+<li>int型几个字节<br> 4个</li>
+<li>int与Integer的区别<br> int是Java内置基本数据类型之一，Integer是int的封装类（包装类），int默认值为0，Integer默认值为null，Integer是一个类，可以new一个对象</li>
+<li>java 语句 Integer i = 1; i += 1; 做了哪些事情<br> Integer i = 1;这一句声明了一个了Integer的对象，并赋值为1，然后jdk会进行自动装箱，将1转换为一个Integer对象，调用Integer.valueOf(int i)<br> i += 1;这一句又进行了自动拆箱，由于i是一个对象引用，不能直接进行操作符运算，jdk会自动将i这个Integer对象拆箱为一个int值，其值为之前对象所拥有的值，然后将计算结果2赋值给i，由于i是一个Integer对象，2只是一个int型值，所以又会发生自动装箱，将2装进i这个对象引用</li>
+</ol>
+</li>
+<li>double、Double<ol>
+<li>能否在不进行强制转换的情况下将一个 double 值赋值给 long 类型的变量？<br> 不行，从自动转换的优先级 从低到高：byte，short，char -&gt; int -&gt; long -&gt; float -&gt; double可以知道，double类型的范围比long更大，大向小转换必须强制转换</li>
+<li>java 中 3*0.1 == 0.3 将会返回什么？true 还是 false<br> false，浮点数不能完全精确的表示出来，一般都会精度损失</li>
+</ol>
+</li>
+<li>float、Float<ol>
+<li>java 中 float f = 3.4; 是否正确？<br> 不正确，3.4是双精度数，float是单精度，属于向下转换，必须强制类型转换，或者3.4f（声明单精度浮点数）</li>
+</ol>
+</li>
+<li>char、Character<ol>
+<li>char占多少字节数<br> 2字节</li>
+<li>java 中 char 类型变量能不能储存一个中文的汉字，为什么？<br> 可以，char用于储存Unicode编码字符，Unicode字符集包含了汉字。但是有些生僻字不再Unicode字符集内，就不能储存。准确说Unicode包含了就可以存储。参考<a href="https://blog.csdn.net/lubiaopan/article/details/4714909" target="_blank" rel="noopener">Java:Unicode简介</a></li>
+</ol>
+</li>
+</ul>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><ol>
+<li><p>String 为什么要设计成不可变的？<br> （1）线程安全，不可变天生线程安全<br> （2）String常被用做HashMap的key，如果可变会引发安全性问题<br> （3）String常被用做数据库或接口的参数，可变会引发安全性问题<br> （4）通过字符串常量池可以节省空间，String值是储存在常量池中的<br> （5）每个String对应一个hashcode，再次使用不用重新计算，一定的性能优化</p>
+<p> <a href="https://user-gold-cdn.xitu.io/2018/3/11/162133576a03ec38?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" target="_blank" rel="noopener"><img src="https://user-gold-cdn.xitu.io/2018/3/11/162133576a03ec38?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="只改变引用"></a>只改变引用</p>
+<p> 为什么不可变？<br> （1）String类本身是final的，不可以被继承<br> （2）String类内部通过private final char value[]实现，从而保证了引用的不可变和对外的不可见<br> （3）String内部通过良好的封装，不去改变value数组的值</p>
+<p> 可以通过反射机制改变<br> 参考<a href="https://blog.csdn.net/zhangjg_blog/article/details/18319521" target="_blank" rel="noopener">Java中的String为什么是不可变的？ – String源码分析</a><a href="https://juejin.im/post/5aa1ee0c51882555677e2109" target="_blank" rel="noopener">String 为什么要设计成不可变的</a></p>
+</li>
+<li><p>String，Stringbuffer，Stringbuilder 区别<br> <a href="https://blog.csdn.net/kingzone_2008/article/details/9220691" target="_blank" rel="noopener">Java：String、StringBuffer和StringBuilder的区别</a><br> <a href="https://blog.csdn.net/rmn190/article/details/1492013" target="_blank" rel="noopener">String,StringBuffer与StringBuilder的区别??</a></p>
+</li>
+<li><p>switch能否用string做参数<br> Java1.7以前不可以，1.7开始就可以。</p>
+</li>
+<li><p>string to integer<br> 先转换为int，再装箱为Integer</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"123"</span>;</span><br><span class="line"><span class="keyword">int</span> i = Integer.parseInt(str);</span><br><span class="line"><span class="comment">//1.5后会自动装箱，或者Integer integer = new Integer(i);或者Integer integer = Integer.valueOf(i);</span></span><br><span class="line">Integer integer = i;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>String a=”abc”,String b = “abc”，创建了几个对象？<br> 一个对象，String a = “abc”创建一个对象在堆上，当执行String b = “abc”时，堆上已经有了”abc”这个对象，所以不会再新建，直接将b指向”abc”这个对象</p>
+</li>
+<li><p>简单说说 String 的 isEmpty() 与 null 与 “” 的区别<br> isEmpty()是JDK封装的方法，是字符串对象的方法，如果没有分配内存时（String s或String s = null），调用此方法会报空指针异常。值为空，变量是否被初始化<br> null是判断字符串有没有分配内存空间，字符串是否指向一个内存地址，对象为空，表示数据未知或不可用，一般用于判断是不是实例化对象<br> “”是一个有值的字符串，值比较特殊，是空字符串，但是有内存空间，有内存地址<br> <a href="https://upload-images.jianshu.io/upload_images/4061843-1e1434d621a9d331.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-1e1434d621a9d331.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png<br> <em>注意</em>：null+”abc”，结果为”nulabc”（原因可以看源码）</p>
+</li>
+<li><p>用 java 代码实现字符串的反转<br> （1）使用JDK中StringBuffer、StringBuidler的反转方法reverse</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">reverse</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> ((str == <span class="keyword">null</span>) || (str.length() &lt;= <span class="number">1</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> StringBuffer(str).reverse().toString();</span><br><span class="line">    <span class="comment">//return new StringBuilder(str).reverse().toString();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> （2）递归实现</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">reverse</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((str == <span class="keyword">null</span>) || (str.length() &lt;= <span class="number">1</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> reverse(str.substring(<span class="number">1</span>)) + str.charAt(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用 java 代码来检查输入的字符串是否回文（对称）<br> （1）JDK现有API</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    StringBuilder strBuilder = <span class="keyword">new</span> StringBuilder(str);</span><br><span class="line">    strBuilder.reverse();</span><br><span class="line">    <span class="keyword">return</span> strBuilder.toString.equals(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> （2）</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> length = str.length();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length / <span class="number">2</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (str.charAt(i) != str.charAt(length - i -<span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用 java 代码写一个方法从字符串中删除给定字符？</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">removeChar</span><span class="params">(String str, <span class="keyword">char</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> str.replaceAll(Character.toString(c), <span class="string">""</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>能不能继承String类<br>不能，String类是final修饰的，被final修饰的类是不能被继承的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt;, <span class="title">CharSequence</span> </span>&#123;</span><br><span class="line">    <span class="comment">//此处省略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>说说 String str = “hello world”; 和 String str = new String(“hello world”); 的区别？<br>String str = “hello world”在编译期间生成了字面常量和符号引用，在运行期间字面常量”hello world”被存储在运行时常量池（只保存一份），后面如果有再创建相同的字符串（比如String str1 = “hello world”）不会再重新创建，只会将新的引用指向它。<br>String str = new String(“hello world”)由于采用了new操作，所以每次new的时候都会产生一个新的对象，且new操作后，对象是放在堆内存中，每一个对象的地址都不同，哪怕是值相同（比如String str3 = new String(“hello world”)，str3与前面一个是不相同的两个对象）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String str = <span class="string">"hello world"</span>;</span><br><span class="line">    String str0 = <span class="string">"Hello world"</span>;</span><br><span class="line">    String str1 = <span class="string">"hello world"</span>;</span><br><span class="line">    String str2 = <span class="keyword">new</span> String(<span class="string">"hello world"</span>);</span><br><span class="line">    String str3 = <span class="keyword">new</span> String(<span class="string">"hello world"</span>);</span><br><span class="line">    <span class="comment">//==比较的是内存地址，String不是基本类型所以不是比较的值</span></span><br><span class="line">    System.out.println(str == str0);  <span class="comment">//值不同，内存地址也应不同，在常量池中</span></span><br><span class="line">    System.out.println(str == str1);  <span class="comment">//相同的常量池，两个引用却是一个值</span></span><br><span class="line">    System.out.println(str == str2);  <span class="comment">//一个在常量池，一个在堆内存，地址不同</span></span><br><span class="line">    System.out.println(str2 == str3);  <span class="comment">//new操作，地址不同</span></span><br><span class="line">    <span class="comment">//由于String类重写了equals方法，所以equals比较的是字符串内容（值）</span></span><br><span class="line">    System.out.println(str.equals(str0));  <span class="comment">//值不同</span></span><br><span class="line">    System.out.println(str.equals(str1));  <span class="comment">//值相同</span></span><br><span class="line">    System.out.println(str.equals(str2));  <span class="comment">//值相同</span></span><br><span class="line">    System.out.println(str2.equals(str3));  <span class="comment">//值相同</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<blockquote>
+<p>false<br>true<br>false<br>false<br>false<br>true<br>true<br>true</p>
+<p>Process finished with exit code 0</p>
+</blockquote>
+</li>
+<li><p>语句 String str = new String(“abc”); 一共创建了多少个对象？<br>运行期间，new操作只创建了一个堆上的“abc”对象；在类加载过程中在运行时常量池中会先创建一个“abc”对象；创建了两个String对象。一个是“abc”，一个是指向“abc”的str。问题存在歧义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考链接[请别再拿“String s = <span class="keyword">new</span> String(<span class="string">"xyz"</span>);创建了多少个String实例”来面试了吧](http:<span class="comment">//rednaxelafx.iteye.com/blog/774673/)</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="自动装箱拆箱"><a href="#自动装箱拆箱" class="headerlink" title="自动装箱拆箱"></a>自动装箱拆箱</h2><p>自动装箱拆箱是在Java 1.5开始引入</p>
+<ul>
+<li>自动装箱：在1.5开始后，可以直接对基本类型的封装类进行直接赋值，jdk会自动将其转换。Java自动将原始类型值转换成对应的对象</li>
+<li>自动拆箱：与装箱的过程正好相反，拆箱就是将对象转换为对应的原始类型</li>
+</ul>
+<p>例子1：参考<a href="https://blog.csdn.net/JairusChan/article/details/7513045" target="_blank" rel="noopener">Java自动装箱与拆箱及其陷阱</a><br>参考<a href="https://www.cnblogs.com/dolphin0520/p/3780005.html" target="_blank" rel="noopener">深入剖析Java中的装箱和拆箱</a><br>参考<a href="https://mp.weixin.qq.com/s/akaEG8SPwlyaF2eXY_-AUA" target="_blank" rel="noopener">Java 包装类型装箱拆箱基础面试题</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer i = <span class="number">100</span>;  <span class="comment">//自动装箱，Java 1.5开始</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = i;  <span class="comment">//自动拆箱，Java 1.5</span></span><br></pre></td></tr></table></figure>
+
+<p>自动装箱过程中，程序会自动执行Integer.valueOf(int i)这个方法，来进行new对象，实现了自动装箱<br>自动拆箱过程中，进行赋值的时候，程序会自动先执行Integer.intValue()方法，来实现拆箱</p>
+<p>装箱拆箱陷阱：<br><a href="https://upload-images.jianshu.io/upload_images/4061843-9084ea13c1d09fd1.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-9084ea13c1d09fd1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="会导致如此的原因跟源码很有关系"></a>会导致如此的原因跟源码很有关系</p>
+<ul>
+<li><p>基本数据类型的自动装箱拆箱源码：<br>  （1）Integer</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱，缓存-128~127的值。可能缓存除此外的值（new了一个新的Integer对象）</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">        <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//拆箱</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">intValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  （2）Byte</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Byte <span class="title">valueOf</span><span class="params">(<span class="keyword">byte</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> offset = <span class="number">128</span>;</span><br><span class="line">    <span class="keyword">return</span> ByteCache.cache[(<span class="keyword">int</span>)b + offset];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//拆箱</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">byte</span> <span class="title">byteValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  （3）Long</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱，类似Integer，在-128~127时会强转为int缓存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">valueOf</span><span class="params">(<span class="keyword">long</span> l)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> offset = <span class="number">128</span>;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= -<span class="number">128</span> &amp;&amp; l &lt;= <span class="number">127</span>) &#123; <span class="comment">// will cache</span></span><br><span class="line">        <span class="keyword">return</span> LongCache.cache[(<span class="keyword">int</span>)l + offset];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Long(l);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//拆箱</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">longValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  （4）Character</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱，ASCII码&lt;=127的时候一定缓存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Character <span class="title">valueOf</span><span class="params">(<span class="keyword">char</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (c &lt;= <span class="number">127</span>) &#123; <span class="comment">// must cache</span></span><br><span class="line">        <span class="keyword">return</span> CharacterCache.cache[(<span class="keyword">int</span>)c];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Character(c);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//拆箱</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">charValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  （5）Short</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱，类似Long</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Short <span class="title">valueOf</span><span class="params">(<span class="keyword">short</span> s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> offset = <span class="number">128</span>;</span><br><span class="line">    <span class="keyword">int</span> sAsInt = s;</span><br><span class="line">    <span class="keyword">if</span> (sAsInt &gt;= -<span class="number">128</span> &amp;&amp; sAsInt &lt;= <span class="number">127</span>) &#123; <span class="comment">// must cache</span></span><br><span class="line">        <span class="keyword">return</span> ShortCache.cache[sAsInt + offset];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Short(s);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//拆箱</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">short</span> <span class="title">shortValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  （6）Double</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱，直接new了一个对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Double <span class="title">valueOf</span><span class="params">(<span class="keyword">double</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Double(d);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//拆箱</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">doubleValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  （7）Float</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装箱，类似Double，直接new了一个对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Float <span class="title">valueOf</span><span class="params">(<span class="keyword">float</span> f)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Float(f);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">floatValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  （8）String</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类似Double、Float，直接new对象，但是没怎么看懂String的拆箱（没找到）</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(<span class="keyword">char</span> data[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> String(data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><em>一个简单的总结</em>：
+Integer、Byte、Short、Long、Character五者的装箱拆箱过程基本差不多，出来Byte装箱不需要做判断，其余4个都需要判断是直接缓存还是new一个新的对象，缓存的时候对值有一定的要求；Double、Float没有对值进行判断，直接new了一个对象；String放在一起，它的装箱也有点类似Double</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/07/Java反射、注解总结/" rel="next" title="Java反射、注解总结">
+                <i class="fa fa-chevron-left"></i> Java反射、注解总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/07/Java基础总结/" rel="prev" title="Java基础总结">
+                Java基础总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java基本数据类型、String总结"><span class="nav-number">1.</span> <span class="nav-text">Java基本数据类型、String总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据基本类型"><span class="nav-number">1.1.</span> <span class="nav-text">数据基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关面试题"><span class="nav-number">1.1.1.</span> <span class="nav-text">相关面试题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-number">1.2.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动装箱拆箱"><span class="nav-number">1.3.</span> <span class="nav-text">自动装箱拆箱</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Linux学习(一)——常用命令常用命令：  su：切换到超级用户su -user：切换到user   mysql -uroot -p：连接本地数据库   chmod：权限管理a-x  go+wa：all   g：group  o：other  u：user   who am i：用户身份who：查看登录用户useradd userName：新建用户passwd userName：添加密码">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux学习(一)——常用命令">
+<meta property="og:url" content="http://yoursite.com/2018/04/18/Linux学习(一)——常用命令/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="Linux学习(一)——常用命令常用命令：  su：切换到超级用户su -user：切换到user   mysql -uroot -p：连接本地数据库   chmod：权限管理a-x  go+wa：all   g：group  o：other  u：user   who am i：用户身份who：查看登录用户useradd userName：新建用户passwd userName：添加密码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.293Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux学习(一)——常用命令">
+<meta name="twitter:description" content="Linux学习(一)——常用命令常用命令：  su：切换到超级用户su -user：切换到user   mysql -uroot -p：连接本地数据库   chmod：权限管理a-x  go+wa：all   g：group  o：other  u：user   who am i：用户身份who：查看登录用户useradd userName：新建用户passwd userName：添加密码">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/18/Linux学习(一)——常用命令/">
+
+
+
+
+
+  <title>Linux学习(一)——常用命令 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/Linux学习(一)——常用命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux学习(一)——常用命令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-18T00:00:00+08:00">
+                2018-04-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<h1 id="Linux学习-一-——常用命令"><a href="#Linux学习-一-——常用命令" class="headerlink" title="Linux学习(一)——常用命令"></a>Linux学习(一)——常用命令</h1><p>常用命令：</p>
+<blockquote>
+<p>su：切换到超级用户<br>su -user：切换到user</p>
+</blockquote>
+<blockquote>
+<p>mysql -uroot -p：连接本地数据库</p>
+</blockquote>
+<blockquote>
+<p>chmod：权限管理<br>a-x  go+w<br>a：all   g：group  o：other  u：user</p>
+</blockquote>
+<blockquote>
+<p>who am i：用户身份<br>who：查看登录用户<br>useradd userName：新建用户<br>passwd userName：添加密码<br>userdel userName：删除用户<br>groupadd groupName：新建组<br>groupdel groupName：删除组</p>
+</blockquote>
+<blockquote>
+<p>netstat -a：查看网络联机状态<br>ps -aux：查看后台执行的程序<br>ps -e | grep ssh：查看运行的进程</p>
+</blockquote>
+<blockquote>
+<p>sync：将数据同步到硬盘中<br>shutdown -h n：n分钟后关机<br>shutdown -r n：n分钟后重启<br>reboot：重庆<br>halt：关闭系统</p>
+</blockquote>
+<blockquote>
+<p>重定向：&gt; 直接覆盖文件， &gt;&gt; 在文件末尾追加</p>
+</blockquote>
+<blockquote>
+<p>安装apt-get install</p>
+</blockquote>
+<blockquote>
+<p>pwd：显示当前目录</p>
+</blockquote>
+<blockquote>
+<p>ls：显示当前目录内容</p>
+<p>-a：显示所有文件和目录，不含隐藏文件<br>-l：详细信息<br>-r：文件以相反次序显示<br>-t：按时间顺序<br>-A：不列出.开头，其余同-a<br>-F：列出文件名称后加一符号<br>-R：将目录下的文件也列出</p>
+</blockquote>
+<blockquote>
+<p>mkdir：创建目录</p>
+<p>-p：确定目录名称存在，不存在就新建一个</p>
+</blockquote>
+<blockquote>
+<p>rm：删除目录（所有使用者）</p>
+<p>-i：删除前逐一确<br>-f：不确认，直接删除<br>-r：将目录及目录下的文件逐一删除</p>
+<p>rmdir：（当前目录有权限的所有者）</p>
+<p>-p：子目录删除后为空也删除</p>
+</blockquote>
+<blockquote>
+<p>cat：查看文件</p>
+<p>-n：对行数编号<br>-b：空白行不编号<br>-s：连续两行以上的空白行为一行输出<br>-v：</p>
+</blockquote>
+<blockquote>
+<p>more：查看文件</p>
+<p>-num：一次显示的行数<br>-d：提示使用者<br>-l：取消遇见字符元^L会暂停的功能<br>-f：计算实际行数<br>-p：不以卷动的方式显示每一页，而是先清除荧幕后再显示内容<br>-c：跟 -p 相似，不同的是先显示内容再清除其他旧资料<br>-s：当遇到有连续两行以上的空白行，就代换为一行的空白行<br>-u：不显示下引号 （根据环境变数 TERM 指定的 terminal 而有所不同）<br>+/：在每个文件显示前搜寻该字串（pattern），然后从该字串之后开始显示<br>+num：从第 num 行开始显示<br>fileNames：欲显示内容的文件，可为复数个数 </p>
+</blockquote>
+<blockquote>
+<p>less：查看文件（几乎和more一样）<br>允许用户向前向后翻阅文件</p>
+</blockquote>
+<blockquote>
+<p>head：查看文件的头几行</p>
+<p>-n：行数</p>
+</blockquote>
+<blockquote>
+<p>tail：查看尾部</p>
+<p>-n：行数<br>-f：动态显示，常用语跟踪消息文件</p>
+</blockquote>
+<blockquote>
+<p>touch：新建空文件</p>
+<p>-a：改变文件的读取时间记录<br>-m：改变文件的修改时间记录<br>-c：目的文件不存在不会新建文件<br>-f：不使用<br>-r：使用参考文件的时间记录<br>-d：设定时间与日期<br>-t：设定文件的时间记录<br>-no-create：不会建立新文件<br>–version：版本信息</p>
+</blockquote>
+<blockquote>
+<p>cp：拷贝</p>
+<p>-a：尽可能照原状进行复制<br>-r：将目录下的文件依序拷贝<br>-f：若相同文件存在，则先删除再复制</p>
+</blockquote>
+<blockquote>
+<p>mv：移动文件</p>
+<p>-i：若有同名文件，则先询问是否覆盖</p>
+</blockquote>
+<blockquote>
+<p>ln：文件链接</p>
+<p>-f：链结时先将与连结相同文件名的文件删除<br>-d：允许系统管理着硬链结自己的目录<br>-i：在删除与连结相同文件名的文件时先进行询问<br>-n：在进行软连结时，将dist视为一般文件<br>-s：进行软链结<br>-v：在连结之前显示其文件名<br>-b：将在链结时会被覆写或删除的文件进行备份<br>-S SUFFIX：将备份的文件都加上SUFFIX的字尾<br>-V MEHOD：指定备份的方式</p>
+</blockquote>
+<blockquote>
+<p>?：通配符，可代替单个字符<br>*：任意字符<br>[charset]：charset集中的任何单个字符</p>
+</blockquote>
+<blockquote>
+<p>whereis：查找文件（在特定的目录中查找符合条件的文件：原始代码、二进制文件、帮组文件）</p>
+<p>-b：只查找二进制文件<br>-B&lt;目录&gt;：只在设置的目录下查找二进制文件<br>-f：不显示文件名前的路径名称<br>-m：只查找说明文件<br>-M&lt;目录&gt;：只在设置的目录下查找说明文件<br>-s：值查找原始代码文件<br>-S&lt;目录&gt;：只在设置的目录下查找原始代码文件<br>-u：查找不包含指定类型的文件</p>
+</blockquote>
+<blockquote>
+<p>which：查找文件（在环境变量$PATH设置的目录查找符合条件的文件）</p>
+<p>-n&lt;文件名长度&gt;：指定文件名长度，必须&gt;=所有文件中最长的文件名<br>-p&lt;文件名长度&gt;：包括了文件的路径<br>-w：指定输出时栏位的宽度<br>-V：显示版本信息</p>
+</blockquote>
+<blockquote>
+<p>find：查找文件</p>
+<p>-mount、-xdev：只检查和指定目录在同一个文件系统下的文件，避免列出其他文件系统的文件<br>-amin n：在过去n分钟内被读取过<br>-anewer file：比文件file更晚被读取过的文件<br>-atime n：在过去n天读取过的文件<br>-cmin n：在过去n分钟内被修改过<br>-cnewer file：比文件file更行的文件<br>-ctime n：在过去 n天修改过的文件<br>-empty：空的文件-gid n or -group name :  gid 是n或是group名称是name<br>-print：find命令将匹配的文件输出到标准输出<br>-ipath p：路径名称符合p的文件，ipath会忽略大小写<br>-name name，-iname name：文件名称符合name的文件，iname会忽略大小写<br>-size n：文件大小是n单位，本代表512为元组的区块，c表示字元数，k表示kilo bytes，w是二个未元组。 -type c：文件类型是c<br>d：目录<br>c：字型装置文件<br>b：区块装置文件<br>p：具名贮列<br>f：一般文件<br>l：符号链接<br>s：socket<br>-pid n：process id是n的文件</p>
+</blockquote>
+<blockquote>
+<p>Locate：查找符合条件的文件（使用者可以很快速的搜寻文件系统内是否有指定的文件）</p>
+<p>-u：建立数据库时，由根目录开始<br>-U<dir>：建立数据库时，可以指定开始的位置<br>-e<dir>：将<dir>排除在外<br>-l<level>：如果<level>是 1，则启动安全模式，安全模式下使用者不会看到权限和文件<br>-f<filetype>：将特定的文件系统排除在外<br>-q：安静模式，不会显示任何错误信息<br>-n：至多显示n个输出<br>-r：使用正规运算式做寻找的条件<br>-o：指定数据库存的名称<br>-d：指定数据库的路径<br>-h：显示辅助讯息<br>-v：显示更多的讯息<br>-V：版本信息</filetype></level></level></dir></dir></dir></p>
+</blockquote>
+<blockquote>
+<p>grep：查找，它能使用正则表达式搜索文本，并把匹配的行打印出来。<br>查询vsftpd软件包是否安装</p>
+<pre><code>#rpm –qa |grep vsftpd</code></pre></blockquote>
+<blockquote>
+<p>tar：压缩命令</p>
+<p>-c或：create   建立新的备份文件。<br>-C&lt;目的目录&gt;或： directory=&lt;目的目录&gt;  切换到指定的目录。<br>-f&lt;备份文件&gt;或： file=&lt;备份文件&gt;   指定备份文件。<br>-k或：keep-old-files   解开备份文件时，不覆盖已有的文件。<br>-l或：one-file-system   复制的文件或目录存放的文件系统，必须与tar指令执行时所处的文件系统相同，否则不予复制。<br>-m或：modification-time   还原文件时，不变更文件的更改时间。<br>-t或：list   列出备份文件的内容。<br>-u或：update   仅置换较备份文件内的文件更新的文件。<br>-U或：unlink-first   解开压缩文件还原文件之前，先解除文件的连接。<br>-v或：verbose   显示指令执行过程。<br>-x或–extract或—get：从备份文件中还原文件。<br>-z或–gzip或—ungzip：通过gzip指令处理备份文件。</p>
+</blockquote>
+<blockquote>
+<p>gzip：压缩</p>
+<p>-c 将输出写到标准输出上，并保留原有文件。<br>-d 将压缩文件解压。<br>-l 对每个压缩文件，显示下列字段：<br>压缩文件的大小；未压缩文件的大小；压缩比；未压缩文件的名字<br>-r 递归式地查找指定目录并压缩其中的所有文件或者是解压缩。<br>-t 测试，检查压缩文件是否完整。<br>-v 对每一个压缩和解压的文件，显示文件名和压缩比。<br>-num 用指定的数字 num 调整压缩的速度，-1 或 –fast 表示最快压缩方法（低压缩比）。<br>-9 或–best表示最慢压缩方法（高压缩比）。系统缺省值为 6。</p>
+</blockquote>
+<blockquote>
+<p>gunzip：解压文件</p>
+<p>-a或–ascii：使用ASCII文字模式。<br>-c或–stdout或–to-stdout：把解压后的文件输出到标准输出设备。<br>-f或-force：强行解开压缩文件，不理会文件名称或硬连接是否存在及该文件是否为符号连接。<br>-h或–help：在线帮助。<br>-l或–list：列出压缩文件的相关信息。<br>-L或–license：显示版本和版权信息。<br>-n或–no-name：解压缩时，若压缩文件内含有远来的文件名称及时间戳记，则将其忽略不予处理。<br>-N或–name：解压缩时，若压缩文件内含有原来的文件名称及时间戳记，则将其回存到解开的文件上。<br>-q或–quiet：不显示警告信息。<br>-r或–recursive：递归处理，将指定目录下的所有文件及子目录一并处理。<br>-S或–suffix：更改压缩字尾字符串。<br>-t或–test：测试压缩文件是否正确无误。<br>-v或–verbose：显示指令执行过程。<br>-V或–version 显示版本信息。</p>
+</blockquote>
+<blockquote>
+<p>–zip：压缩文件</p>
+<p>-A：调整可执行的自动解压缩文件。<br>-b&lt;工作目录&gt;：指定暂时存放文件的目录<br>-c：替每个被压缩的文件加上注释<br>-d：从压缩文件内删除指定的文件。<br>-D：压缩文件内不建立目录名称。<br>-f：此参数的效果和指定”-u”参数类似，但不仅更新既有文件，如果某些文件原本不存在于压缩文件内，使用本参数会一并将其加入压缩文件中。<br>-F：尝试修复已损坏的压缩文件。<br>-g：将文件压缩后附加在既有的压缩文件之后，而非另行建立新的压缩文件。<br>-h：在线帮助。<br>-i&lt;范本样式&gt;：只压缩符合条件的文件。<br>-j：只保存文件名称及其内容，而不存放任何目录名称。<br>-J：删除压缩文件前面不必要的数据。<br>-k：使用MS-DOS兼容格式的文件名称。<br>-l：压缩文件时，把LF字符置换成LF+CR字符。<br>-ll：压缩文件时，把LF+CR字符置换成LF字符。<br>-L：显示版权信息。<br>-m   将文件压缩并加入压缩文件后，删除原始文件，即把文件移到压缩文件中。<br>-n&lt;字尾字符串&gt;   不压缩具有特定字尾字符串的文件<br>-o   以压缩文件内拥有最新更改时间的文件为准，将压缩文件的更改时间设成和该文件相同。<br>-q   不显示指令执行过程<br>-r   递归处理，将指定目录下的所有文件和子目录一并处理<br>-S   包含系统和隐藏文件<br>-t&lt;日期时间&gt;   把压缩文件的日期设成指定的日期<br>-T   检查备份文件内的每个文件是否正确无误。<br>-u   更换较新的文件到压缩文件内。<br>-v   显示指令执行过程或显示版本信息。<br>-V   保存VMS操作系统的文件属性。<br>-w   在文件名称里假如版本编号，本参数仅在VMS操作系统下有效。<br>-x&lt;范本样式&gt;   压缩时排除符合条件的文件。<br>-X   不保存额外的文件属性。<br>-y   直接保存符号连接，而非该连接所指向的文件，本参数仅在UNIX之类的系统下有效。<br>-z   替压缩文件加上注释<br>-$   保存第一个被压缩文件所在磁盘的卷册名称。</p>
+</blockquote>
+<blockquote>
+<p>unzip：解压zip文件</p>
+<p>-c   将解压缩的结果显示到屏幕上，并对字符做适当的转换。<br>-f   更新现有的文件。<br>-l   显示压缩文件内所包含的文件。<br>-p   与-c参数类似，会将解压缩的结果显示到屏幕上，但不会执行任何的转换。<br>-t   检查压缩文件是否正确。<br>-u   与-f参数类似，但是除了更新现有的文件外，也会将压缩文件中的其他文件解压缩到目录中。<br>-v   执行是时显示详细的信息。<br>-z   仅显示压缩文件的备注文字。<br>-a   对文本文件进行必要的字符转换。<br>-b   不要对文本文件进行字符转换。<br>-C   压缩文件中的文件名称区分大小写。<br>-j   不处理压缩文件中原有的目录路径。<br>-L   将压缩文件中的全部文件名改为小写。<br>-M   将输出结果送到more程序处理。<br>-n   解压缩时不要覆盖原有的文件。<br>-o   不必先询问用户，unzip执行后覆盖原有文件。<br>-P&lt;密码&gt;   使用zip的密码选项。<br>-q   执行时不显示任何信息。<br>-s   将文件名中的空白字符转换为底线字符。<br>-V   保留VMS的文件版本信息。<br>-X   解压缩时同时回存文件原来的UID/GID。<br>[.zip文件]   指定.zip压缩文件。<br>[文件]   指定要处理.zip压缩文件中的哪些文件。<br>-d&lt;目录&gt;  指定文件解压缩后所要存储的目录。<br>-x&lt;文件&gt;  指定不要处理.zip压缩文件中的哪些文件。<br>-Z   unzip -Z等于执行zipinfo指令。 </p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/16/Linux学习(三)——GCC、GDB调试/" rel="next" title="Linux学习(三)——GCC编程、GDB调试">
+                <i class="fa fa-chevron-left"></i> Linux学习(三)——GCC编程、GDB调试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/23/Linux学习(五)——cron服务/" rel="prev" title="Linux学习(五)——cron服务">
+                Linux学习(五)——cron服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux学习-一-——常用命令"><span class="nav-number">1.</span> <span class="nav-text">Linux学习(一)——常用命令</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

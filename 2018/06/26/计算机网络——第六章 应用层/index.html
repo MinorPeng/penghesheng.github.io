@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="计算机网络,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="计算机网络——第六章 应用层域名系统DNSUDP   四种域名服务器：  根域名服务器1、所有的根域名服务器都知道所有的顶级域名服务器的域名和IP2、只要本地域名服务器无法自己解析，就求助根域名服务器，根域名服务器使用迭代查询后，把要找的顶级域名服务器的IP告诉本地服务器自己查询3、13个不同IP的根域名服务器，a~m  顶级域名服务器1、负责管理在该顶级域名服务器注册的所有二级域名2、当">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络——第六章 应用层">
+<meta property="og:url" content="http://yoursite.com/2018/06/26/计算机网络——第六章 应用层/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="计算机网络——第六章 应用层域名系统DNSUDP   四种域名服务器：  根域名服务器1、所有的根域名服务器都知道所有的顶级域名服务器的域名和IP2、只要本地域名服务器无法自己解析，就求助根域名服务器，根域名服务器使用迭代查询后，把要找的顶级域名服务器的IP告诉本地服务器自己查询3、13个不同IP的根域名服务器，a~m  顶级域名服务器1、负责管理在该顶级域名服务器注册的所有二级域名2、当">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-d3a8f9684bba3bee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-d90dd883202b227f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-feefc6a887445c1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-4332d9ab207727f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-98fdce7e2af3c058.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-6dc6c6c768aa57b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-d7902f55efac6d68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-f08e0dcfe9ee1eb6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机网络——第六章 应用层">
+<meta name="twitter:description" content="计算机网络——第六章 应用层域名系统DNSUDP   四种域名服务器：  根域名服务器1、所有的根域名服务器都知道所有的顶级域名服务器的域名和IP2、只要本地域名服务器无法自己解析，就求助根域名服务器，根域名服务器使用迭代查询后，把要找的顶级域名服务器的IP告诉本地服务器自己查询3、13个不同IP的根域名服务器，a~m  顶级域名服务器1、负责管理在该顶级域名服务器注册的所有二级域名2、当">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/4061843-d3a8f9684bba3bee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/26/计算机网络——第六章 应用层/">
+
+
+
+
+
+  <title>计算机网络——第六章 应用层 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/26/计算机网络——第六章 应用层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机网络——第六章 应用层</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T00:00:00+08:00">
+                2018-06-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<h1 id="计算机网络——第六章-应用层"><a href="#计算机网络——第六章-应用层" class="headerlink" title="计算机网络——第六章 应用层"></a>计算机网络——第六章 应用层</h1><h3 id="域名系统DNS"><a href="#域名系统DNS" class="headerlink" title="域名系统DNS"></a>域名系统DNS</h3><p>UDP<br><img src="https://upload-images.jianshu.io/upload_images/4061843-d3a8f9684bba3bee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4061843-d90dd883202b227f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4061843-feefc6a887445c1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br><img src="https://upload-images.jianshu.io/upload_images/4061843-4332d9ab207727f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><strong>四种域名服务器：</strong></p>
+<ul>
+<li><p>根域名服务器<br>1、所有的根域名服务器都知道所有的顶级域名服务器的域名和IP<br>2、只要本地域名服务器无法自己解析，就求助根域名服务器，根域名服务器使用迭代查询后，把要找的顶级域名服务器的IP告诉本地服务器自己查询<br>3、13个不同IP的根域名服务器，a~m</p>
+</li>
+<li><p>顶级域名服务器<br>1、负责管理在该顶级域名服务器注册的所有二级域名<br>2、当收到DNS查询请求时，就给出回答：可能是最后的结果，也可能是下一步要找的域名服务器的IP</p>
+</li>
+<li><p>权限域名服务器<br>1、负责一个区的域名服务器<br>2、当一个权限域名服务器还不能给出最后的查询回答时，就会告诉发出查询请求的 DNS 客户，下一步应当找哪一个权限域名服务器。</p>
+</li>
+<li><p>本地域名服务器<br>1、当一个主机发出 DNS 查询请求时，这个查询请求报文就发送给本地域名服务器,也称为默认域名服务器<br>2、每一个因特网服务提供者 ISP，或一个大学，甚至一个大学里的系，都可以拥有一个本地域名服务器。</p>
+</li>
+</ul>
+<p><strong>域名解析基本原理：</strong><br>1、将域名转换为对应的IP地址的过程称为域名解析<br>2、完成该功能的软件叫域名解析器;<br>3、每个本地域名服务器配置一个域名解析器软件<br>4、由于每个服务器都知道根服务器的地址，因此无论经过几步查询，在域名树中最终总会找出正确的解析结果</p>
+<p><strong>解析步骤：</strong><br>1、请求本地域名服务器（本地查询采用递归）<br>2、本地域名服务器请求根域名服务器<br>3、根域名服务器返回要查找的顶级域名服务器和其IP（根域名服务器采用迭代）<br>4、本地域名服务器根据返回的顶级域名服务器IP，请求对应的顶级域名服务器<br>5、顶级域名服务器若不直接返回IP，便返回下一个查找的域名服务器和其IP<br>6、本地域名服务器根据返回的IP查找下一个域名服务器，重复，最后返回IP</p>
+<hr>
+<h3 id="文件传送协议FTP"><a href="#文件传送协议FTP" class="headerlink" title="文件传送协议FTP"></a>文件传送协议FTP</h3><p>TCP<br>（1）主进程打开熟知端口（21），使客户进程能连接<br>（2）等待客户进程发出连接请求<br>（3）启动从属进程处理请求<br>（4）回到等待状态<br><img src="https://upload-images.jianshu.io/upload_images/4061843-98fdce7e2af3c058.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>TFTP：</strong>简单文件传送协议<br>UDP<br><strong>特点：</strong><br>（1）每次传送的数据报文中有512字节的数据，最后一次可以不足512<br>（2）数据报文按序编号，从1开始<br>（3）支持ASCII码或二进制传送<br>（4）可对文件进行读或写<br>（5）使用简单的首部</p>
+<hr>
+<h3 id="远程终端协议TELNET"><a href="#远程终端协议TELNET" class="headerlink" title="远程终端协议TELNET"></a>远程终端协议TELNET</h3><p>类似于远程终端控制，又称终端仿真协议<br>TCP连接</p>
+<hr>
+<h3 id="万维网WWW"><a href="#万维网WWW" class="headerlink" title="万维网WWW"></a>万维网WWW</h3><p>分布式超媒体(hypermedia)系统，它是超文本(hypertext)系统的扩充</p>
+<ul>
+<li><p><strong>工作方式：</strong><br>1、万维网以客户服务器方式工作。<br>2、浏览器就是在用户计算机上的万维网客户程序。万维网文档所驻留的计算机则运行服务器程序，因此这个计算机也称为万维网服务器。<br>3、客户程序向服务器程序发出请求，服务器程序向客户程序送回客户所要的万维网文档。<br>4、在一个客户程序主窗口上显示出的万维网文档称为页面(page)<br><img src="https://upload-images.jianshu.io/upload_images/4061843-6dc6c6c768aa57b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+</li>
+<li><p><strong>必须解决的问题：</strong><br>1、怎样标志分布在整个因特网上的万维网文档？<br>（1）使用统一资源定位符 URL (Uniform Resource Locator)来标志万维网上的各种文档。<br>（2）使每一个文档在整个因特网的范围内具有唯一的标识符 URL。<br>（3）也被称为网页地址(web地址),万维网联盟编制为因特网标准RFC1738。</p>
+</li>
+</ul>
+<p>2、用何协议实现万维网上各种超链的链接？<br>（1）在万维网客户程序与万维网服务器程序之间进行交互所使用的协议，是超文本传送协议 HTTP (HyperText Transfer Protocol)。<br>（2）HTTP 是一个应用层协议，它使用 TCP 连接进行可靠的传送</p>
+<p>3、怎样使各种万维网文档都能在因特网上的各种计算机上显示出来，同时使用户清楚地知道在什么地方存在着超链？<br>（1）超文本标记语言 HTML (HyperText Markup Language)使得万维网页面的设计者可以很方便地用一个超链从本页面的某处链接到因特网上的任何一个万维网页面，并且能够在自己的计算机屏幕上将这些页面显示出来。<br>4、怎样使用户能够很方便地找到所需的信息？<br>（1）为了在万维网上方便地查找信息，用户可使用各种的搜索工具（即搜索引擎）</p>
+<ul>
+<li><strong>URL</strong><br>统一资源定位符</li>
+</ul>
+<p><em>组成：</em><br>1、第一部分是协议（或称为服务方式）</p>
+<blockquote>
+<p>（1）file 资源是本地计算机上的文件。格式file://<br>（2）ftp 通过 FTP访问资源。格式 FTP:// gopher 通过 Gopher 协议访问该资源。<br>（3）http 通过 HTTP 访问该资源。 格式 HTTP://<br>https 通过安全的 HTTPS 访问该资源。 格式 HTTPS://<br>（4）mailto 资源为电子邮件地址，通过 SMTP 访问。 格式 mailto:<br>MMS 通过 支持MMS（流媒体）协议的播放该资源。（代表软件：Windows Media Player）格式 MMS://<br>ed2k 通过 支持ed2k（专用下载链接）协议的P2P软件访问该资源。（代表软件：电驴） 格式 ed2k://<br>（5）Flashget通过 支持Flashget:（专用下载链接）协议的P2P软件访问该资源。（代表软件：快车） 格式 Flashget://<br>（6）thunder 通过 支持thunder（专用下载链接）协议的P2P软件访问该资源。（代表软件：迅雷） 格式 thunder://<br>（7）news 通过 NNTP 访问该资源。 tencent(通过支持tencent(专用聊天连接) 协议和用户对话。(代表软件：QQ、TM)格式 tencent://message/?uin=号码&amp;Site=&amp;Menu=yes<br>msnim 通过支持msnim(专用聊天连接) 协议和用户对话。(代表软件：MSN、WLM) 格式 （8）msnim:chat?contact=邮箱地址</p>
+</blockquote>
+<p>2、第二部分是存有该资源的主机域名或IP地址（有时也包括端口号，没有端口号时其端口号为第一部分的协议所分的端口号，即默认端口号）<br>3、第三部分是主机资源的具体地址。如目录和文件名等。<br>4、第一部分和第二部分之间用“：//”符号隔开，第二部分和第三部分用“/”符号隔开。第一部分和第二部分是不可缺少的，第三部分有时可以省略。</p>
+<ul>
+<li><strong>HTTP：</strong><br>超文本传输协议，面向事务的应用层协议<br>TCP<br><img src="https://upload-images.jianshu.io/upload_images/4061843-d7902f55efac6d68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></li>
+</ul>
+<p><strong>持续连接的两种方式：</strong><br>1、非流水线方式：客户在收到前一个响应后才能发出下一个请求。这比非持续连接的两倍 RTT 的开销节省了建立 TCP 连接所需的一个 RTT 时间。但服务器在发送完一个对象后，其 TCP 连接就处于空闲状态，浪费了服务器资源<br>2、流水线方式：客户在收到 HTTP 的响应报文之前就能够接着发送新的请求报文。一个接一个的请求报文到达服务器后，服务器就可连续发回响应报文。使用流水线方式时，客户访问所有的对象只需花费一个 RTT时间，使 TCP 连接中的空闲时间减少，提高了下载文档效率<br><img src="https://upload-images.jianshu.io/upload_images/4061843-f08e0dcfe9ee1eb6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<hr>
+<h3 id="电子邮件协议SMTP"><a href="#电子邮件协议SMTP" class="headerlink" title="电子邮件协议SMTP"></a>电子邮件协议SMTP</h3><p>TCP</p>
+<p>邮件发送协议SMTP，读取协议邮局协议POP3或网际报文存取协议IMAP</p>
+<hr>
+<h3 id="各种地址标识"><a href="#各种地址标识" class="headerlink" title="各种地址标识"></a>各种地址标识</h3><p>（1）web地址：标识因特网上不同的网页；<br>（2）域名：用名字标识因特网上不同的服务器或主机等，方便记忆；<br>（3）端口号：区分不同的应用进程。<br>（4）IP地址：用数字串标识因特网上不同的主机或路由器端口等，路由器寻址必须使用。<br>（5）插口地址：IP地址加端口号，通过（源IP地址+源端口号,目的IP地址+目的端口号）可以在整个因特网上唯一的区分每一对应用进程之间的通信关系<br>（6）MAC地址：物理地址，交换机或网桥会根据目的MAC地址转发数据，接收方根据目的MAC地址判断是否接收，是自己的才会收下来处理并上交给网络层</p>
+<ul>
+<li><strong>关系：</strong><br>（1）根据Web地址，可以得到服务器的域名或IP地址和目的端口号<br>（2）由域名，通过DNS系统查询，可以得到服务器的IP地址（目的IP地址）<br>（3）由目的IP地址，可以判断是否与源主机是同一网络：<br>a）如果是，由ARP缓存和ARP协议可以得出目的主机的MAC地址（即目的MAC地址），可直接交付；<br>b）如果不是，则由ARP缓存和ARP协议可以得到默认网关的MAC地址，再由默认网关间接交付。<br>（4）由（ IP地址+端口号）可以得到插口地址，进而可以唯一确定在整个因特网上每一对应用进程之间的通信关系（源IP地址+源端口号,目的IP地址+目的端口号）</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/25/Linux学习(八)——线程操作/" rel="next" title="Linux学习(八)——线程操作">
+                <i class="fa fa-chevron-left"></i> Linux学习(八)——线程操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/29/Android View系列(三)——LinearLayout源码分析/" rel="prev" title="Android View系列(三)——LinearLayout源码分析">
+                Android View系列(三)——LinearLayout源码分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机网络——第六章-应用层"><span class="nav-number">1.</span> <span class="nav-text">计算机网络——第六章 应用层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#域名系统DNS"><span class="nav-number">1.0.1.</span> <span class="nav-text">域名系统DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件传送协议FTP"><span class="nav-number">1.0.2.</span> <span class="nav-text">文件传送协议FTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程终端协议TELNET"><span class="nav-number">1.0.3.</span> <span class="nav-text">远程终端协议TELNET</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#万维网WWW"><span class="nav-number">1.0.4.</span> <span class="nav-text">万维网WWW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电子邮件协议SMTP"><span class="nav-number">1.0.5.</span> <span class="nav-text">电子邮件协议SMTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各种地址标识"><span class="nav-number">1.0.6.</span> <span class="nav-text">各种地址标识</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

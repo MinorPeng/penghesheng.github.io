@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android第三方框架,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] Android RxJava2源码浅析（2.2.8）介绍一些类介绍：  Observable：abstract class，被观察者，被订阅者，数据源，上游 Observer：interface，观察者，订阅者，下游，数据接收处理的地方 ObservableSource：interface，抽象订阅的接口，每一个Observable都实现了这个接口，可以将它和Observabl">
+<meta name="keywords" content="Android第三方框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android RxJava2源码浅析">
+<meta property="og:url" content="http://yoursite.com/2019/06/11/Android RxJava2源码分析/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="[TOC] Android RxJava2源码浅析（2.2.8）介绍一些类介绍：  Observable：abstract class，被观察者，被订阅者，数据源，上游 Observer：interface，观察者，订阅者，下游，数据接收处理的地方 ObservableSource：interface，抽象订阅的接口，每一个Observable都实现了这个接口，可以将它和Observabl">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190611174554298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190611180410578.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190611182202538.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.276Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android RxJava2源码浅析">
+<meta name="twitter:description" content="[TOC] Android RxJava2源码浅析（2.2.8）介绍一些类介绍：  Observable：abstract class，被观察者，被订阅者，数据源，上游 Observer：interface，观察者，订阅者，下游，数据接收处理的地方 ObservableSource：interface，抽象订阅的接口，每一个Observable都实现了这个接口，可以将它和Observabl">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190611174554298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/11/Android RxJava2源码分析/">
+
+
+
+
+
+  <title>Android RxJava2源码浅析 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/11/Android RxJava2源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android RxJava2源码浅析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-11T09:21:00+08:00">
+                2019-06-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<p>[TOC]</p>
+<h1 id="Android-RxJava2源码浅析（2-2-8）"><a href="#Android-RxJava2源码浅析（2-2-8）" class="headerlink" title="Android RxJava2源码浅析（2.2.8）"></a>Android RxJava2源码浅析（2.2.8）</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>一些类介绍：</p>
+<ul>
+<li>Observable：abstract class，被观察者，被订阅者，数据源，上游</li>
+<li>Observer：interface，观察者，订阅者，下游，数据接收处理的地方</li>
+<li>ObservableSource：interface，抽象订阅的接口，每一个Observable都实现了这个接口，可以将它和Observable同样看待</li>
+<li>ObservableOnSubscribe：interface，描述订阅的过程，实现这个subscribe方法进行发送数据，生产数据</li>
+<li>ObservableEmitter：interface，抽象的被订阅者发射器</li>
+<li>Emitter：interface，公用的抽象发射器，共有的API</li>
+<li>ObservableCreate：class，Observable的实例，继承自Observable，也就是一个Observable对象，可以说是原始的Observable对象，持有ObservableOnSubscribe，一个普通的使用可以通过它走完流程（即上游数据到下游数据）</li>
+<li>CreateEmitter：class，ObservableCreate的一个内部类，继承自AtomicReference，实现了ObservableEmitter和Disposable，真正的一个数据发射器，持有外部的observer对象</li>
+<li>AtomicReference：class，对象引用的自动原子更新</li>
+<li>Disposable：interface，描述数据的是否处置</li>
+<li>QueueDisposable：interface，队列形式的Disposable</li>
+<li>ObservableMap：class，继承自AbstractObservableWithUpstream，也是一个Observable，map的Observable，使用map的时候，则是包装了这层Observable来进行数据转换处理</li>
+<li>AbstractObservableWithUpstream：abstract class，继承自Observable，持有了上一级的Observable对象（也就是ObservableSource）</li>
+<li>MapObserver：class，继承自BasicFuseableObserver，是一个Observer，map的Observer，在onNext中通过mapper进行数据转换</li>
+<li>Function：interface，map使用的一个抽象接口</li>
+<li>BasicFuseableObserver：abstract class，实现了Observer和QueueDisposable，持有了下一级的observer对象</li>
+<li>ObservableSubscribeOn：class，继承自AbstractObservableWithUpstream，持有上一级的Observable和Scheduler，进行线程调度，订阅的Observable</li>
+<li>SubscribeOnObserver：class，继承自AtomicReference，实现了Observer和Disposable，线程调度具体实现地方，订阅的Observer</li>
+<li>SubscribeTask：class，就是一个Runnable，通过SubscribeOnObserver中的Scheduler去执行，run方法中就是订阅，只有第一次订阅才有效</li>
+<li>ObservableObserveOn：class，继承自AbstractObservableWithUpstream，持有上一级的Observable和线程调度的Scheduler，订阅者的Observable，每一次订阅都有效</li>
+<li>ObserveOnObserver：class，继承自BasicIntQueueDisposable，实现了Observer和Runnable，订阅者的Observer，Scheduler执行的就是它</li>
+</ul>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p><strong>简单使用</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        emitter.onNext(<span class="number">1</span>);</span><br><span class="line">        emitter.onNext(<span class="number">2</span>);</span><br><span class="line">        emitter.onNext(<span class="number">3</span>);</span><br><span class="line">        emitter.onComplete();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">    .map(<span class="keyword">new</span> Function&lt;Integer, String&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (integer.equals(<span class="number">1</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"Observable1 map"</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (integer.equals(<span class="number">2</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"Observable2 map"</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"Observable3 map"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .subscribeOn(Schedulers.io())</span><br><span class="line">    .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">    .subscribe(<span class="keyword">new</span> Observer&lt;String&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这是一个简单的使用例子，创建Observable，发送了三个Integer（1，2，3），通过Map将数据进行了一次转换，转为String，在IO线程发送，在UI线程消费，在Observer中接收事件</p>
+<p>整体来说，整个操作流程大致分为以下几步</p>
+<ul>
+<li>create：创建Observable，在上游来发送数据</li>
+<li>map：不是必须的一步，转换数据，这个放在后面分析</li>
+<li>subscribeOn：订阅线程，上游发送数据所在的线程</li>
+<li>observeOn：消费线程，下游接收数据所在的线程</li>
+<li>subscribe：订阅，关联起来</li>
+</ul>
+<h3 id="create"><a href="#create" class="headerlink" title="create"></a>create</h3><p>（<strong>这里分析的是最原始的，没有map操作，也没有线程切换</strong>）</p>
+<p>先看看<code>Observable</code>的创建，在使用中，我们通常是通过匿名实现<code>ObservableOnSubscribe</code>来创建的，看看<code>Observable</code>中的create方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Observable&lt;T&gt; <span class="title">create</span><span class="params">(ObservableOnSubscribe&lt;T&gt; source)</span> </span>&#123;</span><br><span class="line">    ObjectHelper.requireNonNull(source, <span class="string">"source is null"</span>);</span><br><span class="line">    <span class="keyword">return</span> RxJavaPlugins.onAssembly(<span class="keyword">new</span> ObservableCreate&lt;T&gt;(source));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们new出的ObservableOnSubscribe就是我们的数据源，也就是上游，在create方法中先是对null进行了判断，不能为空；接着就直接返回了<code>RxJavaPlugins.onAssembly(new ObservableCreate&lt;T&gt;(source))</code></p>
+<p>RxJavaPlugins是RxJava中的一个工具类，用来注入一些RxJava操作，我们的Observable（被观察者）就是通过它来创建的，跟进去看看</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Observable&lt;T&gt; <span class="title">onAssembly</span><span class="params">(@NonNull Observable&lt;T&gt; source)</span> </span>&#123;</span><br><span class="line">    Function&lt;? <span class="keyword">super</span> Observable, ? extends Observable&gt; f = onObservableAssembly;</span><br><span class="line">    <span class="keyword">if</span> (f != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> apply(f, source);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> source;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个关于hook的方法，关于hook我们暂且不表，不影响主流程，我们默认使用中都没有hook，所以这里就是直接返回source，也就是我们前面创建的对象<code>new ObservableCreate&lt;T&gt;(source)</code></p>
+<p>先好好看看这个，从<code>create()</code>方法的返回值，我们需要的<code>Observable</code>对象，但这里返回的是根据<code>ObservableOnSubscribe</code>创建的<code>ObservableCreate</code>对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ObservableCreate</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Observable</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ObservableOnSubscribe&lt;T&gt; source;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ObservableCreate</span><span class="params">(ObservableOnSubscribe&lt;T&gt; source)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.source = source;</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ObservableCreate</code>就是<code>Observable</code>的一个实现类，持有了<code>ObservableOnSubscribe</code>这个<code>source</code>，关于<code>ObservableCreate</code>就先看这么多，后面还会再看这个的</p>
+<p>下面再看看<code>ObservableOnSubscribe</code>这个是什么</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ObservableOnSubscribe</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;T&gt; emitter)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就是一个接口，内部定义了<code>subscribe()</code>方法，那再看看这个<code>ObservableEmitter</code>又是什么，从这里的注释可以知道它是一个发射器，用来抽象上关联<code>Observable</code>和<code>Observer</code>的，我们发射数据也是通过它来及进行的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ObservableEmitter</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Emitter</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setDisposable</span><span class="params">(@Nullable Disposable d)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setCancellable</span><span class="params">(@Nullable Cancellable c)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isDisposed</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function">ObservableEmitter&lt;T&gt; <span class="title">serialize</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">tryOnError</span><span class="params">(@NonNull Throwable t)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ObservableEmitter</code>又是继承自<code>Emitter</code>，同时自己也实现了一些API</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Emitter</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onNext</span><span class="params">(@NonNull T value)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onError</span><span class="params">(@NonNull Throwable error)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Emitter</code>是一个公用的一个接口，定义了几个方法来标识一种状态（信号），这里面的几个API我们常用到，特别是在下游消费事件的时候</p>
+<p><code>create()</code>方法我们先就看这么多，通过create方法得到了<code>ObservableCreate</code>对象</p>
+<h3 id="subsribe"><a href="#subsribe" class="headerlink" title="subsribe"></a>subsribe</h3><p>接着我们看如何进行订阅接收数据的</p>
+<p>通过<code>subscribe(Observer&lt;T&gt; observer)</code>方法来进行订阅，在Observer中接收数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(Observer&lt;? <span class="keyword">super</span> T&gt; observer)</span> </span>&#123;</span><br><span class="line">    ObjectHelper.requireNonNull(observer, <span class="string">"observer is null"</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        observer = RxJavaPlugins.onSubscribe(<span class="keyword">this</span>, observer);</span><br><span class="line"></span><br><span class="line">        ObjectHelper.requireNonNull(observer, <span class="string">"The RxJavaPlugins.onSubscribe hook returned a null Observer. Please change the handler provided to RxJavaPlugins.setOnObservableSubscribe for invalid null returns. Further reading: https://github.com/ReactiveX/RxJava/wiki/Plugins"</span>);</span><br><span class="line"></span><br><span class="line">        subscribeActual(observer);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NullPointerException e) &#123; <span class="comment">// NOPMD</span></span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">        Exceptions.throwIfFatal(e);</span><br><span class="line">        RxJavaPlugins.onError(e);</span><br><span class="line">        NullPointerException npe = <span class="keyword">new</span> NullPointerException(<span class="string">"Actually not, but can't throw other exceptions due to RS"</span>);</span><br><span class="line">        npe.initCause(e);</span><br><span class="line">        <span class="keyword">throw</span> npe;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样，先是null检查，然后可能会抛出的一些异常捕获；</p>
+<p>然后主要看看try语句块中的：<code>observer = RxJavaPlugins.onSubscribe(this, observer);</code>也是通过<code>RxJavaPlugins</code>来进行一个关于hook的处理，如果没有hook，其实返回的就是传入的observer；然后就是再一次null检查，接着就调用了<code>subscribeActual(observer);</code>方法</p>
+<p><code>subscribeActual()</code>方法是一个抽象方法，需要靠子类去实现，那么前面<code>Observable</code>的创建，得到的<code>Observable</code>对象实际是<code>ObservableCreate</code></p>
+<p>那就看看<code>ObservableCreate</code>中的<code>subscribeActual()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">subscribeActual</span><span class="params">(Observer&lt;? <span class="keyword">super</span> T&gt; observer)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//创建CreateEmitter实例</span></span><br><span class="line">    CreateEmitter&lt;T&gt; parent = <span class="keyword">new</span> CreateEmitter&lt;T&gt;(observer);</span><br><span class="line">    observer.onSubscribe(parent);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//将ObservableOnSubscribe（上游）与CreateEmitter（Observer，下游）关联起来</span></span><br><span class="line">        source.subscribe(parent);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">        Exceptions.throwIfFatal(ex);</span><br><span class="line">        <span class="comment">//错误回调</span></span><br><span class="line">        parent.onError(ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先创建了<code>CreateEmitter</code>对象，这是<code>ObservableCreate</code>的一个静态内部类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateEmitter</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">AtomicReference</span>&lt;<span class="title">Disposable</span>&gt; <span class="keyword">implements</span> <span class="title">ObservableEmitter</span>&lt;<span class="title">T</span>&gt;, <span class="title">Disposable</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">        <span class="keyword">final</span> Observer&lt;? <span class="keyword">super</span> T&gt; observer;</span><br><span class="line"></span><br><span class="line">    CreateEmitter(Observer&lt;? <span class="keyword">super</span> T&gt; observer) &#123;</span><br><span class="line">        <span class="keyword">this</span>.observer = observer;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>CreateEmitter</code>继承自<code>AtomicReference</code>（一个可以通过原子方式来进行自动更新的类，<strong>对象引用的自动原子更新</strong>），实现了<code>ObservableEmitter</code>（这个在<code>Observable</code>的创建中我们提到过）和<code>Disposable</code>（用来描述资源是否被处置）</p>
+<p>回到前面的<code>subscribeActual()</code>方法</p>
+<p>接着通过<code>observer</code>回调了<code>onSubscribe(parent)</code>方法，这个参数就是刚new出的CreateEmitter（实现了Disposable）；然后通过<code>source</code>调用了<code>subscribe()</code>方法，这个<code>source</code>就是我们创建<code>ObservableCreate</code>时传入的<code>ObservableOnSubscribe</code>，也就是我们在代码里写的<code>ObservableOnSubscribe</code>，那么这里就是回调到了我们外面的<code>ObservableOnSubscribe</code>的<code>subscribe()</code>方法，这样就上游发射、下游接收就关联起来了</p>
+<p>然后我们看看数据是怎么进行发射和接收的</p>
+<p>在代码中，我们在<code>ObservableOnSubscribe</code>的<code>subscribe()</code>方法中进行数据的发射</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">emitter.onNext(<span class="number">1</span>);</span><br><span class="line">emitter.onNext(<span class="number">2</span>);</span><br><span class="line">emitter.onNext(<span class="number">3</span>);</span><br><span class="line">emitter.onComplete();</span><br></pre></td></tr></table></figure>
+
+<p>比如我们通过发射器<code>ObservableEmitter</code>发射了1、2、3三个整型，这个<code>ObservableEmitter</code>就是前面创建的<code>CreateEmitter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (t == <span class="keyword">null</span>) &#123;</span><br><span class="line">        onError(<span class="keyword">new</span> NullPointerException(<span class="string">"onNext called with null. Null values are generally not allowed in 2.x operators and sources."</span>));</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!isDisposed()) &#123;</span><br><span class="line">        observer.onNext(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对数据进行一个null检查，同时有<code>Disposable</code>来监控一个取消的状态，当还没有处理的时候，就直接通过<code>Observer</code>的<code>onNext()</code>进行回调了</p>
+<p>其他的onError、onComplete等都是一样的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!tryOnError(t)) &#123;</span><br><span class="line">        RxJavaPlugins.onError(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryOnError</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (t == <span class="keyword">null</span>) &#123;</span><br><span class="line">        t = <span class="keyword">new</span> NullPointerException(<span class="string">"onError called with null. Null values are generally not allowed in 2.x operators and sources."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!isDisposed()) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            observer.onError(t);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            dispose();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isDisposed()) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            observer.onComplete();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            dispose();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dispose</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    DisposableHelper.dispose(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isDisposed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> DisposableHelper.isDisposed(get());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在调用<code>onError()</code>或者<code>onComplete()</code>方法后，都会调用<code>dispose();</code>，来中断后续的操作了</p>
+<p>基本上每个操作API都会用到<code>isDisposed()</code>来进行判断，我们就好好看看这个怎么来判断的</p>
+<p>首先看看<code>DisposableHelper</code>这个类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> DisposableHelper implements Disposable &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The singleton instance representing a terminal, disposed state, don't leak it.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    DISPOSED</span><br><span class="line">    ;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个枚举类，拥有自身的单例，同时实现了Disposable</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isDisposed</span><span class="params">(Disposable d)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> d == DISPOSED;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">dispose</span><span class="params">(AtomicReference&lt;Disposable&gt; field)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//1 通过断点查看，默认情况下,field的值是"null"，并非引用是null哦！大坑大坑大坑</span></span><br><span class="line">    <span class="comment">//但是current是null引用</span></span><br><span class="line">    Disposable current = field.get();</span><br><span class="line">    Disposable d = DISPOSED;</span><br><span class="line">    <span class="comment">//2 null不等于DISPOSED</span></span><br><span class="line">    <span class="keyword">if</span> (current != d) &#123;</span><br><span class="line">        <span class="comment">//3 field是DISPOSED了，current还是null</span></span><br><span class="line">        current = field.getAndSet(d);</span><br><span class="line">        <span class="keyword">if</span> (current != d) &#123;</span><br><span class="line">            <span class="comment">//4 默认情况下 走不到这里，这里是在设置了setCancellable()后会走到。</span></span><br><span class="line">            <span class="keyword">if</span> (current != <span class="keyword">null</span>) &#123;</span><br><span class="line">                current.dispose();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>isDisposed()</code>就是简单的比较引用是否相同</p>
+<p><code>dispose()</code>方法，这个通过把当前的<code>CreateEmitter</code>（继承自<code>AtomicReference</code>）传入，进行dispose（这里就直接看<a href="https://blog.csdn.net/zxt0601" target="_blank" rel="noopener">张旭童</a>的<a href="https://blog.csdn.net/zxt0601/article/details/61614799" target="_blank" rel="noopener">RxJava2 源码解析（一）</a>中引用的部分了）</p>
+<p>又出现了<code>AtomicReference</code>，简单说一下相关的API吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回当前的引用。</span></span><br><span class="line"><span class="function">V <span class="title">get</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">//如果当前值与给定的expect引用相等，（注意是引用相等而不是equals()相等），更新为指定的update值。</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(V expect, V update)</span></span></span><br><span class="line"><span class="function"><span class="comment">//原子地设为给定值并返回旧值。</span></span></span><br><span class="line"><span class="function">V <span class="title">getAndSet</span><span class="params">(V newValue)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>好了，自此我们就在下游获取到了数据</p>
+<h3 id="subscribeOn"><a href="#subscribeOn" class="headerlink" title="subscribeOn"></a>subscribeOn</h3><p>接着我们加上线程切换来看看是怎么回事</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.subscribeOn(Schedulers.io())</span><br></pre></td></tr></table></figure>
+
+<p>这是订阅的线程，跟进去看看</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Observable&lt;T&gt; <span class="title">subscribeOn</span><span class="params">(Scheduler scheduler)</span> </span>&#123;</span><br><span class="line">    ObjectHelper.requireNonNull(scheduler, <span class="string">"scheduler is null"</span>);</span><br><span class="line">    <span class="keyword">return</span> RxJavaPlugins.onAssembly(<span class="keyword">new</span> ObservableSubscribeOn&lt;T&gt;(<span class="keyword">this</span>, scheduler));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>检查null，然后同样是<code>RxJavaPlugins</code>就不再多说，返回的就是<code>ObservableSubscribeOn</code>对象，看看类的继承结构</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ObservableSubscribeOn</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractObservableWithUpstream</span>&lt;<span class="title">T</span>, <span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractObservableWithUpstream</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; <span class="keyword">extends</span> <span class="title">Observable</span>&lt;<span class="title">U</span>&gt; <span class="keyword">implements</span> <span class="title">HasUpstreamObservableSource</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从这里可以知道，<code>ObservableSubscribeOn</code>也是一个<code>Observable</code>对象</p>
+<p>接着看看它的构造方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ObservableSubscribeOn</span><span class="params">(ObservableSource&lt;T&gt; source, Scheduler scheduler)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(source);</span><br><span class="line">    <span class="keyword">this</span>.scheduler = scheduler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用super方法，传入了source，在其父类<code>AbstractObservableWithUpstream</code>中只是简单的持有了source这个对象，也就是说<code>ObservableSubscribeOn</code>持有了上一次的<code>Observable</code>对象（也是<code>ObservableSource</code>，前面说过它们的关系）和线程调度器<code>Scheduler</code></p>
+<p>然后我们就接着看是怎么订阅上的，最后subscribe的时候，同普通的时候一样，会调用<code>subscribeActual(observer);</code>方法，但这里就不是<code>ObservableCreate</code>中的了，而是<code>ObservableSubscribeOn</code>中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribeActual</span><span class="params">(<span class="keyword">final</span> Observer&lt;? <span class="keyword">super</span> T&gt; observer)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> SubscribeOnObserver&lt;T&gt; parent = <span class="keyword">new</span> SubscribeOnObserver&lt;T&gt;(observer);</span><br><span class="line">    <span class="comment">//回调方法，传入上一级的observer onSubscribe()方法执行在 订阅处所在的线程</span></span><br><span class="line">    observer.onSubscribe(parent);</span><br><span class="line">    <span class="comment">//线程的处理 setDisposable()是为了将子线程的操作加入Disposable管理中</span></span><br><span class="line">    parent.setDisposable(scheduler.scheduleDirect(<span class="keyword">new</span> SubscribeTask(parent)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个方法中，创建了<code>SubscribeOnObserver</code>（也是一个<code>Observer</code>对象），这个类是对传入的<code>observer</code>进行一个持有</p>
+<p>然后创建了<code>SubscribeTask</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">SubscribeTask</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SubscribeOnObserver&lt;T&gt; parent;</span><br><span class="line"></span><br><span class="line">    SubscribeTask(SubscribeOnObserver&lt;T&gt; parent) &#123;</span><br><span class="line">        <span class="keyword">this</span>.parent = parent;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//这里就进行了真正的订阅</span></span><br><span class="line">        source.subscribe(parent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就是一个Runnable，持有<code>SubscribeOnObserver</code>对象，进行了真正的订阅</p>
+<p>然后将<code>SubscribeTask</code>传到了<code>scheduler</code>的<code>scheduleDirect()</code>方法，就是去执行<code>SubscribeOnObserver</code>中的代码，这样就做到了线程的调度</p>
+<p>如此，我们的订阅的流程都是在我们所指定的<code>scheduler</code>中执行了</p>
+<p>然后我们看看<code>SubscribeOnObserver</code>中的<code>onNext()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span> </span>&#123;</span><br><span class="line">    downstream.onNext(t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">    downstream.onError(t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    downstream.onComplete();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，不管是<code>onNext()</code>、<code>onError()</code>还是<code>onComplete()</code>，都是直接通过downstream（这里就是我们设置的observer）直接回调了</p>
+<h3 id="observeOn"><a href="#observeOn" class="headerlink" title="observeOn"></a>observeOn</h3><p><code>observeOn()</code>大致思想都差不多，只不过这里是消费的线程了（订阅者）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Observable&lt;T&gt; <span class="title">observeOn</span><span class="params">(Scheduler scheduler)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> observeOn(scheduler, <span class="keyword">false</span>, bufferSize());</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Observable&lt;T&gt; <span class="title">observeOn</span><span class="params">(Scheduler scheduler, <span class="keyword">boolean</span> delayError, <span class="keyword">int</span> bufferSize)</span> </span>&#123;</span><br><span class="line">    ObjectHelper.requireNonNull(scheduler, <span class="string">"scheduler is null"</span>);</span><br><span class="line">    ObjectHelper.verifyPositive(bufferSize, <span class="string">"bufferSize"</span>);</span><br><span class="line">    <span class="keyword">return</span> RxJavaPlugins.onAssembly(<span class="keyword">new</span> ObservableObserveOn&lt;T&gt;(<span class="keyword">this</span>, scheduler, delayError, bufferSize));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接返回了<code>ObservableObserveOn</code>对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ObservableObserveOn</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractObservableWithUpstream</span>&lt;<span class="title">T</span>, <span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Scheduler scheduler;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> delayError;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> bufferSize;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ObservableObserveOn</span><span class="params">(ObservableSource&lt;T&gt; source, Scheduler scheduler, <span class="keyword">boolean</span> delayError, <span class="keyword">int</span> bufferSize)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//同样保留上一次的Observable——ObservableSource</span></span><br><span class="line">        <span class="keyword">super</span>(source);</span><br><span class="line">        <span class="keyword">this</span>.scheduler = scheduler;</span><br><span class="line">        <span class="keyword">this</span>.delayError = delayError;</span><br><span class="line">        <span class="keyword">this</span>.bufferSize = bufferSize;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>订阅的时候</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">subscribeActual</span><span class="params">(Observer&lt;? <span class="keyword">super</span> T&gt; observer)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (scheduler <span class="keyword">instanceof</span> TrampolineScheduler) &#123;</span><br><span class="line">        source.subscribe(observer);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//1 创建出一个 主线程的Worker	</span></span><br><span class="line">        Scheduler.Worker w = scheduler.createWorker();</span><br><span class="line">        <span class="comment">//2 订阅上游数据源</span></span><br><span class="line">        source.subscribe(<span class="keyword">new</span> ObserveOnObserver&lt;T&gt;(observer, w, delayError, bufferSize));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样也是创建了一个<code>Observer</code>，不过这里的<code>Observer</code>是<code>ObserveOnObserver</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ObserveOnObserver</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">BasicIntQueueDisposable</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Observer</span>&lt;<span class="title">T</span>&gt;, <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="comment">//下游的观察者</span></span><br><span class="line">    <span class="keyword">final</span> Observer&lt;? <span class="keyword">super</span> T&gt; downstream;</span><br><span class="line">    <span class="comment">//对应Scheduler里的Worker</span></span><br><span class="line">    <span class="keyword">final</span> Scheduler.Worker worker;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> delayError;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> bufferSize;</span><br><span class="line">    <span class="comment">//上游被观察者 push 过来的数据都存在这里</span></span><br><span class="line">    SimpleQueue&lt;T&gt; queue;</span><br><span class="line">    Disposable upstream;</span><br><span class="line">    <span class="comment">//如果onError了，保存对应的异常</span></span><br><span class="line">    Throwable error;</span><br><span class="line">    <span class="comment">//是否完成</span></span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">boolean</span> done;</span><br><span class="line">    <span class="comment">//是否取消</span></span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">boolean</span> disposed;</span><br><span class="line">    <span class="comment">// 代表同步发送 异步发送 </span></span><br><span class="line">    <span class="keyword">int</span> sourceMode;</span><br><span class="line">    <span class="keyword">boolean</span> outputFused;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来简单分析几个API</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (DisposableHelper.validate(<span class="keyword">this</span>.upstream, d)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.upstream = d;</span><br><span class="line">        <span class="keyword">if</span> (d <span class="keyword">instanceof</span> QueueDisposable) &#123;</span><br><span class="line">            ...</span><br><span class="line">                <span class="comment">//同步</span></span><br><span class="line">                <span class="keyword">if</span> (m == QueueDisposable.SYNC) &#123;</span><br><span class="line">                    ...</span><br><span class="line">                &#125;</span><br><span class="line">            <span class="comment">//异步</span></span><br><span class="line">            <span class="keyword">if</span> (m == QueueDisposable.ASYNC) &#123;</span><br><span class="line">                ...</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//创建一个queue 用于保存上游 onNext() push的数据</span></span><br><span class="line">        queue = <span class="keyword">new</span> SpscLinkedArrayQueue&lt;T&gt;(bufferSize);</span><br><span class="line">        <span class="comment">//回调下游观察者onSubscribe方法</span></span><br><span class="line">        downstream.onSubscribe(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>onSubscribe()</code>多了同步异步的判断和处理，同时创建了queue来保存上游的<code>onNext()</code>发送的数据</p>
+<p>再看看<code>onNext()</code>等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (done) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//如果数据源类型不是异步的， 默认不是</span></span><br><span class="line">    <span class="keyword">if</span> (sourceMode != QueueDisposable.ASYNC) &#123;</span><br><span class="line">        <span class="comment">//将上游push过来的数据 加入 queue里</span></span><br><span class="line">        queue.offer(t);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//开始进入对应Workder线程，在线程里 将queue里的t 取出 发送给下游Observer</span></span><br><span class="line">    schedule();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (done) &#123;</span><br><span class="line">        RxJavaPlugins.onError(t);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    error = t;</span><br><span class="line">    done = <span class="keyword">true</span>;</span><br><span class="line">    schedule();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (done) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    done = <span class="keyword">true</span>;</span><br><span class="line">    schedule();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>都会判断是否完成，调用<code>onError()</code>和<code>onComplete()</code>都会让done置为true，然后都会调用<code>schedule()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">schedule</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getAndIncrement() == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//该方法需要传入一个线程， 注意看本类实现了Runnable的接口，所以查看对应的run()方法</span></span><br><span class="line">        worker.schedule(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//默认false</span></span><br><span class="line">    <span class="keyword">if</span> (outputFused) &#123;</span><br><span class="line">        drainFused();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//取出queue里的数据 发送</span></span><br><span class="line">        drainNormal();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>drainNormal()</code>来进行数据发送</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drainNormal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> missed = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">final</span> SimpleQueue&lt;T&gt; q = queue;</span><br><span class="line">    <span class="keyword">final</span> Observer&lt;? <span class="keyword">super</span> T&gt; a = downstream;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="comment">//如果已经 终止 或者queue空，则跳出函数</span></span><br><span class="line">        <span class="keyword">if</span> (checkTerminated(done, q.isEmpty(), a)) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="keyword">boolean</span> d = done;</span><br><span class="line">            T v;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//从queue里取出一个值</span></span><br><span class="line">                v = q.poll();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">                ...</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">boolean</span> empty = v == <span class="keyword">null</span>;</span><br><span class="line">            <span class="comment">//再次检查 是否 终止  如果满足条件 跳出函数</span></span><br><span class="line">            <span class="keyword">if</span> (checkTerminated(d, empty, a)) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//上游还没结束数据发送，但是这边处理的队列已经是空的，不会push给下游 Observer</span></span><br><span class="line">            <span class="keyword">if</span> (empty) &#123;</span><br><span class="line">                <span class="comment">//仅仅是结束这次循环，不发送这个数据而已，并不会跳出函数</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//发送给下游</span></span><br><span class="line">            a.onNext(v);</span><br><span class="line">        &#125;</span><br><span class="line">		...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法主要就是死循环，不断从队列中取，然后进行null检查已经检查是否种植，发送给下游，回调</p>
+<h3 id="map操作符"><a href="#map操作符" class="headerlink" title="map操作符"></a>map操作符</h3><p>得到了<code>ObservableCreate</code>对象后，在其<code>subscribe()</code>方法发送数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">emitter.onNext(<span class="number">1</span>);</span><br><span class="line">emitter.onNext(<span class="number">2</span>);</span><br><span class="line">emitter.onNext(<span class="number">3</span>);</span><br><span class="line">emitter.onComplete();</span><br></pre></td></tr></table></figure>
+
+<p>接着，我们可以选择使用map操作符，来对数据进行一个转换操作（这是RxJava非常强大的地方之一了）</p>
+<p>使用的时候，主要是创建了Function来做这个数据如何变换，在<code>apply()</code>方法中会接收到前面发送的数据，这个时候我们就可以进行对应的数据转换操作了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.map(<span class="keyword">new</span> Function&lt;Integer, String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (integer.equals(<span class="number">1</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Observable1 map"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (integer.equals(<span class="number">2</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Observable2 map"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Observable3 map"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>然后将这个Function设置给<code>Observable</code>对象，也就是前面的<code>ObservableCreate</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> &lt;R&gt; <span class="function">Observable&lt;R&gt; <span class="title">map</span><span class="params">(Function&lt;? <span class="keyword">super</span> T, ? extends R&gt; mapper)</span> </span>&#123;</span><br><span class="line">    ObjectHelper.requireNonNull(mapper, <span class="string">"mapper is null"</span>);</span><br><span class="line">    <span class="keyword">return</span> RxJavaPlugins.onAssembly(<span class="keyword">new</span> ObservableMap&lt;T, R&gt;(<span class="keyword">this</span>, mapper));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里又出现了<code>RxJavaPlugins</code>这个类，其实进去看源码知道，如果没有hook的情况下，都会返回你传进去的参数，传进去是什么，返回的就是什么，如果有hook就有对应的一些处理；默认是没有hook的，所以我们就不再看有hook的情况了</p>
+<p>那么这里就是这里new出了<code>ObservableMap</code>，并返回了它</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ObservableMap</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractObservableWithUpstream</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractObservableWithUpstream</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; <span class="keyword">extends</span> <span class="title">Observable</span>&lt;<span class="title">U</span>&gt; <span class="keyword">implements</span> <span class="title">HasUpstreamObservableSource</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过这个类的继承关系，就知道，<code>ObservableMap</code>也是一个<code>Observable</code>对象（<code>ObservableCreate</code>），所以我们前面能够直接返回</p>
+<p>看看这个<code>ObservableMap</code>对象的构造方法，因为参数是<code>(this, mapper)</code>这样的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ObservableMap</span><span class="params">(ObservableSource&lt;T&gt; source, Function&lt;? <span class="keyword">super</span> T, ? extends U&gt; function)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(source);</span><br><span class="line">    <span class="keyword">this</span>.function = function;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ObservableSource</code>是什么？<code>ObservableSource</code>是一个接口，从前面传参的时候，说明<code>Observable</code>是实现了这个接口的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Observable</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">ObservableSource</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ObservableSource</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull Observer&lt;? <span class="keyword">super</span> T&gt; observer)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它代表了一个标准的无背压的 源数据接口</p>
+<p>那么现在知道了这个source是什么了（从另一方面来说，<code>ObservableSource</code>其实是和<code>Observable</code>（<code>ObservableCreate</code>）等价的，可能只是为了从<code>Observable</code>众多的操作剥离出这个抽象来），同时我们得到了source是为了在<code>AbstractObservableWithUpstream</code>保存这个上游的<code>ObservableSource</code>，也就是我们一开始创建的<code>ObservableCreate</code>对象</p>
+<p>那么现在再看看<code>ObservableMap</code>，它首先持有了进行数据转换的Function，它还继承自<code>AbstractObservableWithUpstream</code>，这个类里也保存了转换之前的<code>Observable</code>（上游）</p>
+<p>也就是说，如果我们使用了map操作，最后得到的<code>Observable</code>对象其实是<code>ObservableMap</code>对象，那么在接下来调用订阅的时候<code>subscribe()</code>，会调用到<code>ObservableMap</code>中的<code>subscribeActual()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribeActual</span><span class="params">(Observer&lt;? <span class="keyword">super</span> U&gt; t)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//这里的t就是外面的observer，function就是之前通过map定义的Function进行数据转换的，source就是之前的Observable，建立了和MapObserver的关联</span></span><br><span class="line">    source.subscribe(<span class="keyword">new</span> MapObserver&lt;T, U&gt;(t, function));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里直接创建了一个<code>MapObserver</code>，这是<code>ObservableMap</code>的静态内部类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">MapObserver</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; <span class="keyword">extends</span> <span class="title">BasicFuseableObserver</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">        MapObserver(Observer&lt;? <span class="keyword">super</span> U&gt; actual, Function&lt;? <span class="keyword">super</span> T, ? extends U&gt; mapper) &#123;</span><br><span class="line">        <span class="keyword">super</span>(actual);</span><br><span class="line">        <span class="keyword">this</span>.mapper = mapper;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>MapObserver</code>继承自<code>BasicFuseableObserver</code>，从类名就应该能猜出这就是一个Observer</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BasicFuseableObserver</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt; <span class="keyword">implements</span> <span class="title">Observer</span>&lt;<span class="title">T</span>&gt;, <span class="title">QueueDisposable</span>&lt;<span class="title">R</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//下游的订阅者 observer</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> Observer&lt;? <span class="keyword">super</span> R&gt; downstream;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BasicFuseableObserver</span><span class="params">(Observer&lt;? <span class="keyword">super</span> R&gt; downstream)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.downstream = downstream;</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从<code>BasicFuseableObserver</code>的继承结构看到，它实现了<code>Observer</code>，所以它也是一个<code>Observer</code>，同时保存了我们传入的<code>Observer</code>，它还实现了队列的Disposable<code>QueueDisposable</code>，这就说明了我们的map操作是一个一个执行的，按队列执行的</p>
+<p>所以<code>MapObserver</code>和<code>BasicFuseableObserver</code>都是对<code>Observer</code>的再一层包装；<code>ObservableMap</code>也是对之前的<code>Observable</code>的一层包装，保留了之前的<code>Observable</code>（source就是上一次的<code>ObservableSource</code>，最开始创建的<code>ObservableCreate</code>）</p>
+<p>和没有map的时候一样，前面<code>Observable</code>发送数据，通过<code>onNext()</code>发送，<code>onComplete()</code>结束，那么看看<code>MapObserver</code>中的<code>onNext()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//调用onComplete和onError方法，会在BasicFuseableObserver中置为true</span></span><br><span class="line">    <span class="keyword">if</span> (done) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sourceMode != NONE) &#123;</span><br><span class="line">        downstream.onNext(<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    U v;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        v = ObjectHelper.requireNonNull(mapper.apply(t), <span class="string">"The mapper function returned a null value."</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">        fail(ex);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    downstream.onNext(v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>T是转换前的数据类型，U是转换后的数据类型，在这个方法中，很直观的看到，通过调用<code>mapper.apply(t)</code>来进行了数据类型的转换（这个mapper就是我们通过map设置的数据转换Function），将T转换为U，然后通过downstream（就是我们代码设置的Observer）回调，这样就进行了我们的数据转换</p>
+<p>梳理一下map的流程</p>
+<p>订阅的过程，是从下游到上游依次订阅的：</p>
+<ol>
+<li>即终点 <code>Observer</code> 订阅了 map 返回的<code>ObservableMap</code>。</li>
+<li>然后map的<code>Observable</code>(<code>ObservableMap</code>)在被订阅时，会订阅其内部保存上游<code>Observable</code>（创建的<code>ObservableCreate</code>），用于订阅上游的<code>Observer</code>是<code>MapObserver</code>，内部保存了下游（本例是终点）<code>Observer</code>，以便上游发送数据过来时，能传递给下游。</li>
+<li>以此类推，直到源头<code>Observable</code>被订阅，根据前面的内容，它开始向<code>Observer</code>发送数据。</li>
+</ol>
+<p>数据传递的过程，当然是从上游push到下游的：</p>
+<ol>
+<li>源头<code>Observable</code>（<code>ObservableCreate</code>）传递数据给下游<code>Observer</code>（这里就是<code>MapObserver</code>）</li>
+<li>然后<code>MapObserver</code>接收到数据，对其变换操作后(实际的function在这一步执行)，再调用内部保存的下游<code>Observer</code>的<code>onNext()</code>发送数据给下游</li>
+<li>以此类推，直到终点<code>Observer</code></li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>没有其他操作时</p>
+<p>  <img src="https://img-blog.csdnimg.cn/20190611174554298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70" alt="RxJava2没有其他操作时"></p>
+</li>
+<li><p>加上map</p>
+<p>  <img src="https://img-blog.csdnimg.cn/20190611180410578.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70" alt="RxJava2有map"></p>
+<ol>
+<li>内部对上游Observable进行订阅</li>
+<li>内部订阅者接收到数据后，将数据转换，发送给下游Observer.</li>
+<li>操作符返回的Observable和其内部订阅者、是装饰者模式的体现。</li>
+<li>操作符数据变换的操作，也是发生在订阅后。</li>
+</ol>
+</li>
+<li><p>加上线程调度</p>
+<p>  <img src="https://img-blog.csdnimg.cn/20190611182202538.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70" alt="加上线程调度"></p>
+<ul>
+<li>线程调度subscribeOn()：</li>
+</ul>
+<ol>
+<li>内部先切换线程，在切换后的线程中对上游Observable进行订阅，这样上游发送数据时就是处于被切换后的线程里了。</li>
+<li>也因此多次切换线程，最后一次切换（离源数据最近）的生效。</li>
+<li>内部订阅者接收到数据后，直接发送给下游Observer.</li>
+<li>引入内部订阅者是为了控制线程（dispose）</li>
+<li>线程切换发生在Observable中。</li>
+</ol>
+<ul>
+<li>线程调度observeOn():</li>
+</ul>
+<ol>
+<li>使用装饰的Observer对上游Observable进行订阅</li>
+<li>在Observer中onXXX()方法里，将待发送数据存入队列，同时请求切换线程处理真正push数据给下游。</li>
+<li>多次切换线程，都会对下游生效。</li>
+</ol>
+</li>
+</ul>
+<h2 id="特别鸣谢"><a href="#特别鸣谢" class="headerlink" title="特别鸣谢"></a>特别鸣谢</h2><ul>
+<li><a href="https://blog.csdn.net/zxt0601/article/details/61614799" target="_blank" rel="noopener">RxJava2 源码解析（一）</a></li>
+<li><a href="https://blog.csdn.net/zxt0601/article/details/61637439" target="_blank" rel="noopener">RxJava2 源码解析（二）</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android第三方框架/" rel="tag"># Android第三方框架</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/03/Android OkHttp3源码分析/" rel="next" title="Android OkHttp3源码分析">
+                <i class="fa fa-chevron-left"></i> Android OkHttp3源码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/11/一些快捷键汇总/" rel="prev" title="一些快捷键汇总">
+                一些快捷键汇总 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-RxJava2源码浅析（2-2-8）"><span class="nav-number">1.</span> <span class="nav-text">Android RxJava2源码浅析（2.2.8）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">1.2.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create"><span class="nav-number">1.2.1.</span> <span class="nav-text">create</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subsribe"><span class="nav-number">1.2.2.</span> <span class="nav-text">subsribe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subscribeOn"><span class="nav-number">1.2.3.</span> <span class="nav-text">subscribeOn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#observeOn"><span class="nav-number">1.2.4.</span> <span class="nav-text">observeOn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map操作符"><span class="nav-number">1.2.5.</span> <span class="nav-text">map操作符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特别鸣谢"><span class="nav-number">1.4.</span> <span class="nav-text">特别鸣谢</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

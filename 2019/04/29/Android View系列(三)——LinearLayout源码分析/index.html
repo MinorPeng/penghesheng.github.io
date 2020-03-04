@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] LinearLayout 源码分析简介LinearLayout是我们开发中最常用的布局之一了，就是我们所说的线程布局，其分水平（HORIZONTAL）和垂直（VERTICAL）两个方向进行布局，接下来我们就慢慢看看这个LinearLayout 首先看看类的继承关系 123public class LinearLayout extends ViewGroup &amp;#123;	...">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android View系列(三)——LinearLayout源码分析">
+<meta property="og:url" content="http://yoursite.com/2019/04/29/Android View系列(三)——LinearLayout源码分析/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="[TOC] LinearLayout 源码分析简介LinearLayout是我们开发中最常用的布局之一了，就是我们所说的线程布局，其分水平（HORIZONTAL）和垂直（VERTICAL）两个方向进行布局，接下来我们就慢慢看看这个LinearLayout 首先看看类的继承关系 123public class LinearLayout extends ViewGroup &amp;#123;	...">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android View系列(三)——LinearLayout源码分析">
+<meta name="twitter:description" content="[TOC] LinearLayout 源码分析简介LinearLayout是我们开发中最常用的布局之一了，就是我们所说的线程布局，其分水平（HORIZONTAL）和垂直（VERTICAL）两个方向进行布局，接下来我们就慢慢看看这个LinearLayout 首先看看类的继承关系 123public class LinearLayout extends ViewGroup &amp;#123;	...">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/29/Android View系列(三)——LinearLayout源码分析/">
+
+
+
+
+
+  <title>Android View系列(三)——LinearLayout源码分析 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/29/Android View系列(三)——LinearLayout源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android View系列(三)——LinearLayout源码分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-29T00:00:00+08:00">
+                2019-04-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<p>[TOC]</p>
+<h1 id="LinearLayout-源码分析"><a href="#LinearLayout-源码分析" class="headerlink" title="LinearLayout 源码分析"></a>LinearLayout 源码分析</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>LinearLayout是我们开发中最常用的布局之一了，就是我们所说的线程布局，其分水平（HORIZONTAL）和垂直（VERTICAL）两个方向进行布局，接下来我们就慢慢看看这个LinearLayout</p>
+<p>首先看看类的继承关系</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinearLayout</span> <span class="keyword">extends</span> <span class="title">ViewGroup</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很明显，直接继承自ViewGroup，当然，其他常用的布局RealativeLayout、FrameLayout等都是直接继承ViewGroup的</p>
+<p>接着简单看看LinearLayout中的一些属性吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//水平方向和垂直方向</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HORIZONTAL = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VERTICAL = <span class="number">1</span>;</span><br><span class="line"><span class="comment">//几种分割线的状态</span></span><br><span class="line">   <span class="comment">//不展示dividers</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHOW_DIVIDER_NONE = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">//展示dividers在group的前面</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHOW_DIVIDER_BEGINNING = <span class="number">1</span>;</span><br><span class="line">   <span class="comment">//给viewgroup的每一个item之间都展示divider</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHOW_DIVIDER_MIDDLE = <span class="number">2</span>;</span><br><span class="line">   <span class="comment">//展示在ViewGroup的后面</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHOW_DIVIDER_END = <span class="number">4</span>;</span><br><span class="line">...</span><br><span class="line">   <span class="comment">//基线对齐变量</span></span><br><span class="line">   <span class="meta">@ViewDebug</span>.ExportedProperty(category = <span class="string">"layout"</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">boolean</span> mBaselineAligned = <span class="keyword">true</span>;</span><br><span class="line"><span class="comment">//基线对齐对象index</span></span><br><span class="line">   <span class="meta">@ViewDebug</span>.ExportedProperty(category = <span class="string">"layout"</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mBaselineAlignedChildIndex = -<span class="number">1</span>;</span><br><span class="line"><span class="comment">//基线的额外偏移量</span></span><br><span class="line">   <span class="meta">@ViewDebug</span>.ExportedProperty(category = <span class="string">"measurement"</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mBaselineChildTop = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//方向</span></span><br><span class="line">   <span class="meta">@ViewDebug</span>.ExportedProperty(category = <span class="string">"measurement"</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mOrientation;</span><br><span class="line">...</span><br><span class="line">   <span class="comment">//对齐方式</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mGravity = Gravity.START | Gravity.TOP;</span><br><span class="line"><span class="comment">//整个LinearLayout子View的高度和（Vertical）或者宽度和（Historical）</span></span><br><span class="line">   <span class="meta">@ViewDebug</span>.ExportedProperty(category = <span class="string">"measurement"</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mTotalLength;</span><br><span class="line"><span class="comment">//权重和</span></span><br><span class="line">   <span class="meta">@ViewDebug</span>.ExportedProperty(category = <span class="string">"layout"</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">float</span> mWeightSum;</span><br><span class="line"><span class="comment">//权重最小尺寸对象</span></span><br><span class="line">   <span class="meta">@ViewDebug</span>.ExportedProperty(category = <span class="string">"layout"</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">boolean</span> mUseLargestChild;</span><br><span class="line"><span class="comment">//基线对齐相关</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span>[] mMaxAscent;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span>[] mMaxDescent;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VERTICAL_GRAVITY_COUNT = <span class="number">4</span>;</span><br><span class="line"><span class="comment">//几种index</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_CENTER_VERTICAL = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_TOP = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_BOTTOM = <span class="number">2</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_FILL = <span class="number">3</span>;</span><br><span class="line"><span class="comment">//分割线相关</span></span><br><span class="line">   <span class="keyword">private</span> Drawable mDivider;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mDividerWidth;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mDividerHeight;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mShowDividers;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mDividerPadding;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mLayoutDirection = View.LAYOUT_DIRECTION_UNDEFINED;</span><br></pre></td></tr></table></figure>
+
+<p>属性简单就看这么多吧，接着进入重点吧，看看LinearLayout是怎么测量、布局、绘制的</p>
+<h2 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (mOrientation == VERTICAL) &#123;</span><br><span class="line">           measureVertical(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           measureHorizontal(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在onMeasure方法中，对方向进行了判断，来决定是垂直测量还是横向测量，我们就看垂直方向的吧</p>
+<p>由于方法有点长，分几个部分一点一点看吧，先看这个函数内的一些变量吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">measureVertical</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//每次测量都会将ziView的高度和进行初始化</span></span><br><span class="line">       mTotalLength = <span class="number">0</span>;</span><br><span class="line">       <span class="comment">//子View最大宽度，不包括含有layout_weight权重的子View</span></span><br><span class="line">       <span class="keyword">int</span> maxWidth = <span class="number">0</span>;</span><br><span class="line">       <span class="comment">//测量状态</span></span><br><span class="line">       <span class="keyword">int</span> childState = <span class="number">0</span>;</span><br><span class="line">       <span class="comment">//子View中layout_weight &lt;= 0的最大高度</span></span><br><span class="line">       <span class="keyword">int</span> alternativeMaxWidth = <span class="number">0</span>;</span><br><span class="line">       <span class="comment">//子View中layout_weight &gt; 0的最大高度</span></span><br><span class="line">       <span class="keyword">int</span> weightedMaxWidth = <span class="number">0</span>;</span><br><span class="line">       <span class="comment">//是否全是match_parent</span></span><br><span class="line">       <span class="keyword">boolean</span> allFillParent = <span class="keyword">true</span>;</span><br><span class="line">       <span class="comment">//子View权重和</span></span><br><span class="line">       <span class="keyword">float</span> totalWeight = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//子View个数</span></span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> count = getVirtualChildCount();</span><br><span class="line">	<span class="comment">//测量模式</span></span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> widthMode = MeasureSpec.getMode(widthMeasureSpec);</span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> heightMode = MeasureSpec.getMode(heightMeasureSpec);</span><br><span class="line">	<span class="comment">//为match_parent时未true</span></span><br><span class="line">       <span class="keyword">boolean</span> matchWidth = <span class="keyword">false</span>;</span><br><span class="line">       <span class="keyword">boolean</span> skippedMeasure = <span class="keyword">false</span>;</span><br><span class="line">	<span class="comment">//基线对齐的对象index</span></span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> baselineChildIndex = mBaselineAlignedChildIndex;</span><br><span class="line">       <span class="comment">//权重最小尺寸对象</span></span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">boolean</span> useLargestChild = mUseLargestChild;</span><br><span class="line">       <span class="comment">//子View中最高高度</span></span><br><span class="line">       <span class="keyword">int</span> largestChildHeight = Integer.MIN_VALUE;</span><br><span class="line">       <span class="keyword">int</span> consumedExcessSpace = <span class="number">0</span>;</span><br><span class="line">       <span class="comment">//能够显示的View个数</span></span><br><span class="line">       <span class="keyword">int</span> nonSkippedChildCount = <span class="number">0</span>;</span><br><span class="line">       ...</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这些变量大致的意思都写在代码注释里了，简单过一下就ok了</p>
+<p>接着看看方法内的后面一部分，测量所有的子View</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">measureVertical</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="comment">// See how tall everyone is. Also remember max width.</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</span><br><span class="line">           <span class="keyword">final</span> View child = getVirtualChildAt(i);</span><br><span class="line">           <span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</span><br><span class="line">               <span class="comment">//为null，+0</span></span><br><span class="line">               mTotalLength += measureNullChild(i);</span><br><span class="line">               <span class="keyword">continue</span>;</span><br><span class="line">           &#125;</span><br><span class="line">		<span class="comment">//View.GONE的子View也不会计算在里面</span></span><br><span class="line">           <span class="keyword">if</span> (child.getVisibility() == View.GONE) &#123;</span><br><span class="line">              i += getChildrenSkipCount(child, i);</span><br><span class="line">              <span class="keyword">continue</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">           nonSkippedChildCount++;</span><br><span class="line">           <span class="comment">//如果有分割线，则要加上分割线的高度</span></span><br><span class="line">           <span class="keyword">if</span> (hasDividerBeforeChildAt(i)) &#123;</span><br><span class="line">               mTotalLength += mDividerHeight;</span><br><span class="line">           &#125;</span><br><span class="line">		<span class="comment">//获取子View的LayoutParams并且强转为父布局的LayoutParams</span></span><br><span class="line">           <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line">		<span class="comment">//累加权重</span></span><br><span class="line">           totalWeight += lp.weight;</span><br><span class="line">		<span class="comment">//是否使用多余的空间，如果设置了权重，并且height==0，表示希望使用剩下的空间，则跳过此次测量，稍后进行测量</span></span><br><span class="line">           <span class="keyword">final</span> <span class="keyword">boolean</span> useExcessSpace = lp.height == <span class="number">0</span> &amp;&amp; lp.weight &gt; <span class="number">0</span>;</span><br><span class="line">           <span class="comment">//有权重的情况下且LinearLayout高度确定</span></span><br><span class="line">           <span class="keyword">if</span> (heightMode == MeasureSpec.EXACTLY &amp;&amp; useExcessSpace) &#123;</span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> totalLength = mTotalLength;</span><br><span class="line">               mTotalLength = Math.max(totalLength, totalLength + lp.topMargin + lp.bottomMargin);</span><br><span class="line">               skippedMeasure = <span class="keyword">true</span>;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">if</span> (useExcessSpace) &#123;</span><br><span class="line">                   <span class="comment">//有权重且LinearLayout高度不确定的情况，则重置子View高度为wrap_content</span></span><br><span class="line">                   lp.height = LayoutParams.WRAP_CONTENT;</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="comment">//正常测量过程</span></span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> usedHeight = totalWeight == <span class="number">0</span> ? mTotalLength : <span class="number">0</span>;</span><br><span class="line">               <span class="comment">//进行子View的测量</span></span><br><span class="line">               measureChildBeforeLayout(child, i, widthMeasureSpec, <span class="number">0</span>,</span><br><span class="line">                       heightMeasureSpec, usedHeight);</span><br><span class="line"></span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> childHeight = child.getMeasuredHeight();</span><br><span class="line">               <span class="keyword">if</span> (useExcessSpace) &#123;</span><br><span class="line">                   <span class="comment">//重置子View高度</span></span><br><span class="line">                   lp.height = <span class="number">0</span>;</span><br><span class="line">                   consumedExcessSpace += childHeight;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> totalLength = mTotalLength;</span><br><span class="line">               <span class="comment">//计算较大的totalLength</span></span><br><span class="line">               mTotalLength = Math.max(totalLength, totalLength + childHeight + lp.topMargin +</span><br><span class="line">                      lp.bottomMargin + getNextLocationOffset(child));</span><br><span class="line">			<span class="comment">//设置最高子View大小</span></span><br><span class="line">               <span class="keyword">if</span> (useLargestChild) &#123;</span><br><span class="line">                   largestChildHeight = Math.max(childHeight, largestChildHeight);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">		<span class="comment">//mBaselineChildTop 表示指定的 baseline 的子视图的顶部高度</span></span><br><span class="line">           <span class="keyword">if</span> ((baselineChildIndex &gt;= <span class="number">0</span>) &amp;&amp; (baselineChildIndex == i + <span class="number">1</span>)) &#123;</span><br><span class="line">              mBaselineChildTop = mTotalLength;</span><br><span class="line">           &#125;</span><br><span class="line">		<span class="comment">//为baseline的子View不允许有weight属性</span></span><br><span class="line">           <span class="keyword">if</span> (i &lt; baselineChildIndex &amp;&amp; lp.weight &gt; <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"A child of LinearLayout with index "</span></span><br><span class="line">                       + <span class="string">"less than mBaselineAlignedChildIndex has weight &gt; 0, which "</span></span><br><span class="line">                       + <span class="string">"won't work.  Either remove the weight, or don't set "</span></span><br><span class="line">                       + <span class="string">"mBaselineAlignedChildIndex."</span>);</span><br><span class="line">           &#125;</span><br><span class="line">		<span class="comment">//当LinearLayout非EXACTLY模式 并且自View为MATCH_PARENT时</span></span><br><span class="line">     		<span class="comment">//设置matchWidth和matchWidthLocally为true</span></span><br><span class="line">     		<span class="comment">//该子View占据LinearLayout水平方向上所有空间</span></span><br><span class="line">           <span class="keyword">boolean</span> matchWidthLocally = <span class="keyword">false</span>;</span><br><span class="line">           <span class="keyword">if</span> (widthMode != MeasureSpec.EXACTLY &amp;&amp; lp.width == LayoutParams.MATCH_PARENT) &#123;</span><br><span class="line">               matchWidth = <span class="keyword">true</span>;</span><br><span class="line">               matchWidthLocally = <span class="keyword">true</span>;</span><br><span class="line">           &#125;</span><br><span class="line">		<span class="comment">//进行变量的赋值</span></span><br><span class="line">           <span class="keyword">final</span> <span class="keyword">int</span> margin = lp.leftMargin + lp.rightMargin;</span><br><span class="line">           <span class="keyword">final</span> <span class="keyword">int</span> measuredWidth = child.getMeasuredWidth() + margin;</span><br><span class="line">           maxWidth = Math.max(maxWidth, measuredWidth);</span><br><span class="line">           childState = combineMeasuredStates(childState, child.getMeasuredState());</span><br><span class="line">           allFillParent = allFillParent &amp;&amp; lp.width == LayoutParams.MATCH_PARENT;</span><br><span class="line">           <span class="keyword">if</span> (lp.weight &gt; <span class="number">0</span>) &#123;</span><br><span class="line">               weightedMaxWidth = Math.max(weightedMaxWidth,</span><br><span class="line">                       matchWidthLocally ? margin : measuredWidth);</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               alternativeMaxWidth = Math.max(alternativeMaxWidth,</span><br><span class="line">                       matchWidthLocally ? margin : measuredWidth);</span><br><span class="line">           &#125;</span><br><span class="line">           i += getChildrenSkipCount(child, i);</span><br><span class="line">       &#125;</span><br><span class="line">       ...</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>遍历所有子View，根据index获取一个子View，在这里我们看到为null的时候mTotalLength加的是0，当子View是View.GONE时，也是加0，所以从这里可以看出，当子View为View.GONE是不计算在内的；这里简单提一下，内部获取子View的LayoutParams是要强转为父View的LayoutParams的，所以通常在代码来控制子View的位置是要获取父View的LayoutParams</p>
+<p>接着判断当LinearLayout为EXACTLY时且子View设置了权重，表示这个子View要使用剩下的空间，那么就会先跳过这次正常的测量，会在后面有权重的时候进行单独的测量</p>
+<p>接着正常子View的测量，mTotalLength累加子View的高度，测量完成重置子View的高度等；然后接着测量View宽度</p>
+<p>接着看后面的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">measureVertical</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">       <span class="comment">//有divider时加上divider的高度</span></span><br><span class="line">	<span class="keyword">if</span> (nonSkippedChildCount &gt; <span class="number">0</span> &amp;&amp; hasDividerBeforeChildAt(count)) &#123;</span><br><span class="line">           mTotalLength += mDividerHeight;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//如果高度测量模式为AT_MOST或者UNSPECIFIED 则进行二次测量 useLargestChild</span></span><br><span class="line">	<span class="keyword">if</span> (useLargestChild &amp;&amp;</span><br><span class="line">               (heightMode == MeasureSpec.AT_MOST || heightMode == MeasureSpec.UNSPECIFIED)) &#123;</span><br><span class="line">           mTotalLength = <span class="number">0</span>;</span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</span><br><span class="line">               <span class="keyword">final</span> View child = getVirtualChildAt(i);</span><br><span class="line">               <span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</span><br><span class="line">                   mTotalLength += measureNullChild(i);</span><br><span class="line">                   <span class="keyword">continue</span>;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">if</span> (child.getVisibility() == GONE) &#123;</span><br><span class="line">                   i += getChildrenSkipCount(child, i);</span><br><span class="line">                   <span class="keyword">continue</span>;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">final</span> LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)</span><br><span class="line">                       child.getLayoutParams();</span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> totalLength = mTotalLength;</span><br><span class="line">               mTotalLength = Math.max(totalLength, totalLength + largestChildHeight +</span><br><span class="line">                       lp.topMargin + lp.bottomMargin + getNextLocationOffset(child));</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//加上paddingTo、paddingBottom</span></span><br><span class="line">       mTotalLength += mPaddingTop + mPaddingBottom;</span><br><span class="line">       <span class="keyword">int</span> heightSize = mTotalLength;</span><br><span class="line">       <span class="comment">// Check against our minimum height</span></span><br><span class="line">       heightSize = Math.max(heightSize, getSuggestedMinimumHeight());</span><br><span class="line">       <span class="comment">// Reconcile our calculated size with the heightMeasureSpec</span></span><br><span class="line">       <span class="keyword">int</span> heightSizeAndState = resolveSizeAndState(heightSize, heightMeasureSpec, <span class="number">0</span>);</span><br><span class="line">       heightSize = heightSizeAndState &amp; MEASURED_SIZE_MASK;</span><br><span class="line">       ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这次就是判断是否需要第二次测量，如果高度测量模式为AT_MOST或者UNSPECIFIED 则进行二次测量 且设置了useLargestChild，而useLargestChild是mUseLargestChild，而mUseLargestChild是在LinearLayout初始化时，在布局中设置，<code>mUseLargestChild = a.getBoolean(R.styleable.LinearLayout_measureWithLargestChild, false);</code>也就是说只有设置了measureWithLargestChild为true（默认false）时才可能进行二次测量</p>
+<p>然后后面就是mTotalLength加上padding，重新计算heightSize</p>
+<p>接着看后面</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">measureVertical</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">       <span class="comment">//额外空间的计算</span></span><br><span class="line">	<span class="keyword">int</span> remainingExcess = heightSize - mTotalLength</span><br><span class="line">               + (mAllowInconsistentMeasurement ? <span class="number">0</span> : consumedExcessSpace);</span><br><span class="line">       <span class="keyword">if</span> (skippedMeasure || remainingExcess != <span class="number">0</span> &amp;&amp; totalWeight &gt; <span class="number">0.0f</span>) &#123;</span><br><span class="line">           <span class="comment">//如果有总的权重和，就使用设置的，否则使用子View计算来的</span></span><br><span class="line">           <span class="keyword">float</span> remainingWeightSum = mWeightSum &gt; <span class="number">0.0f</span> ? mWeightSum : totalWeight;</span><br><span class="line">           mTotalLength = <span class="number">0</span>;</span><br><span class="line">           <span class="comment">//有权重，需要进行二次测量有权重的子View</span></span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</span><br><span class="line">               <span class="keyword">final</span> View child = getVirtualChildAt(i);</span><br><span class="line">               <span class="keyword">if</span> (child == <span class="keyword">null</span> || child.getVisibility() == View.GONE) &#123;</span><br><span class="line">                   <span class="keyword">continue</span>;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">float</span> childWeight = lp.weight;</span><br><span class="line">               <span class="keyword">if</span> (childWeight &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                   <span class="keyword">final</span> <span class="keyword">int</span> share = (<span class="keyword">int</span>) (childWeight * remainingExcess / remainingWeightSum);</span><br><span class="line">                   remainingExcess -= share;</span><br><span class="line">                   remainingWeightSum -= childWeight;</span><br><span class="line"></span><br><span class="line">                   <span class="keyword">final</span> <span class="keyword">int</span> childHeight;</span><br><span class="line">                   <span class="keyword">if</span> (mUseLargestChild &amp;&amp; heightMode != MeasureSpec.EXACTLY) &#123;</span><br><span class="line">                       childHeight = largestChildHeight;</span><br><span class="line">                   &#125; <span class="keyword">else</span> <span class="keyword">if</span> (lp.height == <span class="number">0</span> &amp;&amp; (!mAllowInconsistentMeasurement</span><br><span class="line">                           || heightMode == MeasureSpec.EXACTLY)) &#123;</span><br><span class="line">                       childHeight = share;</span><br><span class="line">                   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                       <span class="comment">//定义权重子控件重新测量，这时候childWidth是子控件本身的高度加上通过权重计算的额外高度</span></span><br><span class="line">                   	childHeight = child.getMeasuredHeight() + share;</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">                   <span class="keyword">final</span> <span class="keyword">int</span> childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(</span><br><span class="line">                           Math.max(<span class="number">0</span>, childHeight), MeasureSpec.EXACTLY);</span><br><span class="line">                   <span class="keyword">final</span> <span class="keyword">int</span> childWidthMeasureSpec = getChildMeasureSpec(widthMeasureSpec,</span><br><span class="line">                           mPaddingLeft + mPaddingRight + lp.leftMargin + lp.rightMargin,</span><br><span class="line">                           lp.width);</span><br><span class="line">                   child.measure(childWidthMeasureSpec, childHeightMeasureSpec);</span><br><span class="line">                   childState = combineMeasuredStates(childState, child.getMeasuredState()</span><br><span class="line">                           &amp; (MEASURED_STATE_MASK&gt;&gt;MEASURED_HEIGHT_STATE_SHIFT));</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> margin =  lp.leftMargin + lp.rightMargin;</span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> measuredWidth = child.getMeasuredWidth() + margin;</span><br><span class="line">               maxWidth = Math.max(maxWidth, measuredWidth);</span><br><span class="line"></span><br><span class="line">               <span class="keyword">boolean</span> matchWidthLocally = widthMode != MeasureSpec.EXACTLY &amp;&amp;</span><br><span class="line">                       lp.width == LayoutParams.MATCH_PARENT;</span><br><span class="line"></span><br><span class="line">               alternativeMaxWidth = Math.max(alternativeMaxWidth,</span><br><span class="line">                       matchWidthLocally ? margin : measuredWidth);</span><br><span class="line"></span><br><span class="line">               allFillParent = allFillParent &amp;&amp; lp.width == LayoutParams.MATCH_PARENT;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> totalLength = mTotalLength;</span><br><span class="line">               mTotalLength = Math.max(totalLength, totalLength + child.getMeasuredHeight() +</span><br><span class="line">                       lp.topMargin + lp.bottomMargin + getNextLocationOffset(child));</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="comment">// Add in our padding</span></span><br><span class="line">           mTotalLength += mPaddingTop + mPaddingBottom;</span><br><span class="line">           <span class="comment">// <span class="doctag">TODO:</span> Should we recompute the heightSpec based on the new total length?</span></span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           alternativeMaxWidth = Math.max(alternativeMaxWidth,</span><br><span class="line">                                          weightedMaxWidth);</span><br><span class="line">          <span class="comment">//当设置了权重最小尺寸</span></span><br><span class="line">           <span class="keyword">if</span> (useLargestChild &amp;&amp; heightMode != MeasureSpec.EXACTLY) &#123;</span><br><span class="line">               <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">                   <span class="keyword">final</span> View child = getVirtualChildAt(i);</span><br><span class="line">                   <span class="keyword">if</span> (child == <span class="keyword">null</span> || child.getVisibility() == View.GONE) &#123;</span><br><span class="line">                       <span class="keyword">continue</span>;</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">                   <span class="keyword">final</span> LinearLayout.LayoutParams lp =</span><br><span class="line">                           (LinearLayout.LayoutParams) child.getLayoutParams();</span><br><span class="line"></span><br><span class="line">                   <span class="keyword">float</span> childExtra = lp.weight;</span><br><span class="line">                   <span class="keyword">if</span> (childExtra &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                       child.measure(</span><br><span class="line">                               MeasureSpec.makeMeasureSpec(child.getMeasuredWidth(),</span><br><span class="line">                                       MeasureSpec.EXACTLY),</span><br><span class="line">                               MeasureSpec.makeMeasureSpec(largestChildHeight,</span><br><span class="line">                                       MeasureSpec.EXACTLY));</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (!allFillParent &amp;&amp; widthMode != MeasureSpec.EXACTLY) &#123;</span><br><span class="line">           maxWidth = alternativeMaxWidth;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       maxWidth += mPaddingLeft + mPaddingRight;</span><br><span class="line">       <span class="comment">// Check against our minimum width</span></span><br><span class="line">       maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());</span><br><span class="line"></span><br><span class="line">       setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),</span><br><span class="line">               heightSizeAndState);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (matchWidth) &#123;</span><br><span class="line">           forceUniformWidth(count, heightMeasureSpec);</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>整个垂直方向的Measure流程大致就这样了，水平方向是类似的</p>
+<h2 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h2><p>layout过程其实逻辑基本和Measure是类似的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (mOrientation == VERTICAL) &#123;</span><br><span class="line">           layoutVertical(l, t, r, b);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           layoutHorizontal(l, t, r, b);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样，不同的方向进行不同的layout，这里还是以Vertical方向为例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">layoutVertical</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> paddingLeft = mPaddingLeft;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">int</span> childTop;</span><br><span class="line">       <span class="keyword">int</span> childLeft;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 子View默认右侧位置</span></span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> width = right - left;</span><br><span class="line">       <span class="keyword">int</span> childRight = width - mPaddingRight;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 子View可用空间大小</span></span><br><span class="line">       <span class="keyword">int</span> childSpace = width - paddingLeft - mPaddingRight;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> count = getVirtualChildCount();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> majorGravity = mGravity &amp; Gravity.VERTICAL_GRAVITY_MASK;</span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> minorGravity = mGravity &amp; Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK;</span><br><span class="line">	<span class="comment">//根据LinearLayout设置的对其方式 设置第一个子View的Top值</span></span><br><span class="line">       <span class="keyword">switch</span> (majorGravity) &#123;</span><br><span class="line">          <span class="keyword">case</span> Gravity.BOTTOM:</span><br><span class="line">              <span class="comment">// mTotalLength contains the padding already</span></span><br><span class="line">              childTop = mPaddingTop + bottom - top - mTotalLength;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">              <span class="comment">// mTotalLength contains the padding already</span></span><br><span class="line">          <span class="keyword">case</span> Gravity.CENTER_VERTICAL:</span><br><span class="line">              childTop = mPaddingTop + (bottom - top - mTotalLength) / <span class="number">2</span>;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> Gravity.TOP:</span><br><span class="line">          <span class="keyword">default</span>:</span><br><span class="line">              childTop = mPaddingTop;</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//遍历子View</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">           <span class="keyword">final</span> View child = getVirtualChildAt(i);</span><br><span class="line">           <span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</span><br><span class="line">               childTop += measureNullChild(i);</span><br><span class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (child.getVisibility() != GONE) &#123;</span><br><span class="line">               <span class="comment">//LinearLayout中子View的宽和高有measure过程决定</span></span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> childWidth = child.getMeasuredWidth();</span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> childHeight = child.getMeasuredHeight();</span><br><span class="line"></span><br><span class="line">               <span class="keyword">final</span> LinearLayout.LayoutParams lp =</span><br><span class="line">                       (LinearLayout.LayoutParams) child.getLayoutParams();</span><br><span class="line"></span><br><span class="line">               <span class="keyword">int</span> gravity = lp.gravity;</span><br><span class="line">               <span class="keyword">if</span> (gravity &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                   gravity = minorGravity;</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> layoutDirection = getLayoutDirection();</span><br><span class="line">               <span class="keyword">final</span> <span class="keyword">int</span> absoluteGravity = Gravity.getAbsoluteGravity(gravity, layoutDirection);</span><br><span class="line">               <span class="keyword">switch</span> (absoluteGravity &amp; Gravity.HORIZONTAL_GRAVITY_MASK) &#123;</span><br><span class="line">                   <span class="keyword">case</span> Gravity.CENTER_HORIZONTAL:</span><br><span class="line">                       childLeft = paddingLeft + ((childSpace - childWidth) / <span class="number">2</span>)</span><br><span class="line">                               + lp.leftMargin - lp.rightMargin;</span><br><span class="line">                       <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                   <span class="keyword">case</span> Gravity.RIGHT:</span><br><span class="line">                       childLeft = childRight - childWidth - lp.rightMargin;</span><br><span class="line">                       <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                   <span class="keyword">case</span> Gravity.LEFT:</span><br><span class="line">                   <span class="keyword">default</span>:</span><br><span class="line">                       childLeft = paddingLeft + lp.leftMargin;</span><br><span class="line">                       <span class="keyword">break</span>;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">if</span> (hasDividerBeforeChildAt(i)) &#123;</span><br><span class="line">                   childTop += mDividerHeight;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               childTop += lp.topMargin;</span><br><span class="line">               <span class="comment">//用setChildFrame()方法设置子控件控件的在父控件上的坐标轴</span></span><br><span class="line">               setChildFrame(child, childLeft, childTop + getLocationOffset(child),</span><br><span class="line">                       childWidth, childHeight);</span><br><span class="line">               childTop += childHeight + lp.bottomMargin + getNextLocationOffset(child);</span><br><span class="line"></span><br><span class="line">               i += getChildrenSkipCount(child, i);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>layout也十分简单，就这么多东西</p>
+<h2 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h2><p>draw也是一样的逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (mDivider == <span class="keyword">null</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (mOrientation == VERTICAL) &#123;</span><br><span class="line">           drawDividersVertical(canvas);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           drawDividersHorizontal(canvas);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接看drawDividersVertical吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawDividersVertical</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">final</span> <span class="keyword">int</span> count = getVirtualChildCount();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">           <span class="keyword">final</span> View child = getVirtualChildAt(i);</span><br><span class="line">           <span class="keyword">if</span> (child != <span class="keyword">null</span> &amp;&amp; child.getVisibility() != GONE) &#123;</span><br><span class="line">               <span class="keyword">if</span> (hasDividerBeforeChildAt(i)) &#123;</span><br><span class="line">                   <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line">                   <span class="keyword">final</span> <span class="keyword">int</span> top = child.getTop() - lp.topMargin - mDividerHeight;</span><br><span class="line">                   drawHorizontalDivider(canvas, top);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (hasDividerBeforeChildAt(count)) &#123;</span><br><span class="line">           <span class="keyword">final</span> View child = getLastNonGoneChild();</span><br><span class="line">           <span class="keyword">int</span> bottom = <span class="number">0</span>;</span><br><span class="line">           <span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</span><br><span class="line">               bottom = getHeight() - getPaddingBottom() - mDividerHeight;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line">               bottom = child.getBottom() + lp.bottomMargin;</span><br><span class="line">           &#125;</span><br><span class="line">           drawHorizontalDivider(canvas, bottom);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>绘制里面就主要是分割线的绘制，明显易懂，就不再多说了</p>
+<h2 id="FrameLayout、LinearLayout和RelativeLayout的性能对比"><a href="#FrameLayout、LinearLayout和RelativeLayout的性能对比" class="headerlink" title="FrameLayout、LinearLayout和RelativeLayout的性能对比"></a>FrameLayout、LinearLayout和RelativeLayout的性能对比</h2><p>当RelativeLayout和LinearLayout作为ViewGroup表达相同的布局的时候，谁的绘制更快一些，性能相对更好一些？</p>
+<p>通过网上的很多实验结果我们得之，两者绘制同样的界面时layout和draw的过程时间消耗相差无几，关键在于measure过程RelativeLayout比LinearLayout慢了一些。我们知道ViewGroup是没有onMeasure方法的，这个方法是交给子类自己实现的。因为不同的ViewGroup子类布局都不一样，那么onMeasure索性就全部交给他们自己实现好了</p>
+<p>LinearLayout：在没有权重的情况下，就只会单纯的遍历一个方向，遍历一次所有的View；如果View设置了权重 ，那么在第一次遍历的时候这个View是不会进行测量的，在第二次测量（专门用于测量权weight重的）；所以无权重一次遍历，有权重两次遍历</p>
+<p>RelativeLayout：因为依赖关系，所以在进行排序后，分别会对水平、垂直方向进行遍历，所以两次遍历</p>
+<p>FrameLayout：某种情况上来说，FrameLayout也可能导致二次测量，不过FrameLayout的二次测量就只针对View为match_parent的了</p>
+<h2 id="特别鸣谢"><a href="#特别鸣谢" class="headerlink" title="特别鸣谢"></a>特别鸣谢</h2><p><a href="https://www.jianshu.com/p/3b52e6856b72" target="_blank" rel="noopener">Android View 相关源码分析之四 LinearLayout源码分析</a></p>
+<p><a href="https://www.jianshu.com/p/43d49b7d2ad2" target="_blank" rel="noopener">你对LinearLayout到底有多少了解？（二）-源码篇</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/26/计算机网络——第六章 应用层/" rel="next" title="计算机网络——第六章 应用层">
+                <i class="fa fa-chevron-left"></i> 计算机网络——第六章 应用层
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/30/Android EventBus源码分析/" rel="prev" title="Android——EventBus源码分析">
+                Android——EventBus源码分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LinearLayout-源码分析"><span class="nav-number">1.</span> <span class="nav-text">LinearLayout 源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onMeasure"><span class="nav-number">1.2.</span> <span class="nav-text">onMeasure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onLayout"><span class="nav-number">1.3.</span> <span class="nav-text">onLayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onDraw"><span class="nav-number">1.4.</span> <span class="nav-text">onDraw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FrameLayout、LinearLayout和RelativeLayout的性能对比"><span class="nav-number">1.5.</span> <span class="nav-text">FrameLayout、LinearLayout和RelativeLayout的性能对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特别鸣谢"><span class="nav-number">1.6.</span> <span class="nav-text">特别鸣谢</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

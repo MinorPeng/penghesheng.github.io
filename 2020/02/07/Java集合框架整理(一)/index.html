@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] Java Map、List、Vector源码分析脑图 Java集合框架脑图 Java集合大致分为Set、List、Queue、Map四类。  Set：无序、不可重复的集合List：有序、可重复的集合Queue：队列集合Map：有映射关系的集合  而Java集合最根本的接口主要是Collection和Map，前三个都是通过Collection接口实现 CollectionColl">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合框架整理(一)">
+<meta property="og:url" content="http://yoursite.com/2020/02/07/Java集合框架整理(一)/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="[TOC] Java Map、List、Vector源码分析脑图 Java集合框架脑图 Java集合大致分为Set、List、Queue、Map四类。  Set：无序、不可重复的集合List：有序、可重复的集合Queue：队列集合Map：有映射关系的集合  而Java集合最根本的接口主要是Collection和Map，前三个都是通过Collection接口实现 CollectionColl">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-77301c3b14d67330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190116164907870.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190116165243432.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.289Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java集合框架整理(一)">
+<meta name="twitter:description" content="[TOC] Java Map、List、Vector源码分析脑图 Java集合框架脑图 Java集合大致分为Set、List、Queue、Map四类。  Set：无序、不可重复的集合List：有序、可重复的集合Queue：队列集合Map：有映射关系的集合  而Java集合最根本的接口主要是Collection和Map，前三个都是通过Collection接口实现 CollectionColl">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/4061843-77301c3b14d67330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/07/Java集合框架整理(一)/">
+
+
+
+
+
+  <title>Java集合框架整理(一) | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/Java集合框架整理(一)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java集合框架整理(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<p>[TOC]</p>
+<h1 id="Java-Map、List、Vector源码分析"><a href="#Java-Map、List、Vector源码分析" class="headerlink" title="Java Map、List、Vector源码分析"></a>Java Map、List、Vector源码分析</h1><p><a href="http://naotu.baidu.com/file/195a5d4c7010b778a85631f5f61ab92c?token=f5c0ec8bbaa0f24e" target="_blank" rel="noopener">脑图</a></p>
+<p><a href="https://upload-images.jianshu.io/upload_images/4061843-77301c3b14d67330.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-77301c3b14d67330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java集合框架脑图"></a>Java集合框架脑图</p>
+<p>Java集合大致分为Set、List、Queue、Map四类。</p>
+<blockquote>
+<p>Set：无序、不可重复的集合<br>List：有序、可重复的集合<br>Queue：队列集合<br>Map：有映射关系的集合</p>
+</blockquote>
+<p>而Java集合最根本的接口主要是<strong>Collection</strong>和<strong>Map</strong>，前三个都是通过Collection接口实现</p>
+<h2 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h2><p><a href="https://img-blog.csdnimg.cn/20190116164907870.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70" target="_blank" rel="noopener"><img src="https://img-blog.csdnimg.cn/20190116164907870.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70" alt="Collection"></a>Collection</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//元素数</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//是否包含某个元素</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="comment">//该Collection的迭代器</span></span><br><span class="line">    <span class="function">Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span></span>;</span><br><span class="line">    Object[] toArray();</span><br><span class="line">    &lt;T&gt; T[] toArray(T[] a);</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="comment">//是否包含某个元素集合Collection</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">containsAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">removeAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">removeIf</span><span class="params">(Predicate&lt;? <span class="keyword">super</span> E&gt; filter)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(filter);</span><br><span class="line">        <span class="keyword">boolean</span> removed = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">final</span> Iterator&lt;E&gt; each = iterator();</span><br><span class="line">        <span class="keyword">while</span> (each.hasNext()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (filter.test(each.next())) &#123;</span><br><span class="line">                each.remove();</span><br><span class="line">                removed = <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> removed;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//保留当前Collection和c两个的交（共有的元素）</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">retainAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">default</span> Spliterator&lt;E&gt; <span class="title">spliterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Spliterators.spliterator(<span class="keyword">this</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Stream&lt;E&gt; <span class="title">stream</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> StreamSupport.stream(spliterator(), <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Stream&lt;E&gt; <span class="title">parallelStream</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> StreamSupport.stream(spliterator(), <span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Collection首先继承了Iterable，看Iterable的源码中注释:这个接口是提供了”for-each loop”类似的迭代功能，得到迭代器（Iterator）实现迭代遍历，而Iterator是一种统一遍历集合元素的方式，所以所有实现了Collection的都会默认有一个迭代器，Iterable是为了得到相应的迭代器（每个集合最后迭代的方式可能不一样），接着，Collection中定义了一些常用的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterable</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//返回该Collection上的Iterator</span></span><br><span class="line">    <span class="function">Iterator&lt;T&gt; <span class="title">iterator</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保证通过指定的action（应该是迭代方式）进行遍历完全</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">forEach</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> T&gt; action)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(action);</span><br><span class="line">        <span class="keyword">for</span> (T t : <span class="keyword">this</span>) &#123;</span><br><span class="line">            action.accept(t);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//分割迭代器，用于并行处理的</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Spliterator&lt;T&gt; <span class="title">spliterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Spliterators.spliteratorUnknownSize(iterator(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这是Iterator的代码，相当简单了</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">E <span class="title">next</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="string">"remove"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; action)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(action);</span><br><span class="line">        <span class="keyword">while</span> (hasNext())</span><br><span class="line">            action.accept(next());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Collection的代码看完了，接着看看它的实现和相关的接口吧。<br>从脑图中可以看到，继承于Collection的接口有List、Set、Queue，这三个是直接继承的，然后还有一个抽象类AbstractCollection实现了Collection。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractCollection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">AbstractCollection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size() == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过迭代器，遍历判断是否包含</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        Iterator&lt;E&gt; it = iterator();</span><br><span class="line">        <span class="keyword">if</span> (o==<span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (it.hasNext())</span><br><span class="line">                <span class="keyword">if</span> (it.next()==<span class="keyword">null</span>)</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (it.hasNext())</span><br><span class="line">                <span class="keyword">if</span> (o.equals(it.next()))</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Object[] toArray() &#123;</span><br><span class="line">        Object[] r = <span class="keyword">new</span> Object[size()];</span><br><span class="line">        Iterator&lt;E&gt; it = iterator();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; r.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (! it.hasNext()) <span class="comment">// fewer elements than expected</span></span><br><span class="line">                <span class="keyword">return</span> Arrays.copyOf(r, i);</span><br><span class="line">            r[i] = it.next();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> it.hasNext() ? finishToArray(r, it) : r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; T[] toArray(T[] a) &#123;</span><br><span class="line">        <span class="keyword">int</span> size = size();</span><br><span class="line">        T[] r = a.length &gt;= size ? a :</span><br><span class="line">                  (T[])java.lang.reflect.Array</span><br><span class="line">                  .newInstance(a.getClass().getComponentType(), size);</span><br><span class="line">        Iterator&lt;E&gt; it = iterator();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; r.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (! it.hasNext()) &#123; <span class="comment">// fewer elements than expected</span></span><br><span class="line">                <span class="keyword">if</span> (a == r) &#123;</span><br><span class="line">                    r[i] = <span class="keyword">null</span>; <span class="comment">// null-terminate</span></span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a.length &lt; i) &#123;</span><br><span class="line">                    <span class="keyword">return</span> Arrays.copyOf(r, i);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    System.arraycopy(r, <span class="number">0</span>, a, <span class="number">0</span>, i);</span><br><span class="line">                    <span class="keyword">if</span> (a.length &gt; i) &#123;</span><br><span class="line">                        a[i] = <span class="keyword">null</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> a;</span><br><span class="line">            &#125;</span><br><span class="line">            r[i] = (T)it.next();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// more elements than expected</span></span><br><span class="line">        <span class="keyword">return</span> it.hasNext() ? finishToArray(r, it) : r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_ARRAY_SIZE = Integer.MAX_VALUE - <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> &lt;T&gt; T[] finishToArray(T[] r, Iterator&lt;?&gt; it) &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        Iterator&lt;E&gt; it = iterator();</span><br><span class="line">        <span class="keyword">if</span> (o==<span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (it.next()==<span class="keyword">null</span>) &#123;</span><br><span class="line">                    it.remove();</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (o.equals(it.next())) &#123;</span><br><span class="line">                    it.remove();</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsAll</span><span class="params">(Collection&lt;?&gt; c)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">removeAll</span><span class="params">(Collection&lt;?&gt; c)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">retainAll</span><span class="params">(Collection&lt;?&gt; c)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Iterator&lt;E&gt; it = iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            it.next();</span><br><span class="line">            it.remove();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Iterator&lt;E&gt; it = iterator();</span><br><span class="line">        <span class="keyword">if</span> (! it.hasNext())</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"[]"</span>;</span><br><span class="line"></span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="string">'['</span>);</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            E e = it.next();</span><br><span class="line">            sb.append(e == <span class="keyword">this</span> ? <span class="string">"(this Collection)"</span> : e);</span><br><span class="line">            <span class="keyword">if</span> (! it.hasNext())</span><br><span class="line">                <span class="keyword">return</span> sb.append(<span class="string">']'</span>).toString();</span><br><span class="line">            sb.append(<span class="string">','</span>).append(<span class="string">' '</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个抽象类中，对之前定义的方法进行了处理和实现，添加了逻辑处理。<br>通过迭代器遍历，判断是否包含某个元素（contains）；转换为array（toArray）和指定的数组（toArray(T[] a)），定义了最大容量为Integer.MAX_VALUE - 8；删除处理（remove）；清空集合处理（clear）；toString重写。</p>
+<p>AbstractCollection这个抽象类的子类又根据实现不同的接口（List、Set、Queue）得到AbstractList、AbstractSet、AbstractQueue这几个分别对应的抽象类，然后常用的ArrayList、Vector、HashSet、PriorityQueue、DelayQueue等都是直接或间接继承这几个对应的抽象类来实现的。</p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function">Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span></span>;</span><br><span class="line">    Object[] toArray();</span><br><span class="line">    &lt;T&gt; T[] toArray(T[] a);</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">containsAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(<span class="keyword">int</span> index, Collection&lt;? extends E&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">removeAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">retainAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">replaceAll</span><span class="params">(UnaryOperator&lt;E&gt; operator)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(operator);</span><br><span class="line">        <span class="keyword">final</span> ListIterator&lt;E&gt; li = <span class="keyword">this</span>.listIterator();</span><br><span class="line">        <span class="keyword">while</span> (li.hasNext()) &#123;</span><br><span class="line">            li.set(operator.apply(li.next()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(&#123;<span class="string">"unchecked"</span>, <span class="string">"rawtypes"</span>&#125;)</span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> E&gt; c)</span> </span>&#123;</span><br><span class="line">        Object[] a = <span class="keyword">this</span>.toArray();</span><br><span class="line">        Arrays.sort(a, (Comparator) c);</span><br><span class="line">        ListIterator&lt;E&gt; i = <span class="keyword">this</span>.listIterator();</span><br><span class="line">        <span class="keyword">for</span> (Object e : a) &#123;</span><br><span class="line">            i.next();</span><br><span class="line">            i.set((E) e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><br><span class="line">    <span class="function">E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E element)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span></span>;</span><br><span class="line">    <span class="function">E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lastIndexOf</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function">ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><br><span class="line">    <span class="function">List&lt;E&gt; <span class="title">subList</span><span class="params">(<span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex)</span></span>;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Spliterator&lt;E&gt; <span class="title">spliterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Spliterators.spliterator(<span class="keyword">this</span>, Spliterator.ORDERED);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>List直接继承自Collection，然后定义了很多方法，其中有一部分跟父接口Collecion中是一样的；然后List有定义了一些适合自己的方法（如get、set等），还添加了一个Sort方法用于排序，比Collection多了一种为List定制的ListIterator</p>
+<p>总之，List的源码也没啥看的，也很简单；看了List的源码，后面看Set、Queue的源码都差不多，因为都是继承自Collection，然后根据自己的特性，添加了属于自己的方法和迭代器。这些特性呢，其实就跟学的数据结构一个道理，只不过Java封装的更好、更完善</p>
+<p>看看AbstractList吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractCollection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">AbstractList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        add(size(), e);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//总是会抛出这个异常</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过迭代遍历，找到下标，从0开始</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        ListIterator&lt;E&gt; it = listIterator();</span><br><span class="line">        <span class="keyword">if</span> (o==<span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (it.hasNext())</span><br><span class="line">                <span class="keyword">if</span> (it.next()==<span class="keyword">null</span>)</span><br><span class="line">                    <span class="keyword">return</span> it.previousIndex();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (it.hasNext())</span><br><span class="line">                <span class="keyword">if</span> (o.equals(it.next()))</span><br><span class="line">                    <span class="keyword">return</span> it.previousIndex();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//最后一次出现的下标，从最后一个开始，向前遍历查找</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lastIndexOf</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//通过迭代器remove</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(<span class="keyword">int</span> index, Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Itr();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//ListIterator，默认0开始迭代</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> listIterator(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//从某个下标开始的迭代</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        rangeCheckForAdd(index);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ListItr(index);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//迭代器实现类</span></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//ListIterator实现类，nextIndex就是当前cursor，previousIndex，就是cursor-1</span></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ListItr</span> <span class="keyword">extends</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">ListIterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">        ListItr(<span class="keyword">int</span> index) &#123;</span><br><span class="line">            cursor = index;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//取集合中的某一部分子集来进行操作，是直接在原数据上进行操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;E&gt; <span class="title">subList</span><span class="params">(<span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//两个AbstractListd的比较，同时迭代</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        ListIterator&lt;E&gt; e1 = listIterator();</span><br><span class="line">        ListIterator&lt;?&gt; e2 = ((List&lt;?&gt;) o).listIterator();</span><br><span class="line">        <span class="keyword">while</span> (e1.hasNext() &amp;&amp; e2.hasNext()) &#123;</span><br><span class="line">            E o1 = e1.next();</span><br><span class="line">            Object o2 = e2.next();</span><br><span class="line">            <span class="keyword">if</span> (!(o1==<span class="keyword">null</span> ? o2==<span class="keyword">null</span> : o1.equals(o2)))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> !(e1.hasNext() || e2.hasNext());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> hashCode = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (E e : <span class="keyword">this</span>)</span><br><span class="line">            hashCode = <span class="number">31</span>*hashCode + (e==<span class="keyword">null</span> ? <span class="number">0</span> : e.hashCode());</span><br><span class="line">        <span class="keyword">return</span> hashCode;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//subList实现类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AbstractList&lt;E&gt; l;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> offset;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br><span class="line">    SubList(AbstractList&lt;E&gt; list, <span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex) &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//随机访问，通过它可以间接操控父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomAccessSubList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">SubList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">RandomAccess</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码好像有点多，怎么说呢，AbstractList基本囊括了所有的List操作，基本上平时用到的大多数都在这个源码里面，当然get方法还待实现，后面的ArrayList、Vector、Stack就是根据相应的进行特殊的操作了</p>
+<p>下面看看常用的List吧，都继承于AbstractList这个抽象类：</p>
+<ul>
+<li><p>LinkedList<br>  LinkedList是继承自AbstractSequenceList这个抽象类，而AbstractSequenceList又是继承自AbstractList的</p>
+<p>  <a href="./Java集合框架整理(五)——LinkedList源码分析.md">Java集合框架整理(五)——LinkedList源码分析</a></p>
+</li>
+<li><p>ArrayList</p>
+<ol>
+<li><p>动态数组，线程非安全，允许null</p>
+</li>
+<li><p>可以手动调用扩容</p>
+</li>
+<li><p>默认是空数组构造，默认容量是10</p>
+</li>
+<li><p>扩容默认扩容1.5倍</p>
+</li>
+<li><p>add通过移动数组，remove也是移动数组进行覆盖，数组的拷贝是通过native方法（System.arraycopy）</p>
+</li>
+<li><p>clear操作就是置为null</p>
+<p><a href="./Java集合框架整理(八)——ArrayList源码分析.md">Java集合框架整理(八)——ArrayList源码分析</a></p>
+</li>
+</ol>
+</li>
+<li><p>SparseArray</p>
+<ol>
+<li>int型的key，Object型的value，HashMap则是任意类型</li>
+<li>一个数组存放key，一个数组存放value；key是有序的</li>
+<li>不再使用像HashMap的Entry</li>
+<li>只实现了Cloneable接口，默认容量是10</li>
+<li>通过二分查找法来查找插入的下标index，如果返回的是负值表明该位置没有被占用，可以直接取反获取下标</li>
+<li>删除数据后不会直接移动数据进行覆盖，而是将删除的位置标记为DELETE，标明当前位置没有数据，那么在put时，有原值直接覆盖且不会返回，HashMap会返回原值，发现要插入的位置是DELETE，就直接插入，但是如果发现该位置已经有值了（key值不一样），那么触发gc，调整其他位置的DELETE并删除无用的key，重新计算下标再进行插入；如果容量已经满了，则扩容后插入</li>
+<li>扩容时，当前容量小于等于4，则扩容后容量为8.否则为当前容量的两倍</li>
+</ol>
+</li>
+<li><p>Vector</p>
+<ol>
+<li><p>默认容量10，增长系数0，扩容翻倍</p>
+</li>
+<li><p>通过synchronized 来保证线程安全</p>
+</li>
+<li><p>允许元素为null</p>
+<p><a href="./Java集合框架整理(六)——Vector和Stack源码分析.md">Java集合框架整理(六)——Vector和Stack源码分析</a></p>
+</li>
+</ol>
+</li>
+<li><p>Stack<br>  继承自Vector</p>
+</li>
+</ul>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Set</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function">Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span></span>;</span><br><span class="line">    Object[] toArray();</span><br><span class="line">    &lt;T&gt; T[] toArray(T[] a);</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">containsAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">retainAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">removeAll</span><span class="params">(Collection&lt;?&gt; c)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Spliterator&lt;E&gt; <span class="title">spliterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Spliterators.spliterator(<span class="keyword">this</span>, Spliterator.DISTINCT);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>咋一看，好像跟Collection没啥区别，就是多了默认的分割迭代器。因为特性的原因，方法比List少了一部分（如sort、get、set、listIterator、subList等等）</p>
+<p>看看AbstractSet</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractSet</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractCollection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">Set</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">AbstractSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">this</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> Set))</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        Collection&lt;?&gt; c = (Collection&lt;?&gt;) o;</span><br><span class="line">        <span class="keyword">if</span> (c.size() != size())</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> containsAll(c);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassCastException unused)   &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NullPointerException unused) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> h = <span class="number">0</span>;</span><br><span class="line">        Iterator&lt;E&gt; i = iterator();</span><br><span class="line">        <span class="keyword">while</span> (i.hasNext()) &#123;</span><br><span class="line">            E obj = i.next();</span><br><span class="line">            <span class="keyword">if</span> (obj != <span class="keyword">null</span>)</span><br><span class="line">                h += obj.hashCode();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> h;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">removeAll</span><span class="params">(Collection&lt;?&gt; c)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(c);</span><br><span class="line">        <span class="keyword">boolean</span> modified = <span class="keyword">false</span>;</span><br><span class="line">        <span class="comment">//以少的为循环条件</span></span><br><span class="line">        <span class="keyword">if</span> (size() &gt; c.size()) &#123;</span><br><span class="line">            <span class="keyword">for</span> (Iterator&lt;?&gt; i = c.iterator(); i.hasNext(); )</span><br><span class="line">                modified |= remove(i.next());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (Iterator&lt;?&gt; i = iterator(); i.hasNext(); ) &#123;</span><br><span class="line">                <span class="keyword">if</span> (c.contains(i.next())) &#123;</span><br><span class="line">                    i.remove();</span><br><span class="line">                    modified = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> modified;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个代码好像也没啥，就对equals、hashCode进行实现，removeAll修改了一下，以元素少的为遍历条件进行删除</p>
+<ul>
+<li>HashSet<ol>
+<li>基于HashMap实现，底层保存数据使用HashMap</li>
+<li>有内部排序，当重复的时候不会放入内部的HashMap</li>
+</ol>
+</li>
+<li>LinkedHashSet</li>
+<li>TreeSet</li>
+</ul>
+<p><a href="./Java集合框架整理(七)——TreeSet、HashSet、LinkedHashSet源码分析.md">Java集合框架整理(七)——TreeSet、HashSet、LinkedHashSet源码分析</a></p>
+<h3 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Queue</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(E e)</span></span>;</span><br><span class="line">    <span class="function">E <span class="title">remove</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">E <span class="title">poll</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">E <span class="title">element</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">E <span class="title">peek</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你没看错，Queue的代码就这么点；没有去再给自己一个迭代器，用的就是Collection的，多了offer、poll、element、peek等方法</p>
+<p>就直接看看AbstractQueue这个抽象类吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractQueue</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">AbstractCollection</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Queue</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">AbstractQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (offer(e))</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Queue full"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        E x = poll();</span><br><span class="line">        <span class="keyword">if</span> (x != <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> x;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">element</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        E x = peek();</span><br><span class="line">        <span class="keyword">if</span> (x != <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> x;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (poll() != <span class="keyword">null</span>)</span><br><span class="line">            ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="keyword">this</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">        <span class="keyword">boolean</span> modified = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (E e : c)</span><br><span class="line">            <span class="keyword">if</span> (add(e))</span><br><span class="line">                modified = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">return</span> modified;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码也是很少，add方法最终是通过offer来处理的，remove就是通过poll来处理的，element是通过peek方法来处理的，clear也是通过poll来处理的，这些方法都是需要后面实现的。</p>
+<p>接着看看几种Queue和Deque常用类吧</p>
+<ul>
+<li>线程安全的Queue<br>  ConcurrentLinkedDeque、ConcurrentLinkedQueue、LinkedBlockingQueue、LinkedBlockingDeque、<a href="./Java集合框架整理(一)——PriorityBlockingQueue、ArrayBlockingQueue源码分析.md">Java集合框架整理(一)——PriorityBlockingQueue、ArrayBlockingQueue源码分析</a></li>
+<li>线程非安全的Queue<br>  <a href="./Java集合框架整理(四)——PriorityQueue、DelayQueue源码分析.md">Java集合框架整理(四)——PriorityQueue、DelayQueue源码分析</a>、LinkedTransferQueue</li>
+</ul>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p><a href="https://img-blog.csdnimg.cn/20190116165243432.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70" target="_blank" rel="noopener"><img src="https://img-blog.csdnimg.cn/20190116165243432.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWR1XzM2OTU5ODg2,size_16,color_FFFFFF,t_70" alt="Map"></a>Map</p>
+<blockquote>
+<p>Map作为另一个大类的集合，我们用的也不算少<br>Map是一种数据映射关系的集合，是以键值对的形式存储（key-value），其中key不可重复</p>
+</blockquote>
+<p>首先看看Map这个根接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;  <span class="comment">//元素个数</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>;  <span class="comment">//是否为空集合</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(Object key)</span></span>;  <span class="comment">//是否包含某个键key</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(Object value)</span></span>;  <span class="comment">//是否包含某个值</span></span><br><span class="line">    <span class="function">V <span class="title">get</span><span class="params">(Object key)</span></span>;  <span class="comment">//获取</span></span><br><span class="line">    <span class="function">V <span class="title">put</span><span class="params">(K key, V value)</span></span>;  <span class="comment">//存入一个元素</span></span><br><span class="line">    <span class="function">V <span class="title">remove</span><span class="params">(Object key)</span></span>;  <span class="comment">//根据键删除某个元素</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; m)</span></span>;  <span class="comment">//添加一个map集合</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;  <span class="comment">//清空</span></span><br><span class="line">    <span class="function">Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span></span>;  <span class="comment">//返回key的Set集合</span></span><br><span class="line">    <span class="function">Collection&lt;V&gt; <span class="title">values</span><span class="params">()</span></span>;  <span class="comment">//返回value的Collection集合</span></span><br><span class="line">    Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySet();  <span class="comment">//返回Entry（具有键值对）的Set集合</span></span><br><span class="line">    <span class="comment">//Map内部的一个接口，同时存有key和value，用于entrySet返回</span></span><br><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">        <span class="function">K <span class="title">getKey</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="function">V <span class="title">getValue</span><span class="params">()</span></span>;</span><br><span class="line">        <span class="function">V <span class="title">setValue</span><span class="params">(V value)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> &lt;K extends Comparable&lt;? <span class="keyword">super</span> K&gt;, V&gt; Comparator&lt;Map.Entry&lt;K,V&gt;&gt; comparingByKey() &#123;</span><br><span class="line">            <span class="keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</span><br><span class="line">                (c1, c2) -&gt; c1.getKey().compareTo(c2.getKey());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> &lt;K, V extends Comparable&lt;? <span class="keyword">super</span> V&gt;&gt; Comparator&lt;Map.Entry&lt;K,V&gt;&gt; comparingByValue() &#123;</span><br><span class="line">            <span class="keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</span><br><span class="line">                (c1, c2) -&gt; c1.getValue().compareTo(c2.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> &lt;K, V&gt; Comparator&lt;Map.Entry&lt;K, V&gt;&gt; comparingByKey(Comparator&lt;? <span class="keyword">super</span> K&gt; cmp) &#123;</span><br><span class="line">            Objects.requireNonNull(cmp);</span><br><span class="line">            <span class="keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</span><br><span class="line">                (c1, c2) -&gt; cmp.compare(c1.getKey(), c2.getKey());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> &lt;K, V&gt; Comparator&lt;Map.Entry&lt;K, V&gt;&gt; comparingByValue(Comparator&lt;? <span class="keyword">super</span> V&gt; cmp) &#123;</span><br><span class="line">            Objects.requireNonNull(cmp);</span><br><span class="line">            <span class="keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</span><br><span class="line">                (c1, c2) -&gt; cmp.compare(c1.getValue(), c2.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;  <span class="comment">//hash值</span></span><br><span class="line">    <span class="comment">//根据key获取value默认要指定一个默认值，防止获取不存在的值（不存在的key）。貌似是后来加上的</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">getOrDefault</span><span class="params">(Object key, V defaultValue)</span> </span>&#123;</span><br><span class="line">        V v;</span><br><span class="line">        <span class="keyword">return</span> (((v = get(key)) != <span class="keyword">null</span>) || containsKey(key))</span><br><span class="line">            ? v</span><br><span class="line">            : defaultValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//根据action默认的foreach，key和value都会参与</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">forEach</span><span class="params">(BiConsumer&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V&gt; action)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(action);</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;K, V&gt; entry : entrySet()) &#123;</span><br><span class="line">            K k;</span><br><span class="line">            V v;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                k = entry.getKey();</span><br><span class="line">                v = entry.getValue();</span><br><span class="line">            &#125; <span class="keyword">catch</span>(IllegalStateException ise) &#123;</span><br><span class="line">                <span class="comment">// this usually means the entry is no longer in the map.</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException(ise);</span><br><span class="line">            &#125;</span><br><span class="line">            action.accept(k, v);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//通过遍历，然后根据function来替换原有的值</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">replaceAll</span><span class="params">(BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; function)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(function);</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;K, V&gt; entry : entrySet()) &#123;</span><br><span class="line">            K k;</span><br><span class="line">            V v;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                k = entry.getKey();</span><br><span class="line">                v = entry.getValue();</span><br><span class="line">            &#125; <span class="keyword">catch</span>(IllegalStateException ise) &#123;</span><br><span class="line">                <span class="comment">// this usually means the entry is no longer in the map.</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException(ise);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// ise thrown from function is not a cme.</span></span><br><span class="line">            v = function.apply(k, v);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                entry.setValue(v);</span><br><span class="line">            &#125; <span class="keyword">catch</span>(IllegalStateException ise) &#123;</span><br><span class="line">                <span class="comment">// this usually means the entry is no longer in the map.</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException(ise);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//加入</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">putIfAbsent</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">        V v = get(key);</span><br><span class="line">        <span class="keyword">if</span> (v == <span class="keyword">null</span>) &#123;</span><br><span class="line">            v = put(key, value);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//根据键值对删除指定的元素</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object key, Object value)</span> </span>&#123;</span><br><span class="line">        Object curValue = get(key);</span><br><span class="line">        <span class="keyword">if</span> (!Objects.equals(curValue, value) ||</span><br><span class="line">            (curValue == <span class="keyword">null</span> &amp;&amp; !containsKey(key))) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        remove(key);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//替换，最终是通过put实现</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">replace</span><span class="params">(K key, V oldValue, V newValue)</span> </span>&#123;</span><br><span class="line">        Object curValue = get(key);</span><br><span class="line">        <span class="keyword">if</span> (!Objects.equals(curValue, oldValue) ||</span><br><span class="line">            (curValue == <span class="keyword">null</span> &amp;&amp; !containsKey(key))) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        put(key, newValue);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">replace</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">        V curValue;</span><br><span class="line">        <span class="keyword">if</span> (((curValue = get(key)) != <span class="keyword">null</span>) || containsKey(key)) &#123;</span><br><span class="line">            curValue = put(key, value);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> curValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">computeIfAbsent</span><span class="params">(K key,</span></span></span><br><span class="line"><span class="function"><span class="params">            Function&lt;? <span class="keyword">super</span> K, ? extends V&gt; mappingFunction)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(mappingFunction);</span><br><span class="line">        V v;</span><br><span class="line">        <span class="keyword">if</span> ((v = get(key)) == <span class="keyword">null</span>) &#123;</span><br><span class="line">            V newValue;</span><br><span class="line">            <span class="keyword">if</span> ((newValue = mappingFunction.apply(key)) != <span class="keyword">null</span>) &#123;</span><br><span class="line">                put(key, newValue);</span><br><span class="line">                <span class="keyword">return</span> newValue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">computeIfPresent</span><span class="params">(K key,</span></span></span><br><span class="line"><span class="function"><span class="params">            BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(remappingFunction);</span><br><span class="line">        V oldValue;</span><br><span class="line">        <span class="keyword">if</span> ((oldValue = get(key)) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            V newValue = remappingFunction.apply(key, oldValue);</span><br><span class="line">            <span class="keyword">if</span> (newValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">                put(key, newValue);</span><br><span class="line">                <span class="keyword">return</span> newValue;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                remove(key);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">compute</span><span class="params">(K key,</span></span></span><br><span class="line"><span class="function"><span class="params">            BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(remappingFunction);</span><br><span class="line">        V oldValue = get(key);</span><br><span class="line"></span><br><span class="line">        V newValue = remappingFunction.apply(key, oldValue);</span><br><span class="line">        <span class="keyword">if</span> (newValue == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// delete mapping</span></span><br><span class="line">            <span class="keyword">if</span> (oldValue != <span class="keyword">null</span> || containsKey(key)) &#123;</span><br><span class="line">                <span class="comment">// something to remove</span></span><br><span class="line">                remove(key);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// nothing to do. Leave things as they were.</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// add or replace old mapping</span></span><br><span class="line">            put(key, newValue);</span><br><span class="line">            <span class="keyword">return</span> newValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">merge</span><span class="params">(K key, V value,</span></span></span><br><span class="line"><span class="function"><span class="params">            BiFunction&lt;? <span class="keyword">super</span> V, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(remappingFunction);</span><br><span class="line">        Objects.requireNonNull(value);</span><br><span class="line">        V oldValue = get(key);</span><br><span class="line">        V newValue = (oldValue == <span class="keyword">null</span>) ? value :</span><br><span class="line">                   remappingFunction.apply(oldValue, value);</span><br><span class="line">        <span class="keyword">if</span>(newValue == <span class="keyword">null</span>) &#123;</span><br><span class="line">            remove(key);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            put(key, newValue);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newValue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p><a href="./Java集合框架整理(二)——HashMap源码分析.md">Java集合框架整理(二)——HashMap源码分析</a></p>
+<h4 id="1-7和1-8的区别"><a href="#1-7和1-8的区别" class="headerlink" title="1.7和1.8的区别"></a>1.7和1.8的区别</h4><ol>
+<li>1.7的一些运算赋值在1.8中变为了位运算，一些判断也从Math变为了if else</li>
+<li>JDK 1.7 做了9次扰动处理 = 4次位运算 + 5次异或运算。1.8 简化了扰动函数 = 只做了2次扰动 = 1次位运算 + 1次异或运算</li>
+<li>1.7扩容函数是在确定要扩容进行，1.8的扩容函数可能是初始化；1.7更新阈值在扩容后，1.8在扩容前，很多判断、阈值更新都是在扩容前</li>
+<li>1.8扩容后进行复制时，会先进行链表的一个判断（当前链表只有一个元素时），1.7没有；1.8有链表高低位的处理，是将整个旧链表复制到新的中，低位链表的索引跟原来的一样，高位的则放在新的索引处（尾插法），1.7则是遍历旧链表，头插法插入新链表（可能导致逆序）</li>
+<li>1.8中加入了红黑树，当链表长度到8时链表转化为红黑树，扩容时，重新计算存储位置，红黑树内数量&lt;6又会转化为链表</li>
+<li>key和value都允许为null（key只能有一个为null，而value则可以有多个为null）</li>
+</ol>
+<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><ol>
+<li>1.6使用ReentrantLock保证并发安全，1.8使用CAS（Compare and Swipe）和synchronized 来保证并发安全</li>
+<li>1.8有红黑树的概念，使用红黑树，这些跟1.8的HashMap一样</li>
+<li>由于并发的问题，在扩容的时候是采用单线程初始化大小，多个线程共同进行值的复制</li>
+<li>1.6头插法，1.8逆序插入链表</li>
+<li>1.6删除操作要重新复制一次链表，所以1.7并不绝对并发安全（删除没有完全的时候旧链表存在）</li>
+<li>1.6next是final修饰，1.8不用</li>
+</ol>
+<h3 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h3><ol>
+<li>数组+哈希表，非线程安全</li>
+<li>key、value允许为null</li>
+<li>继承自HashMap，有一个双向链表</li>
+<li>相比HashMap，增加了accessOrder参数控制迭代时的结点顺序</li>
+<li>增删数据，都是调用的HashMap的函数，只是修改了一些链头链尾指向的结点</li>
+<li>accessOrder=true的模式下,在afterNodeAccess()函数中，会将当前被访问到的节点e，移动至内部的双向链表的尾部。值得注意的是，afterNodeAccess()函数中，会修改modCount,因此当你正在accessOrder=true的模式下,迭代LinkedHashMap时，如果同时查询访问数据，也会导致fail-fast，因为迭代的顺序已经改变</li>
+</ol>
+<h3 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h3><ol>
+<li>默认容量是11，不要求底层数组的容量一定要为2的整数次幂</li>
+<li>扩容后重新计算index 求余（%），扩容是2倍+1</li>
+<li>clear操作仅仅是将table（数组）设为null</li>
+<li>每一个方法都是用synchronized 修饰来保证线程安全</li>
+<li>Hashtable中key和value都不允许为null</li>
+<li>计算hash值，直接用key的hashCode()</li>
+<li>拉链法，hashSeed ^ k.hashCode()解决Hash冲突</li>
+<li>所谓快速失败就是在并发集合中，其进行迭代操作时，若有其他线程对其进行结构性的修改，这时迭代器会立马感知到，并且立即抛出ConcurrentModificationException 异常，而不是等到迭代完成之后才告诉你（你已经出错了）。</li>
+</ol>
+<h3 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h3><ol>
+<li>TreeMap是根据key进行排序的，它的排序和定位需要依赖比较器或覆写Comparable接口</li>
+<li>key不能为null</li>
+<li>就是红黑树实现</li>
+<li>非线程同步</li>
+</ol>
+<h3 id="ArrayMap"><a href="#ArrayMap" class="headerlink" title="ArrayMap"></a>ArrayMap</h3><ol>
+<li>两个数组，int型存放hashcod，Object型保存键值对，int型的2倍容量</li>
+<li>扩容时只拷贝数组，不重建hash表</li>
+<li>删除时，如果集合剩余元素少于一定阈值，数组会收缩（容量减小）</li>
+<li>对key从小到大排序，二分法查询key的下标</li>
+<li>默认扩容size是4，默认容量为0</li>
+<li>put操作出来计算hashcode外，其余跟SparseArray基本类似，也类似于ArrayList</li>
+<li>扩容规则：如果容量大于8，则扩容一半。</li>
+<li>mHashes长度大于8，且 集合长度 小于当前空间的 1/3,则执行一个 shrunk，收缩操作</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/07/Java泛型总结/" rel="next" title="Java 泛型总结">
+                <i class="fa fa-chevron-left"></i> Java 泛型总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/07/Java集合框架整理(三)——PriorityBlockingQueue、ArrayBlockingQueue源码分析/" rel="prev" title="Java集合框架整理(一)——PriorityBlockingQueue、ArrayBlockingQueue源码分析">
+                Java集合框架整理(一)——PriorityBlockingQueue、ArrayBlockingQueue源码分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-Map、List、Vector源码分析"><span class="nav-number">1.</span> <span class="nav-text">Java Map、List、Vector源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Collection"><span class="nav-number">1.1.</span> <span class="nav-text">Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#List"><span class="nav-number">1.1.1.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set"><span class="nav-number">1.1.2.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Queue"><span class="nav-number">1.1.3.</span> <span class="nav-text">Queue</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map"><span class="nav-number">1.2.</span> <span class="nav-text">Map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap"><span class="nav-number">1.2.1.</span> <span class="nav-text">HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7和1-8的区别"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">1.7和1.8的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap"><span class="nav-number">1.2.2.</span> <span class="nav-text">ConcurrentHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedHashMap"><span class="nav-number">1.2.3.</span> <span class="nav-text">LinkedHashMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashTable"><span class="nav-number">1.2.4.</span> <span class="nav-text">HashTable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeMap"><span class="nav-number">1.2.5.</span> <span class="nav-text">TreeMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayMap"><span class="nav-number">1.2.6.</span> <span class="nav-text">ArrayMap</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

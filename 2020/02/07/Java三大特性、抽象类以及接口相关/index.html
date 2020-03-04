@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] Java三大特性、抽象类以及接口相关声明：部分面试题来自微信公众号码农每日一题 封装概念：对象属性的封装隐藏，方法的公开；属性私有化后，则其他类不能直接使用对象名.属性名访问，必须通过提供的公开方法。控制在程序中属性的读和修改的访问级别。 目的：增强安全性和简化编程，使用者不必了解具体的实现细节，而只是要通过外部接口，一特定的访问权限来使用类的成员。 基本要求：把所有的属性私有">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java三大特性、抽象类以及接口相关">
+<meta property="og:url" content="http://yoursite.com/2020/02/07/Java三大特性、抽象类以及接口相关/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="[TOC] Java三大特性、抽象类以及接口相关声明：部分面试题来自微信公众号码农每日一题 封装概念：对象属性的封装隐藏，方法的公开；属性私有化后，则其他类不能直接使用对象名.属性名访问，必须通过提供的公开方法。控制在程序中属性的读和修改的访问级别。 目的：增强安全性和简化编程，使用者不必了解具体的实现细节，而只是要通过外部接口，一特定的访问权限来使用类的成员。 基本要求：把所有的属性私有">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-1952b22e7fa34fe4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java三大特性、抽象类以及接口相关">
+<meta name="twitter:description" content="[TOC] Java三大特性、抽象类以及接口相关声明：部分面试题来自微信公众号码农每日一题 封装概念：对象属性的封装隐藏，方法的公开；属性私有化后，则其他类不能直接使用对象名.属性名访问，必须通过提供的公开方法。控制在程序中属性的读和修改的访问级别。 目的：增强安全性和简化编程，使用者不必了解具体的实现细节，而只是要通过外部接口，一特定的访问权限来使用类的成员。 基本要求：把所有的属性私有">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/4061843-1952b22e7fa34fe4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/07/Java三大特性、抽象类以及接口相关/">
+
+
+
+
+
+  <title>Java三大特性、抽象类以及接口相关 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/Java三大特性、抽象类以及接口相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java三大特性、抽象类以及接口相关</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<p>[TOC]</p>
+<h1 id="Java三大特性、抽象类以及接口相关"><a href="#Java三大特性、抽象类以及接口相关" class="headerlink" title="Java三大特性、抽象类以及接口相关"></a>Java三大特性、抽象类以及接口相关</h1><p><strong>声明</strong>：部分面试题来自微信公众号<strong>码农每日一题</strong></p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>概念：对象属性的封装隐藏，方法的公开；属性私有化后，则其他类不能直接使用对象名.属性名访问，必须通过提供的公开方法。控制在程序中属性的读和修改的访问级别。</p>
+<p>目的：增强安全性和简化编程，使用者不必了解具体的实现细节，而只是要通过外部接口，一特定的访问权限来使用类的成员。</p>
+<p>基本要求：把所有的属性私有化，对每个属性提供getter和setter方法</p>
+<p>一个小例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//封装之前</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> String address;</span><br><span class="line">    <span class="keyword">public</span> String age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestDemo</span><span class="params">(String name, String address, String age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    TestDemo() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用是这样的</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TestDemo testDemo = <span class="keyword">new</span> TestDemo();</span><br><span class="line">        String name = testDemo.name;</span><br><span class="line">        String address = testDemo.address;</span><br><span class="line">        String age = testDemo.age;</span><br><span class="line">        testDemo.name = <span class="string">"hello"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//封装之后</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line">    <span class="keyword">private</span> String age;  <span class="comment">//构造私有属性，并且不对外公开获取，只能从构造函数设置</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestDemo</span><span class="params">(String name, String address, String age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    TestDemo() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAddress</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddress</span><span class="params">(String address)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用是这样的</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TestDemo testDemo = <span class="keyword">new</span> TestDemo();</span><br><span class="line">        TestDemo testDemo1 = <span class="keyword">new</span> TestDemo(<span class="string">"Hello"</span>, <span class="string">"world"</span>， <span class="string">"man"</span>);</span><br><span class="line"></span><br><span class="line">        String name = testDemo1.getName();</span><br><span class="line">        String address = testDemo1.getAddress();</span><br><span class="line">        <span class="comment">//String age = testDemo1.getAge();  //无法获取age</span></span><br><span class="line">        testDemo1.setName(<span class="string">"world"</span>);  <span class="comment">//调用公开方法进行属性的修改</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>实现代码的复用，可以基于已经存在的类构造一个新类，继承已存在的类就是复用这个类的方法和域，在此基础上还可以添加一些新的方法和域，一个类只能继承一个类</p>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>父类变，子类就必须变。</li>
+<li>继承破坏了封装，对于父类而言，它的实现细节对与子类来说都是透明的。</li>
+<li>继承是一种强耦合关系。</li>
+</ol>
+<p>访问修饰符：</p>
+<ol>
+<li>private：仅对本类可见</li>
+<li>protected：对本包和所有子类可见</li>
+<li>public：对所有类可见</li>
+<li>默认（无修饰）：对本包可见</li>
+</ol>
+<p>继承和权限：<br>| | | | | | | | |<br>|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|<br>| | Public | 无修饰 | Private | Protected | final | abstract | static |<br>| 类继承 | 可继承 | 同一包中的可继承 | 不能修饰类 | 不能修饰类 | 不能派生子类（不可继承） | 一般可继承 | 不能修饰类 |<br>| 方法重载 | 可重载 | 可重载 | 不能重载 | 可重载 | 不可重载 | 可重载 | 可重载（修饰主函数就不能重载） |<br>| 成员变量 | 父类属性被隐藏，使用调用super | 父类属性被隐藏，使用调用super | 子类不能直接访问父类的私有变量（通过父类构造器初始化父类私有变量） | 父类属性被隐藏，使用调用super | 必须赋初值 | 不能修饰成员变量 | 每个实例共享这个类变量 |</p>
+<h3 id="类、超类、子类"><a href="#类、超类、子类" class="headerlink" title="类、超类、子类"></a>类、超类、子类</h3><p>引例：一家公司，有经理、普通员工等等，但是所有人都是老板的雇员，以此设计它们之间的关系<br>分析：不管是经理、普通员工都是雇员的一类，但是各种身份又有一些不同的属性、不同的功能</p>
+<ul>
+<li>定义父类（超类） Employee</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 姓名</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 工资</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> salary;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Employee</span><span class="params">(String name, <span class="keyword">double</span> salary)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.salary = salary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getSalary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> salary;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>定义子类 Manager</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Manager</span> <span class="keyword">extends</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 奖金信息，特有的属性</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> bonus;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Manager</span><span class="params">(String name, <span class="keyword">double</span> salary)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//Manager的构造器不能访问父类的私有域，所以通过父类的构造器进行初始化</span></span><br><span class="line">        <span class="keyword">super</span>(name, salary);</span><br><span class="line">        bonus = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 重写父类的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getSalary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//调用父类的方法</span></span><br><span class="line">        <span class="keyword">double</span> baseSalary = <span class="keyword">super</span>.getSalary();</span><br><span class="line">        <span class="keyword">return</span> baseSalary + bonus;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBonus</span><span class="params">(<span class="keyword">double</span> bonus)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bonus = bonus;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>继承关系：<a href="https://upload-images.jianshu.io/upload_images/4061843-1952b22e7fa34fe4.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-1952b22e7fa34fe4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="继承层次"></a>继承层次</p>
+<p>强制类型转化：</p>
+<ol>
+<li>只能在继承层次内进行类型转换</li>
+<li>在将超类转换成子类之前，应该使用instance检查</li>
+</ol>
+<h3 id="Object：所有类的超类"><a href="#Object：所有类的超类" class="headerlink" title="Object：所有类的超类"></a>Object：所有类的超类</h3><p>Object类是Java中所有类的始祖，如果一个类没有明确指出超类，那么默认超类是Object。</p>
+<ul>
+<li><p>euqals方法<br>  用于检测一个对象是否等于另一个对象，判断两个对象是都具有相同的引用</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  一般equals和==是不一样的，但是在Object中两者是一样的</p>
+</li>
+<li><p>toString</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getClass().getName() + <span class="string">"@"</span> + Integer.toHexString(hashCode());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>getClass 获得运行时类型<br>  <code>public final native Class&lt;?&gt; getClass();</code></p>
+</li>
+<li><p>hashCode<br>  <code>public native int hashCode();</code><br>  该方法用于哈希查找，可以减少在查找中使用equals的次数，重写了equals方法一般都要重写hashCode方法。这个方法在一些具有哈希功能的Collection中用到。</p>
+<p>  一般必须满足obj1.equals(obj2)==true。可以推出obj1.hash- Code()==obj2.hashCode()，但是hashCode相等不一定就满足equals。不过为了提高效率，应该尽量使上面两个条件接近等价。</p>
+</li>
+<li><p>notify 唤醒在该对象上等待的某个线程<br>  <code>public final native void notify();</code></p>
+</li>
+<li><p>notifyAll 唤醒在该对象上等待的所有线程<br>  <code>public final native void notifyAll();</code></p>
+</li>
+<li><p>wait(long timeout) 在规定时间内没有获得锁就返回<br>  <code>public final native void wait(long timeout) throws InterruptedException;</code></p>
+</li>
+<li><p>wait(long timeout, int nanos)<br>  在规定时间内没有获得锁就返回，有一个附加时间</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">wait</span><span class="params">(<span class="keyword">long</span> timeout, <span class="keyword">int</span> nanos)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (timeout &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"timeout value is negative"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (nanos &lt; <span class="number">0</span> || nanos &gt; <span class="number">999999</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</span><br><span class="line">                            <span class="string">"nanosecond timeout value out of range"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (nanos &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        timeout++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    wait(timeout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>wait() 一直等待，直到获得锁或者被中断</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">wait</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    wait(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>finalize 用于释放资源<br>  <code>protected void finalize() throws Throwable { }</code></p>
+</li>
+<li><p>clone<br>  <code>protected native Object clone() throws CloneNotSupportedException;</code><br>  实现对象的浅复制，只有实现了Cloneable接口才可以调用该方法。主要是JAVA里除了8种基本类型传参数是值传递，其他的类对象传参数都是引用传递，我们有时候不希望在方法里讲参数改变，这是就需要在类中复写clone方法。</p>
+</li>
+</ul>
+<h3 id="抽象类、接口"><a href="#抽象类、接口" class="headerlink" title="抽象类、接口"></a>抽象类、接口</h3><h4 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h4><p>类也可以继承抽象类，抽象类可以继承类，也可以继承抽象类，可以实现接口。</p>
+<ul>
+<li><p>abstract<br>  使用abstract class 定义的类都是抽象类，可以含有、也可以不含有抽象方法<br>  还是上面的例子，不管是经理还是雇员，都是人，所以人可以定义为一个抽象类</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象类Person</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getDescription</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Employee继承Person</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> salary;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Employee</span><span class="params">(String name, <span class="keyword">double</span> salary)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">        <span class="keyword">this</span>.salary = salary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"a employee"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getSalary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> salary;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义新的Student类继承Person</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String major;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, String major)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">        <span class="keyword">this</span>.major = major;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMajor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> major;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"a student"</span> + major;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意问题：</p>
+<ol>
+<li>抽象类不能被实例化，实例化的工作应该交由它的子类来完成，它只需要有一个引用即可。</li>
+<li>抽象方法必须由子类来进行重写</li>
+<li>只要包含一个抽象方法的抽象类，该方法必须要定义成抽象类，不管是否还包含有其他方法</li>
+<li>抽象类中可以包含具体的方法，当然也可以不包含抽象方法</li>
+<li>子类中的抽象方法不能与父类的抽象方法同名</li>
+<li>abstract不能与final并列修饰同一个类</li>
+<li>abstract 不能与private、static、final或native并列修饰同一个方法</li>
+</ol>
+</li>
+</ul>
+<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><p>类可以实现接口，抽象类也可以实现接口，但是接口只能实现接口。类、抽象类、接口都可以实现多个接口</p>
+<ul>
+<li><p>接口示例：<br>  Comparable接口</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object other)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//jdk 1.5后使用泛型定义</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(T other)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  使用 implements关键字</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> <span class="keyword">extends</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Comparable</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object other)</span> </span>&#123;</span><br><span class="line">        Employee other = (Employee) other;  <span class="comment">//使用泛型后不用强转了，比较的方式自定义</span></span><br><span class="line">        <span class="keyword">return</span> Double.compare(salary, other.salary);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口的默认方法<br>  可以为接口提供一个默认实现，必须用default修饰符标记</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object other)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  默认方法可能导致冲突，例如现在一个接口中将方法定义为默认方法，然后又在超类或另一个接口中定义了同样的方法</p>
+</li>
+<li><p>接口的继承<br>  一个接口可以继承另一个接口</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Work</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Study</span> <span class="keyword">extends</span> <span class="title">Work</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">study</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//实现Study的时候会重写两个方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Study</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">study</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  Study接口自己声明了一个方法，又继承了Work，所以实现Study接口的时候，一共有两个方法需要重写</p>
+</li>
+<li><p>接口与回调<br>  参考<a href="https://blog.csdn.net/xiaanming/article/details/8703708" target="_blank" rel="noopener">一个经典例子让你彻彻底底理解java回调机制</a></p>
+</li>
+<li><p>注意事项：</p>
+<ol>
+<li>一个Interface的所有方法访问权限自动被声明为public。确切的说只能为public，当然你可以显示的声明为protected、private，但是编译会出错！</li>
+<li>接口中可以定义“成员变量”，或者说是不可变的常量，因为接口中的“成员变量”会自动变为为public static final。可以通过类命名直接访问：ImplementClass.name</li>
+<li>接口中不存在实现的方法</li>
+<li>实现接口的非抽象类必须要实现该接口的所有方法。抽象类可以不用实现</li>
+<li>不能使用new操作符实例化一个接口，但可以声明一个接口变量，该变量必须引用（refer to)一个实现该接口的类的对象。可以使用 instanceof 检查一个对象是否实现了某个特定的接口。例如：if(anObject instanceof Comparable){}。</li>
+<li>在实现多接口的时候一定要避免方法名的重复</li>
+</ol>
+</li>
+</ul>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>态性是指允许不同子类型的对象对同一消息作出不同的响应。简单的说就是用同样的对象引用调用同样的方法但是做了不同的事情。</p>
+<p>例子：利用抽象类的例子写一个测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person person = <span class="keyword">new</span> Employee(<span class="string">"Employee"</span>, <span class="number">5000</span>);  <span class="comment">//向上转型为Person，person指向Employee</span></span><br><span class="line">        System.out.println(person.getDescription());  <span class="comment">//最终调用的是Employee重写的方法</span></span><br><span class="line"></span><br><span class="line">        Employee employee = (Employee) person;  <span class="comment">//向下转型，需要强制转换</span></span><br><span class="line">        System.out.println(employee.getDescription());  <span class="comment">//调用的是Employee重写的方法</span></span><br><span class="line"></span><br><span class="line">        person = <span class="keyword">new</span> Student(<span class="string">"Student"</span>, <span class="string">"java"</span>);  <span class="comment">//向上转型，将person重新指向一个新的Student</span></span><br><span class="line">        System.out.println(person.getDescription());  <span class="comment">//调用Student重写的方法</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 结果</span></span><br><span class="line"><span class="comment"> * a employee</span></span><br><span class="line"><span class="comment"> * a employee</span></span><br><span class="line"><span class="comment"> * a studentjava</span></span><br><span class="line"><span class="comment"> * /</span></span><br></pre></td></tr></table></figure>
+
+<p>Employee是Person的子类， Person person = new Employee(“Employee”, 5000) 编译时变量和运行时变量不一样，所以多态发生了。</p>
+<blockquote>
+<p>（1）Person person作为一个引用类型数据，存储在JVM栈的本地变量表中。<br>（2）new Employee(“Employee”, 5000)作为实例对象数据存储在堆内存中<br>Employee的对象实例数据（接口、方法、field、对象类型等）的地址也存储在堆中<br>Employee的对象的类型数据（对象实例数据的地址所执行的数据）存储在方法区中，方法区中对象类型数据中有一个指向该类方法的方法表。</p>
+<p>（3）Java虚拟机规范中并未对引用类型访问具体对象的方式做规定，目前主流的实现方式主要有两种：<br>１. 通过句柄访问<br>在这种方式中，JVM堆中会专门有一块区域用来作为句柄池，存储相关句柄所执行的实例数据地址（包括在堆中地址和在方法区中的地址）。这种实现方法由于用句柄表示地址，因此十分稳定。<br>２.通过直接指针访问<br>通过直接指针访问的方式中，reference中存储的就是对象在堆中的实际地址，在堆中存储的对象信息中包含了在方法区中的相应类型数据。这种方法最大的优势是速度快，在HotSpot虚拟机中用的就是这种方式。</p>
+<p>（4）实现过程<br>首先虚拟机通过reference类型（Person的引用）查询java栈中的本地变量表，得到堆中的 对象类型数据的地址，从而找到方法区中的对象类型数据（Employee的对象类型数据），然后查询方法表定位到实际类（Employee类）的方法运行。</p>
+</blockquote>
+<h3 id="多态存在的三个必要条件"><a href="#多态存在的三个必要条件" class="headerlink" title="多态存在的三个必要条件"></a>多态存在的三个必要条件</h3><ol>
+<li>继承<br> 如例子中的Employee是Person的子类</li>
+<li>重写<br> Employee重写了Person的getDescription方法</li>
+<li>父类引用指向子类对象<br> Person person = new Employee(“Employee”, 5000);</li>
+</ol>
+<h3 id="多态的优点"><a href="#多态的优点" class="headerlink" title="多态的优点"></a>多态的优点</h3><ol>
+<li>消除类型之间的耦合关系</li>
+<li>可替换性</li>
+<li>可扩充性</li>
+<li>接口性</li>
+<li>灵活性</li>
+<li>简化性</li>
+</ol>
+<h3 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h3><p>多态性分为编译时的多态性和运行时的多态性。</p>
+<blockquote>
+<ol>
+<li>运行时的多态性<br> 方法重写（override）实现的是运行时的多态性（也称为后绑定），运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）；2. 对象造型（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。</li>
+<li>编译时的多态<br> 方法重载（overload）实现的是编译时的多态性（也称为前绑定）。</li>
+</ol>
+</blockquote>
+<ul>
+<li><p>方法调用绑定<br>  将一个方法主体关联起来被称作绑定<br>  （1）前期绑定（静态绑定）：在程序执行之前进行绑定（默认的绑定方式）<br>  （2）后期绑定（动态绑定或运行时绑定）：在运行时根据对象的类型进行绑定</p>
+<p>  Java中除了static方法和final方法（private方法属于final方法）之外，其他所有的方法都是后期绑定</p>
+</li>
+<li><p>方法的型构：指方法的组成结构，具体包括方法的名称和参数，涵盖参数的数量、类型以及出现的顺序，但是不包括方法的返回值类型，访问权限修饰符，以及 abstract、static、final 等修饰符。</p>
+<ol>
+<li><p>相同型构</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(String s)</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">method</span><span class="params">(String s)</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不同型构</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(<span class="keyword">int</span> i, String s)</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(String s, <span class="keyword">int</span> i)</span> []</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>重载<br>  指在同一个类中定义了一个以上具有相同名称，但是型构不同的方法。</p>
+</li>
+<li><p>重写<br>  指在继承情况下，子类中定义了与其父类中方法具有相同型构的新方法，就称为子类把父类的方法重写了（子类必须重写父类为抽象类的方法）。这是实现多态必须的步骤</p>
+</li>
+</ul>
+<h2 id="相关面试问题"><a href="#相关面试问题" class="headerlink" title="相关面试问题"></a>相关面试问题</h2><ol>
+<li><p>父类的静态方法能否被子类重写<br> 不能，声明为static的方法不能被重写，但是能够被再次声明<br> 用static修饰的方法不依赖于任何对象就可以进行访问（就是说你不需要实例化，就可以通过类名访问），在JVM中，这两个静态方法的存储空间是两个，即使没有对象，它也存在。如果试图在子类重写父类的静态方法，编译器不会报错，但是并不会得到相应的结果，当你用父类引用调用的仍是父类的方法，new一个子类调用时，调用的就是子类的静态方法。也就是说你试图重写父类的静态方法和父类的静态方法完全就是两个方法。重写仅对非静态方法有用</p>
+<p> 小提示：JVM中的静态分派（重载）和动态分派（重写）</p>
+</li>
+<li><p>静态属性和静态方法是否可以被继承？是否可以被重写？以及原因？<br> 静态属性和静态方法可以，重写不可以<br> <a href="http://www.cnblogs.com/kabi/p/5181941.html" target="_blank" rel="noopener">java中静态属性和和静态方法的继承问题 以及多态的实质</a></p>
+</li>
+<li><p>Java中实现多态的机制是什么<br> 继承、重写、父类引用指向子类对象</p>
+</li>
+<li><p>在Java中，什么时候用重载，什么时候用重写？<br> 子类继承父类，重写父类方法<br> 方法重载，不同的参数，同样的方法名</p>
+</li>
+<li><p>Override和Overload的含义与区别。<br> Override是重写，子类重写父类的方法<br> Overload是重载，方法重载</p>
+<table>
+<thead>
+<tr>
+<th>区别点</th>
+<th>重载方法</th>
+<th>重写方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数列表</td>
+<td>必须修改</td>
+<td>一定不能修改</td>
+</tr>
+<tr>
+<td>异常</td>
+<td>可以修改</td>
+<td>可以减少或删除，一定不能抛出新的或者更广的异常</td>
+</tr>
+<tr>
+<td>访问</td>
+<td>可以修改</td>
+<td>一定不能做更严格的限制（可以降低限制）</td>
+</tr>
+<tr>
+<td>返回类型</td>
+<td>可以修改</td>
+<td>一定不能修改</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>Java可以多继承吗<br> 不可以，最多继承一个类，但是可以实现多个接口</p>
+</li>
+<li><p>object类的equal 和hashcode 方法重写，为什么？<br> hashcode用于哈希查找，可以减少在查找中使用equals的次数，所以通常两个一起重写，以便用户可以将对象插入散列表中</p>
+</li>
+<li><p>object有哪些公用方法<br> euqals、toString、hashCode、getClass、wait、notify、notifyAll、</p>
+</li>
+<li><p>抽象类与接口的区别；应用场景；抽象类是否可以没有方法和属性<br> （1）只能继承一个抽象类，但是可以实现多个接口。<br> （2）在abstract class 中可以有自己的数据成员，也可以有非abstarct的方法，而在interface中，只能够有静态的不能被修改的数据成员（也就是必须是static final的，不过在 interface中一般不定义数据成员），所有的方法都是public abstract的。<br> （3）抽象类中的变量默认是 friendly 型，其值可以在子类中重新定义，也可以重新赋值。接口中定义的变量默认是public static final 型，且必须给其赋初值，所以实现类中不能重新定义，也不能改变其值。<br> （4）abstract class和interface所反映出的设计理念不同。其实abstract class表示的是”is-a”关系，interface表示的是”like-a”关系，门和报警的关系。</p>
+<p> （5）现抽象类和接口的类必须实现其中的所有方法。抽象类中可以有非抽象方法。接口中则不能有实现方法</p>
+<p> 应用场景：当你关注一个事物的本质的时候，用抽象类；当你关注一个操作的时候，用接口。</p>
+<p> 可以没有方法和属性</p>
+</li>
+<li><p>abstract 的方法是否可同时是 static、是否可同时是 native、是否可同时是 synchronized 的？为什么？<br>都不可以<br>用static声明方法表明这个方法在不生成类的实例时可直接被类调用，而abstract方法不能被调用，两者矛盾。<br>因为native 暗示这些方法是有实现体的，只不过这些实现体是非java 的，但是abstract却显然的指明这些方法无实现体。<br>从synchronized的功能也可以看出，用synchronized的前提是该方法可以被直接调用，显然和abstract连用</p>
+</li>
+<li><p>抽象关键字不可以和哪些关键字共存？<br>abstract 不能与private、static、final或native并列修饰同一个方法</p>
+</li>
+<li><p>接口与回调；回调的原理；写一个回调demo<br>参考<a href="https://blog.csdn.net/xiaanming/article/details/8703708" target="_blank" rel="noopener">一个经典例子让你彻彻底底理解java回调机制</a></p>
+</li>
+<li><p>接口的意义<br>1、重要性：在Java语言中， abstract class 和interface 是支持抽象类定义的两种机制。正是由于这两种机制的存在，才赋予了Java强大的 面向对象能力。</p>
+<p>2、简单、规范性：如果一个项目比较庞大，那么就需要一个能理清所有业务的架构师来定义一些主要的接口，这些接口不仅告诉开发人员你需要实现那些业务，而且也将命名规范限制住了（防止一些开发人员随便命名导致别的程序员无法看明白）。</p>
+<p>3、维护、拓展性：比如你要做一个画板程序，其中里面有一个面板类，主要负责绘画功能，然后你就这样定义了这个类，可是在不久将来，你突然发现这个类满足不了你了，然后你又要重新设计这个类，更糟糕是你可能要放弃这个类，那么其他地方可能有引用他，这样修改起来很麻烦，如果你一开始定义一个接口，把绘制功能放在接口里，然后定义类时实现这个接口，然后你只要用这个接口去引用实现它的类就行了，以后要换的话只不过是引用另一个类而已，这样就达到维护、拓展的方便性。</p>
+<p>4、安全、严密性：接口是实现软件松耦合的重要手段，它描叙了系统对外的所有服务，而不涉及任何具体的实现细节。这样就比较安全、严密一些(一般软件服务商考虑的比较多)。</p>
+</li>
+<li><p>权限修饰符protected和默认的区别？proctected 修饰的方法，假如子类和父类不在一个包下，子类可以访问父类中这个方法吗？<br>protected不能用于修饰类，默认可以修饰类，修饰的类同一包中可继承。修饰方法和变量时差不错</p>
+<p>可以，是子类或者同一个包就可以</p>
+</li>
+<li><p>父类的方法是public，子类重写后，改为protect，会不会报错？反过来呢？<br>会
+反过来不会</p>
+<p>父类中声明为 public 的方法在子类中也必须为 public。</p>
+<p>父类中声明为 protected 的方法在子类中要么声明为 protected，要么声明为 public，不能声明为 private</p>
+</li>
+<li><p>静态绑定和动态绑定的区别<br>（1）静态绑定发生在编译时期，动态绑定发生在运行时<br>（2）使用private或static或final修饰的变量或者方法，使用静态绑定。而虚方法（可以被子类重写的方法）则会根据运行时的对象进行动态绑定。<br>（3）静态绑定使用类信息来完成，而动态绑定则需要使用对象信息来完成。<br>（4）重载(Overload)的方法使用静态绑定完成，而重写(Override)的方法则使用动态绑定完成<br>（5）真实的对象不能用于静态绑定，相反，类型信息比如变量的类型可以用于本地的方法。另一方面，动态绑定用一个真是的对象去找到那个真正的方法的</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/07/Android实现滑动返回的几种方法总结/" rel="next" title="Android实现滑动返回的几种方法总结">
+                <i class="fa fa-chevron-left"></i> Android实现滑动返回的几种方法总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/07/Java JVM相关总结/" rel="prev" title="JVM相关总结">
+                JVM相关总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java三大特性、抽象类以及接口相关"><span class="nav-number">1.</span> <span class="nav-text">Java三大特性、抽象类以及接口相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#封装"><span class="nav-number">1.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-number">1.2.</span> <span class="nav-text">继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类、超类、子类"><span class="nav-number">1.2.1.</span> <span class="nav-text">类、超类、子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object：所有类的超类"><span class="nav-number">1.2.2.</span> <span class="nav-text">Object：所有类的超类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象类、接口"><span class="nav-number">1.2.3.</span> <span class="nav-text">抽象类、接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">抽象类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">接口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态"><span class="nav-number">1.3.</span> <span class="nav-text">多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多态存在的三个必要条件"><span class="nav-number">1.3.1.</span> <span class="nav-text">多态存在的三个必要条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多态的优点"><span class="nav-number">1.3.2.</span> <span class="nav-text">多态的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多态性"><span class="nav-number">1.3.3.</span> <span class="nav-text">多态性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关面试问题"><span class="nav-number">1.4.</span> <span class="nav-text">相关面试问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

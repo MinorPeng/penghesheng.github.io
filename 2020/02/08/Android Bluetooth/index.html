@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] 蓝牙传统蓝牙：比较耗电 低功耗蓝牙：  从蓝牙4.0开始包含两个蓝牙芯片模块：传统/经典蓝牙模块(Classic Bluetooth,简称BT)和低功耗蓝牙(Bluetooth Low Energy,简称BLE)  经典蓝牙是在之前的蓝牙1.0,1.2,2.0+EDR,2.1+EDR,3.0+EDR等基础上发展和完善起来的, 而低功耗蓝牙是Nokia的Wibree标准上发展起来的，是完">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHS1024">
+<meta property="og:url" content="http://yoursite.com/2020/02/08/Android Bluetooth/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="[TOC] 蓝牙传统蓝牙：比较耗电 低功耗蓝牙：  从蓝牙4.0开始包含两个蓝牙芯片模块：传统/经典蓝牙模块(Classic Bluetooth,简称BT)和低功耗蓝牙(Bluetooth Low Energy,简称BLE)  经典蓝牙是在之前的蓝牙1.0,1.2,2.0+EDR,2.1+EDR,3.0+EDR等基础上发展和完善起来的, 而低功耗蓝牙是Nokia的Wibree标准上发展起来的，是完">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-08T01:29:08.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHS1024">
+<meta name="twitter:description" content="[TOC] 蓝牙传统蓝牙：比较耗电 低功耗蓝牙：  从蓝牙4.0开始包含两个蓝牙芯片模块：传统/经典蓝牙模块(Classic Bluetooth,简称BT)和低功耗蓝牙(Bluetooth Low Energy,简称BLE)  经典蓝牙是在之前的蓝牙1.0,1.2,2.0+EDR,2.1+EDR,3.0+EDR等基础上发展和完善起来的, 而低功耗蓝牙是Nokia的Wibree标准上发展起来的，是完">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/08/Android Bluetooth/">
+
+
+
+
+
+  <title> | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/Android Bluetooth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-08T09:29:07+08:00">
+                2020-02-08
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-08T09:29:08+08:00">
+                2020-02-08
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h1><p>传统蓝牙：比较耗电</p>
+<p>低功耗蓝牙：</p>
+<blockquote>
+<p>从蓝牙4.0开始包含两个蓝牙芯片模块：传统/经典蓝牙模块(Classic Bluetooth,简称BT)和低功耗蓝牙(Bluetooth Low Energy,简称BLE) </p>
+<p>经典蓝牙是在之前的蓝牙1.0,1.2,2.0+EDR,2.1+EDR,3.0+EDR等基础上发展和完善起来的, 而低功耗蓝牙是Nokia的Wibree标准上发展起来的，是完全不同两个标准。</p>
+<ol>
+<li>经典蓝牙模块(BT)</li>
+</ol>
+<p>泛指蓝牙4.0以下的模块，一般用于数据量比较大的传输，如：语音、音乐、较高数据量传输等。</p>
+<p>经典蓝牙模块可再细分为：传统蓝牙模块和高速蓝牙模块。</p>
+<ul>
+<li>传统蓝牙模块在2004年推出，主要代表是支持蓝牙2.1协议的模块，在智能手机爆发的时期得到广泛支持。</li>
+<li>高速蓝牙模块在2009年推出，速率提高到约24Mbps，是传统蓝牙模块的八倍。 </li>
+</ul>
+<p>传统蓝牙有3个功率级别，Class1,Class2,Class3,分别支持100m,10m,1m的传输距离</p>
+<ol start="2">
+<li><p>低功耗蓝牙模块(BLE)</p>
+<p>泛指蓝牙4.0或更高的模块，蓝牙低功耗技术是低成本、短距离、可互操作的鲁棒性无线技术，工作在免许可的2.4GHz ISM射频频段。旨在提供显著降低的功耗 ； 可与功率要求更严格的 BLE 设备（例如近程传感器、心率监测仪和健身设备）通信 </p>
+<p>因为BLE技术采用非常快速的连接方式，因此平时可以处于“非连接”状态（节省能源），此时链路两端相互间只是知晓对方，只有在必要时才开启链路，然后在尽可能短的时间内关闭链路(每次最多传输20字节)。</p>
+<p>低功耗蓝牙无功率级别，一般发送功率在7dBm，一般在空旷距离，达到20m应该是没有问题</p>
+<p><font color="red"><strong>注意：</strong>当用户使用 BLE 将其设备与其他设备配对时，用户设备上的<strong>所有</strong>应用都可以访问在这两个设备间传输的数据。因此，如果您的应用捕获敏感数据，您应实现应用层安全以保护此类数据的私密性</font></p>
+</li>
+</ol>
+</blockquote>
+<p>Android手机蓝牙4.x都是双模蓝牙(既有经典蓝牙也有低功耗蓝牙)，而某些蓝牙设备为了省电是单模(只支持低功耗蓝牙) </p>
+<ul>
+<li><p>经典蓝牙：  </p>
+<ol>
+<li><p>传声音</p>
+<p> 如蓝牙耳机、蓝牙音箱。蓝牙设计的时候就是为了传声音的，所以是近距离的音频传输的不二选择。</p>
+<p> 现在也有基于WIFI的音频传输方案，例如Airplay等，但是WIFI功耗比蓝牙大很多，设备无法做到便携。</p>
+<p> 因此固定的音响有WIFI的，移动的如耳机、便携音箱清一色都是基于经典蓝牙协议的。</p>
+</li>
+</ol>
+</li>
+</ul>
+<pre><code>2. 传大量数据
+
+    例如某些工控场景，使用Android或Linux主控，外挂蓝牙遥控设备的，
+
+    可以使用经典蓝牙里的SPP协议，当作一个无线串口使用。速度比BLE传输快多了。
+
+    这里要注意的是，iPhone没有开放</code></pre><ul>
+<li><p>BLE蓝牙:</p>
+<p>  耗电低，数据量小，如遥控类(鼠标、键盘)，传感设备(心跳带、血压计、温度传感器、共享单车锁、智能锁、防丢器、室内定位)</p>
+<p>  是目前手机和智能硬件通信的性价比最高的手段，直线距离约50米，一节5号电池能用一年，传输模组成本10块钱，远比WIFI、4G等大数据量的通信协议更实用。</p>
+<p>  虽然蓝牙距离近了点，但胜在直连手机，价格超便宜。以室内定位为例，商场每家门店挂个蓝牙beacon，就可以对手机做到精度10米级的室内定位，一个beacon的价格也就几十块钱而已</p>
+</li>
+</ul>
+<ul>
+<li><p>双模蓝牙:</p>
+<p>  如智能电视遥控器、降噪耳机等。很多智能电视配的遥控器带有语音识别，需要用经典蓝牙才能传输声音。</p>
+<p>  而如果做复杂的按键，例如原本键盘表上没有的功能，经典蓝牙的HID按键协议就不行了，得用BLE做私有协议。</p>
+<p>  包括很多降噪耳机上通过APP来调节降噪效果，也是通过BLE来实现的私有通信协议</p>
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h3><ul>
+<li><p>权限申请</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.BLUETOOTH"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.BLUETOOTH_ADMIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- If your app targets Android 9 or lower, you can declare</span></span><br><span class="line"><span class="comment">       ACCESS_COARSE_LOCATION instead. --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_FINE_LOCATION"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>初始化，打开蓝牙，扫描</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> intentFilter = IntentFilter().apply &#123;</span><br><span class="line">	addAction(BluetoothDevice.ACTION_FOUND)       </span><br><span class="line">    addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)</span><br><span class="line">    &#125;</span><br><span class="line">	registerReceiver(mReceiver, intentFilter)</span><br><span class="line"></span><br><span class="line">	mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()</span><br><span class="line">	mBluetoothAdapter?.let &#123; bluetoothAdapter -&gt;</span><br><span class="line">		<span class="keyword">if</span> (!bluetoothAdapter.isEnabled) &#123;</span><br><span class="line">            <span class="comment">// enable bluetooth</span></span><br><span class="line">            <span class="keyword">val</span> enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE                 startActivityForResult(enableBtIntent, REQUEST_CODE_ENABLE_BT)	            &#125;</span><br><span class="line">       <span class="keyword">if</span> (bluetoothAdapter.isDiscovering) &#123;</span><br><span class="line">            bluetoothAdapter.cancelDiscovery()</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">val</span> success = bluetoothAdapter.startDiscovery()</span><br><span class="line">       Log.d(localClassName, <span class="string">"connectionStart discovery:<span class="variable">$success</span>"</span>)</span><br><span class="line">       <span class="comment">// 已经配对的</span></span><br><span class="line">       <span class="keyword">val</span> pairedDevices: Set&lt;BluetoothDevice&gt;? = bluetoothAdapter.bondedDevices</span><br><span class="line">       <span class="keyword">if</span> (pairedDevices.isNullOrEmpty()) &#123;</span><br><span class="line">            mPairedDevicesArrayAdapter?.add(<span class="string">"no devices"</span>)</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            pairedDevices.forEach &#123; device -&gt;</span><br><span class="line">                tv_title_paired.visibility = View.VISIBLE</span><br><span class="line">                <span class="keyword">val</span> deviceName = device.name</span><br><span class="line">                <span class="keyword">val</span> deviceHardwareAddress = device.address</span><br><span class="line">                mPairedDevicesArrayAdapter?.add(<span class="string">"<span class="variable">$deviceName</span>\n<span class="variable">$deviceHardwareAddress</span>"</span>)</span><br><span class="line">                Log.d(localClassName, <span class="string">"for name:<span class="variable">$deviceName</span>. address:<span class="variable">$deviceHardwareAddress</span>"</span>)</span><br><span class="line">                <span class="keyword">if</span> (deviceHardwareAddress == MAC_ADDRESS) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mClientThread == <span class="literal">null</span>) &#123;</span><br><span class="line">                        mClientThread = BluetoothClientThread(<span class="keyword">this</span>, device)</span><br><span class="line">                        mClientThread?.start()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        	mPairedDevicesArrayAdapter?.notifyDataSetChanged()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">// 设置可检测</span></span><br><span class="line">	<span class="comment">// val discoverableIntent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply &#123;</span></span><br><span class="line">    <span class="comment">//     putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// startActivity(discoverableIntent)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>扫描结果</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> mReceiver = <span class="keyword">object</span> : BroadcastReceiver() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onReceive</span><span class="params">(context: <span class="type">Context</span>?, intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">        intent?.action?.let &#123; action -&gt;</span><br><span class="line">			<span class="comment">//attention the location permission to bluetooth</span></span><br><span class="line">			<span class="keyword">when</span>(action) &#123;</span><br><span class="line">                BluetoothDevice.ACTION_FOUND -&gt; &#123;</span><br><span class="line">                    <span class="keyword">val</span> device: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)</span><br><span class="line">                    device?.apply &#123;</span><br><span class="line">                        <span class="keyword">val</span> deviceName = name</span><br><span class="line">                        <span class="keyword">val</span> deviceAddress = address</span><br><span class="line">                        Log.d(localClassName, <span class="string">"onReceive name: <span class="variable">$deviceName</span> address: <span class="variable">$deviceAddress</span>"</span>)</span><br><span class="line">                        <span class="keyword">if</span> (bondState != BluetoothDevice.BOND_BONDED) &#123;</span><br><span class="line">                             <span class="keyword">if</span> (address == MAC_ADDRESS) &#123;</span><br><span class="line">                            mNewDevicesArrayAdapter?.insert(<span class="string">"<span class="variable">$deviceName</span>\n<span class="variable">$deviceAddress</span>"</span>, <span class="number">0</span>)                                             </span><br><span class="line">                             &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                                 mNewDevicesArrayAdapter?.add(<span class="string">"<span class="variable">$deviceName</span>\n<span class="variable">$deviceAddress</span>"</span>)                                             </span><br><span class="line">                             &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    mNewDevicesArrayAdapter?.notifyDataSetChanged()</span><br><span class="line">                &#125;</span><br><span class="line">                BluetoothAdapter.ACTION_DISCOVERY_FINISHED -&gt; &#123;</span><br><span class="line">                    title = <span class="string">"select to connect"</span></span><br><span class="line">                    mNewDevicesArrayAdapter?.let &#123;</span><br><span class="line">                        <span class="keyword">if</span> (it.count == <span class="number">0</span>) &#123;</span><br><span class="line">                            it.add(<span class="string">"no devices"</span>)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> -&gt; &#123; &#125;</span><br><span class="line">            &#125;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>连接线程</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> mSocket: BluetoothSocket? = device.createRfcommSocketToServiceRecord(UUID.fromString(BLUETOOTH_UUID))</span><br><span class="line">   </span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">run</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        mSocket?.connect()</span><br><span class="line">        mConnectedThread = mSocket?.let &#123; ConnectedThread(it) &#125;</span><br><span class="line">        mConnectedThread?.start()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">        Log.e(javaClass.name, <span class="string">"connect error"</span>, e)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>读写线程</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ConnectedThread</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> socket: BluetoothSocket) : Thread() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mBuffer = ByteArray(<span class="number">1024</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mDataOS = DataOutputStream(socket.outputStream)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mDataIS = DataInputStream(socket.inputStream)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">        Log.d(javaClass.name, <span class="string">"connected thread init <span class="variable">$socket</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">run</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">val</span> num = mDataIS.read(mBuffer)</span><br><span class="line">                Log.d(javaClass.name, <span class="string">"read: <span class="subst">$&#123;String(mBuffer)&#125;</span>"</span>)</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">                Log.d(javaClass.name, <span class="string">"read error"</span>, e)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">writeFile</span><span class="params">(context: <span class="type">Context</span>, fileUri: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">var</span> len: <span class="built_in">Int</span></span><br><span class="line">        <span class="keyword">var</span> fileIS: FileInputStream? = <span class="literal">null</span></span><br><span class="line">        <span class="keyword">val</span> inputStream: InputStream?</span><br><span class="line">        Log.d(javaClass.name, <span class="string">"client socket: <span class="subst">$&#123;socket.isConnected&#125;</span>"</span>)</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            inputStream = context.contentResolver.openInputStream(Uri.parse(fileUri))</span><br><span class="line">            mDataOS.writeInt(FILE_SEND)</span><br><span class="line">            inputStream?.let &#123;</span><br><span class="line">                mDataOS.writeInt(it.available())</span><br><span class="line">                <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">                    len = it.read(mBuffer)</span><br><span class="line">                    <span class="keyword">if</span> (len == -<span class="number">1</span>) &#123;</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                    &#125;</span><br><span class="line">                Log.d(javaClass.name, <span class="string">"write <span class="subst">$&#123;mBuffer.size&#125;</span> <span class="subst">$&#123;mBuffer.count()&#125;</span> <span class="subst">$&#123;mBuffer.lastIndex&#125;</span> <span class="variable">$len</span>"</span>)</span><br><span class="line">                    mDataOS.write(mBuffer, <span class="number">0</span>, len)</span><br><span class="line">                &#125;</span><br><span class="line">                it.close()</span><br><span class="line">                Log.d(javaClass.name, <span class="string">"Client data written "</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">            Log.e(javaClass.name, <span class="string">"client socket error"</span>, e)</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            fileIS?.close()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+<h3 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h3><ul>
+<li><p>权限申请</p>
+</li>
+<li><p>打开蓝牙，保证可检测</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()</span><br><span class="line"><span class="keyword">if</span> (mBluetoothAdapter == <span class="literal">null</span>) &#123;</span><br><span class="line">    Log.e(localClassName, <span class="string">"can't apply bluetooth"</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line">mBluetoothAdapter?.enable()</span><br><span class="line"><span class="comment">// 设置可检测</span></span><br><span class="line"><span class="comment">// val discoverableIntent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply &#123;</span></span><br><span class="line"><span class="comment">//     putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 0)</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// startActivity(discoverableIntent)</span></span><br><span class="line">mBluetoothAdapter?.name = <span class="string">"极光249"</span></span><br><span class="line">Log.d(localClassName, <span class="string">"enable: <span class="subst">$&#123;mBluetoothAdapter?.isEnabled&#125;</span> name: <span class="subst">$&#123;mBluetoothAdapter?.name&#125;</span> mac: <span class="subst">$&#123;mBluetoothAdapter?.address&#125;</span>"</span>)</span><br><span class="line">bindService(Intent(<span class="keyword">this</span>, BluetoothServerService::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>), <span class="type">mConnection</span>, <span class="type">Context.BIND_AUTO_CREATE)</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>启动服务线程</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">inner</span> <span class="class"><span class="keyword">class</span> <span class="title">AcceptThread</span> : <span class="type">Thread</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mServerSocket: BluetoothServerSocket? <span class="keyword">by</span> lazy(LazyThreadSafetyMode.NONE) &#123;</span><br><span class="line">        mBluetoothAdapter?.listenUsingInsecureRfcommWithServiceRecord(NAME, UUID.fromString(BLUETOOTH_UUID))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">run</span><span class="params">()</span></span> &#123;</span><br><span class="line">        Log.d(javaClass.name, <span class="string">"AcceptThread begin"</span>)</span><br><span class="line">        name = <span class="string">"AcceptThread"</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">val</span> clientSocket: BluetoothSocket? = mServerSocket?.accept()</span><br><span class="line">            mHandler?.takeIf &#123; mFilePath != <span class="literal">null</span> &#125;?.apply &#123;</span><br><span class="line">                <span class="keyword">if</span> (mServerThread == <span class="literal">null</span>) &#123;</span><br><span class="line">                    mServerThread = clientSocket?.let &#123; ServerThread(mHandler!!, mFilePath!!, it) &#125;</span><br><span class="line">                    mServerThread?.start()</span><br><span class="line">                &#125;</span><br><span class="line">                cancel()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">            Log.e(javaClass.name, <span class="string">"error"</span>, e)</span><br><span class="line">            cancel()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">cancel</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            mServerSocket?.close()</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">            Log.e(javaClass.name, <span class="string">"Could not close the server mSocket"</span>, e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>读写线程</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> : <span class="type">Thread &#123;</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mHandler: Handler</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mFilePath: String</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mSocket: BluetoothSocket</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mDataIS: DataInputStream</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mDataOS: DataOutputStream</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mBuffer = ByteArray(<span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(handler: Handler, filePath: String, socket: BluetoothSocket): <span class="keyword">this</span>(<span class="string">"ServerThread"</span>, handler, filePath, socket)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(name: String, handler: Handler, filePath: String, socket: BluetoothSocket) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">        <span class="keyword">this</span>.mHandler = handler</span><br><span class="line">        <span class="keyword">this</span>.mFilePath = filePath</span><br><span class="line">        <span class="keyword">this</span>.mSocket = socket</span><br><span class="line">        mDataIS = DataInputStream(mSocket.inputStream)</span><br><span class="line">        mDataOS = DataOutputStream(mSocket.outputStream)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">run</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">var</span> len: <span class="built_in">Int</span></span><br><span class="line">        <span class="keyword">var</span> fileOS: FileOutputStream? = <span class="literal">null</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Log.d(javaClass.name, <span class="string">"receive start"</span>)</span><br><span class="line">                <span class="keyword">val</span> tag = mDataIS.readInt()</span><br><span class="line">                <span class="keyword">if</span> (tag == FILE_SEND) &#123;</span><br><span class="line">                    <span class="keyword">val</span> size = mDataIS.readInt()</span><br><span class="line">                    <span class="keyword">var</span> length = <span class="number">0</span></span><br><span class="line">                    <span class="keyword">val</span> f = File(mFilePath, <span class="string">"bluetooth-shared-<span class="subst">$&#123;System.currentTimeMillis()&#125;</span>.jpg"</span>)</span><br><span class="line">                    <span class="keyword">val</span> dirs = File(f.parent?:mFilePath)</span><br><span class="line">                    dirs.takeIf &#123; !it.exists() &#125;?.apply &#123; mkdirs() &#125;</span><br><span class="line">                    f.createNewFile()</span><br><span class="line">                    fileOS = FileOutputStream(f)</span><br><span class="line">                    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">                        len = mDataIS.read(mBuffer)</span><br><span class="line">                        length += len</span><br><span class="line">                        Log.d(javaClass.name, <span class="string">"size: <span class="variable">$size</span> receive <span class="variable">$len</span>"</span>)</span><br><span class="line">                        <span class="keyword">if</span> (len == -<span class="number">1</span>) &#123;</span><br><span class="line">                            <span class="keyword">break</span></span><br><span class="line">                        &#125;</span><br><span class="line">                        fileOS.write(mBuffer, <span class="number">0</span>, len)</span><br><span class="line">                        <span class="comment">// 记录接收的大小，在传输完成后跳出此次循环，避免一直阻塞在此</span></span><br><span class="line">                        <span class="keyword">if</span> (length &gt;= size) &#123;</span><br><span class="line">                            <span class="keyword">break</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    Log.d(javaClass.name, <span class="string">"receive end: <span class="subst">$&#123;f.absolutePath&#125;</span> size: <span class="variable">$size</span>"</span>)</span><br><span class="line">                    write(<span class="string">"received <span class="subst">$&#123;f.path&#125;</span>"</span>.toByteArray())</span><br><span class="line">                    <span class="keyword">val</span> msg = Message.obtain()</span><br><span class="line">                    msg.what = BluetoothServerActivity.MESSAGE_RECEIVE_FILE</span><br><span class="line">                    msg.obj = f.absolutePath</span><br><span class="line">                    mHandler.sendMessage(msg)</span><br><span class="line">            &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">                Log.e(javaClass.name, <span class="string">"readFile error"</span>, e)</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                fileOS?.close()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">write</span><span class="params">(bytes: <span class="type">ByteArray</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">val</span> outputStream = mSocket.outputStream</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            outputStream.write(bytes)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">            Log.e(javaClass.name, <span class="string">"writeFile error"</span>, e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">cancle</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            mSocket.close()</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">            Log.e(javaClass.name, <span class="string">"close error"</span>, e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.jianshu.com/p/977ab323c0a5" target="_blank" rel="noopener">Android-经典蓝牙(BT)-建立长连接传输短消息和文件</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/07/其他面试题汇总/" rel="next" title="其他面试题汇总">
+                <i class="fa fa-chevron-left"></i> 其他面试题汇总
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/02/Android 常用加密算法/" rel="prev" title="Android 常用加密算法">
+                Android 常用加密算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#蓝牙"><span class="nav-number">1.</span> <span class="nav-text">蓝牙</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.1.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Client"><span class="nav-number">1.1.1.</span> <span class="nav-text">Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server"><span class="nav-number">1.1.2.</span> <span class="nav-text">Server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">1.2.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

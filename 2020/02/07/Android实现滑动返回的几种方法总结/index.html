@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于Android实现滑动返回的几种方法总结标签（空格分隔）： 此博客若要转载，请注明出处  关于Android实现滑动返回的方法，网上有很多种，实现的方式也都各不一样。有用SwipeBackLayout开源库的，有用SlidingPaneLayout控件的，有通过使用GestureDetector手势识别的类的，也有写一个基类的，还有一些其他的实现方法。总之，实现滑动返回的方法各种各样，">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android实现滑动返回的几种方法总结">
+<meta property="og:url" content="http://yoursite.com/2020/02/07/Android实现滑动返回的几种方法总结/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="关于Android实现滑动返回的几种方法总结标签（空格分隔）： 此博客若要转载，请注明出处  关于Android实现滑动返回的方法，网上有很多种，实现的方式也都各不一样。有用SwipeBackLayout开源库的，有用SlidingPaneLayout控件的，有通过使用GestureDetector手势识别的类的，也有写一个基类的，还有一些其他的实现方法。总之，实现滑动返回的方法各种各样，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ojplrudb4.bkt.clouddn.com/SwipeBackLayout.gif">
+<meta property="og:image" content="http://ojplrudb4.bkt.clouddn.com/GestureBackActivity.gif">
+<meta property="og:image" content="http://ojplrudb4.bkt.clouddn.com/SlidingPaneLayout.gif">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.283Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android实现滑动返回的几种方法总结">
+<meta name="twitter:description" content="关于Android实现滑动返回的几种方法总结标签（空格分隔）： 此博客若要转载，请注明出处  关于Android实现滑动返回的方法，网上有很多种，实现的方式也都各不一样。有用SwipeBackLayout开源库的，有用SlidingPaneLayout控件的，有通过使用GestureDetector手势识别的类的，也有写一个基类的，还有一些其他的实现方法。总之，实现滑动返回的方法各种各样，">
+<meta name="twitter:image" content="http://ojplrudb4.bkt.clouddn.com/SwipeBackLayout.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/07/Android实现滑动返回的几种方法总结/">
+
+
+
+
+
+  <title>Android实现滑动返回的几种方法总结 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/Android实现滑动返回的几种方法总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android实现滑动返回的几种方法总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<h1 id="关于Android实现滑动返回的几种方法总结"><a href="#关于Android实现滑动返回的几种方法总结" class="headerlink" title="关于Android实现滑动返回的几种方法总结"></a>关于Android实现滑动返回的几种方法总结</h1><p>标签（空格分隔）： 此博客若要转载，请注明出处</p>
+<hr>
+<p>关于Android实现滑动返回的方法，网上有很多种，实现的方式也都各不一样。有用SwipeBackLayout开源库的，有用SlidingPaneLayout控件的，有通过使用GestureDetector手势识别的类的，也有写一个基类的，还有一些其他的实现方法。总之，实现滑动返回的方法各种各样，但同样也各有千秋。在这里，我主要对以下几种方法进行了学习，并一一实现。（注意：我这次Demo是在MaterialsDesign的基础上进行编写代码的，不过这并不影响这几种方法的实现，你可以到这个地址下载源代码进行查看学习：<a href="https://github.com/PengHesheng/ToolBar-BackActivity" target="_blank" rel="noopener">https://github.com/PengHesheng/ToolBar-BackActivity</a>）</p>
+<ul>
+<li>SwipeBackLayout开源库</li>
+<li>GestureDetector</li>
+<li>SlidingPaneLayout</li>
+</ul>
+<hr>
+<p>在这里先声明一下，由于有些方法需要重新设置style，对theme的要求也不尽相同，我在Demo中统一使用了下面一个Theme，所以讲解方法的开始，我先把要新建的style/theme的代码贴出来，还有滑动返回的其中一种动画的设置也贴出来，当然，这主题的设置和动画的设置是在网上找的，在博客的最后我会贴出相关的博客</p>
+<p>style</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resources</span> <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Base application theme. --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">         <span class="comment">&lt;!--Customize your theme here. --&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimary"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimaryDark"</span>&gt;</span>@color/colorPrimaryDark<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorAccent"</span>&gt;</span>@color/colorAccent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!--新建一个主题，设置为透明样式，保证滑动的时候能看到下面的Activity--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"JK.SwipeBack.Transparent.Theme"</span> <span class="attr">parent</span>=<span class="string">"AppTheme"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowBackground"</span>&gt;</span>@android:color/transparent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowIsTranslucent"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowAnimationStyle"</span>&gt;</span>@style/JK.Animation.SlidingBack<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:actionBarStyle"</span>&gt;</span>@style/JKActionBar.Custom<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"JKActionBar.Custom"</span> <span class="attr">parent</span>=<span class="string">"@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"displayOptions"</span>&gt;</span>showCustom<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:background"</span>&gt;</span>@android:color/transparent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"background"</span>&gt;</span>@android:color/transparent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:displayOptions"</span> <span class="attr">tools:ignore</span>=<span class="string">"NewApi"</span>&gt;</span>showCustom<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:height"</span>&gt;</span>?actionBarSize<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"JK.Animation.SlidingBack"</span> <span class="attr">parent</span>=<span class="string">"@android:style/Animation.Activity"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:activityOpenEnterAnimation"</span>&gt;</span>@anim/in_from_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:activityOpenExitAnimation"</span>&gt;</span>@anim/out_to_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:activityCloseEnterAnimation"</span>&gt;</span>@anim/in_from_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:activityCloseExitAnimation"</span>&gt;</span>@anim/out_to_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:wallpaperOpenEnterAnimation"</span>&gt;</span>@anim/in_from_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:wallpaperOpenExitAnimation"</span>&gt;</span>@anim/out_to_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:wallpaperCloseEnterAnimation"</span>&gt;</span>@anim/in_from_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:wallpaperCloseExitAnimation"</span>&gt;</span>@anim/out_to_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:wallpaperIntraOpenEnterAnimation"</span>&gt;</span>@anim/in_from_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:wallpaperIntraOpenExitAnimation"</span>&gt;</span>@anim/out_to_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:wallpaperIntraCloseEnterAnimation"</span>&gt;</span>@anim/in_from_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:wallpaperIntraCloseExitAnimation"</span>&gt;</span>@anim/out_to_right<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>滑动返回的动画设置</p>
+<p>in_form_left：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">translate</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:duration</span>=<span class="string">"400"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromXDelta</span>=<span class="string">"100%p"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toXDelta</span>=<span class="string">"0%p"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>in_from_right：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:shareInterpolator</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">android:zAdjustment</span>=<span class="string">"top"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">translate</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:duration</span>=<span class="string">"200"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fromXDelta</span>=<span class="string">"100.0%p"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:toXDelta</span>=<span class="string">"0.0"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>out_to_left：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">translate</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:duration</span>=<span class="string">"400"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fromXDelta</span>=<span class="string">"0%p"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:toXDelta</span>=<span class="string">"-100%p"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>out_to_right：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">android:shareInterpolator</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">android:zAdjustment</span>=<span class="string">"top"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">translate</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:duration</span>=<span class="string">"200"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fromXDelta</span>=<span class="string">"0.0"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:toXDelta</span>=<span class="string">"100.0%p"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="SwipeBackLayout"><a href="#SwipeBackLayout" class="headerlink" title="SwipeBackLayout"></a><a href="https://github.com/liuguangqiang/SwipeBack" target="_blank" rel="noopener">SwipeBackLayout</a></h2><p>效果图：（为设置为透明和没有设置为透明）</p>
+<p><a href="http://ojplrudb4.bkt.clouddn.com/SwipeBackLayout.gif" target="_blank" rel="noopener"><img src="http://ojplrudb4.bkt.clouddn.com/SwipeBackLayout.gif" alt="此处输入图片的描述"></a>此处输入图片的描述</p>
+<p>这个开源库的讲解我就不必要过多的陈述，在这里我只提一部分实现时需要注意的事项以及我踩到的坑，想详细了解的，直接到<a href="https://github.com/liuguangqiang/SwipeBack" target="_blank" rel="noopener">SwipeBackLayout</a>开源库查看代码和详解。也可看一下这篇博客<a href="http://skykai521.github.io/2016/03/04/SwipeBackLayout源代码分析/" target="_blank" rel="noopener">SwipeBackLayout源代码分析</a>。</p>
+<p><strong>原理：</strong>这种实现的重点在于将Activity的属性设置为透明的，然后上方的Activity就可以在跟随手指移动时候放一个半透明的层表示那种渐变的阴影效果，全部滑动完成后再把上方Activity销毁掉。<br>向右滑动销毁（finish）Activity。</p>
+<p><strong>注意：</strong>由于设置为了全透明，所以当我使用4.0.3版本进行开发的时候，由于活动默认的是白色的，所以当我继承这个类时，运行后的结果效果不太好，在新建的活动中能看见上一个活动的布局，这个体验感非常差，在后面的调试中，发现只要把新建的活动设置一个其他颜色的背景就行了，比如我设置为了gray，这样就没有了那个BUG。我们现在主要讨论的是向右滑动返回，所以在继承该类的时候，一定要有setDragEdge(SwipeBackLayout.DragEdge.LEFT); 这一行代码，原因代码中也说了。</p>
+<p>在这里，我们需要先导入<a href="https://github.com/liuguangqiang/SwipeBack" target="_blank" rel="noopener">SwipeBackLayout</a>开源库，最新版本在开源库上自行查看，我得Demo用的是<code>compile &#39;com.github.liuguangqiang.swipeback:library:1.0.2@aar&#39;</code>，导入成功后直接在你需要用到滑动返回的Activity继承SwipeBackActivity就行了，在这里还需要注意的是Activity的属性设置为透明的，就跟前面的原理一样，这里是需要着重注意的，在后面几个方法中，这一点同样很重要，几乎所有的方法都需要设置一下Activity的属性。</p>
+<p>实现时如代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.hp.toolbartest.Activity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.CollapsingToolbarLayout;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.ActionBar;</span><br><span class="line"><span class="keyword">import</span> android.support.v7.widget.Toolbar;</span><br><span class="line"><span class="keyword">import</span> android.view.MenuItem;</span><br><span class="line"><span class="keyword">import</span> android.widget.ImageView;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.bumptech.glide.Glide;</span><br><span class="line"><span class="keyword">import</span> com.example.hp.toolbartest.R;</span><br><span class="line"><span class="keyword">import</span> com.liuguangqiang.swipeback.SwipeBackActivity;</span><br><span class="line"><span class="keyword">import</span> com.liuguangqiang.swipeback.SwipeBackLayout;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FruitActivity</span> <span class="keyword">extends</span> <span class="title">SwipeBackActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FRUIT_NAME = <span class="string">"fruit_name"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String FRUIT_IMAGE_ID = <span class="string">"fruit_image_id"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_fruit);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//用于设置向右滑动为返回，该库默认是向上滑动为返回</span></span><br><span class="line">        setDragEdge(SwipeBackLayout.DragEdge.LEFT);</span><br><span class="line"></span><br><span class="line">        Intent intent = getIntent();</span><br><span class="line">        String fruitName = intent.getStringExtra(FRUIT_NAME);</span><br><span class="line">        <span class="keyword">int</span> fruitImageId = intent.getIntExtra(FRUIT_IMAGE_ID, <span class="number">0</span>);</span><br><span class="line">        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);</span><br><span class="line">        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)</span><br><span class="line">                findViewById(R.id.collapsing_toolbar);</span><br><span class="line">        ImageView fruitImageView = (ImageView) findViewById(R.id.fruit_image_view);</span><br><span class="line">        TextView fruitContentText = (TextView) findViewById(R.id.fruit_content_text);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line">        ActionBar actionBar = getSupportActionBar();</span><br><span class="line">        <span class="keyword">if</span> (actionBar != <span class="keyword">null</span>) &#123;</span><br><span class="line">            actionBar.setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        collapsingToolbarLayout.setTitle(fruitName);</span><br><span class="line">        Glide.with(<span class="keyword">this</span>).load(fruitImageId).into(fruitImageView);</span><br><span class="line">        String fruitContent = generateFruitContent(fruitName);</span><br><span class="line">        fruitContentText.setText(fruitContent);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//循环生成一个字符串作为内容详解</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">generateFruitContent</span><span class="params">(String fruitName)</span> </span>&#123;</span><br><span class="line">        StringBuilder fruitContent = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">500</span>; i++) &#123;</span><br><span class="line">            fruitContent.append(fruitName);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fruitContent.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">            <span class="keyword">case</span> android.R.id.home:</span><br><span class="line">                finish();</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onOptionsItemSelected(item);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码的关键就只有继承该类和设置一下滑动返回的方向，其他的是我ToolBar的代码的实现，与此次讨论无关。</p>
+<hr>
+<h2 id="利用GestureDetector类"><a href="#利用GestureDetector类" class="headerlink" title="利用GestureDetector类"></a>利用<a href="https://developer.android.google.cn/reference/android/view/GestureDetector.html" target="_blank" rel="noopener">GestureDetector</a>类</h2><p>效果图：</p>
+<p><a href="http://ojplrudb4.bkt.clouddn.com/GestureBackActivity.gif" target="_blank" rel="noopener"><img src="http://ojplrudb4.bkt.clouddn.com/GestureBackActivity.gif" alt="此处输入图片的描述"></a>此处输入图片的描述</p>
+<p>对于GestureDetector这个类，涉及的内容相对比较复杂一点，详细的了解就看官方文档<a href="https://developer.android.google.cn/reference/android/view/GestureDetector.html" target="_blank" rel="noopener">GestureDetector</a>。对于我们要如何实现滑动返回，我们首先需要建一个Activity的管理类AppManager，这样方便我们对Activity的生命周期进行管理，并安全退出，所以我们需要在主活动里对每启动一个Activity，就往AppManager里添加。<br>为了方便，同样构建了一个GestureBackActivity的基类，继承AppCompatActivity，重写AppCompatActivity的一些基本方法，然后重写dispatchTouchEvent事件机制，随着又写了手势监听器，用来监听滑动的手势，并重写GestureDetector.OnGestureListener，在重写的方法里面加入相应的逻辑处理，详细的解释我会写在代码里。多余的话就不用说了，直接给出代码。</p>
+<p>MainActivity类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//启动活动时，添加到AppManager，并设置返回时的动画</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startActivity</span><span class="params">(Class&lt;?&gt; cls)</span> </span>&#123;</span><br><span class="line">    Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">    intent.setClass(<span class="keyword">this</span>, cls);</span><br><span class="line">    startActivity(intent);</span><br><span class="line">    overridePendingTransition(R.anim.in_from_left, R.anim.out_to_left);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AppManager类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 一个Activity管理类，对所有的Activity的生命周期进行管理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Stack&lt;Activity&gt; activityStack;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AppManager instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">AppManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 单一实例</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppManager <span class="title">getAppManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> AppManager();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 添加Activity到堆栈中</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addActivity</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (activityStack == <span class="keyword">null</span>) &#123;</span><br><span class="line">            activityStack = <span class="keyword">new</span> Stack&lt;Activity&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        activityStack.add(activity);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 获取当前Activity（堆栈中最后压入的）</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Activity <span class="title">currentActivity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Activity activity = activityStack.lastElement();</span><br><span class="line">        <span class="keyword">return</span> activity;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 结束当前Activity（堆栈中最后压入的）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finishActivity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Activity activity = activityStack.lastElement();</span><br><span class="line">        finishActivity(activity);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 结束指定的Activity</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finishActivity</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (activity != <span class="keyword">null</span>) &#123;</span><br><span class="line">            activityStack.remove(activity);</span><br><span class="line">            activity.finish();</span><br><span class="line">            activity.overridePendingTransition(R.anim.in_from_right,</span><br><span class="line">                    R.anim.out_to_right);</span><br><span class="line">            activity = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 结束指定类名的Activity</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finishActivity</span><span class="params">(Class&lt;?&gt; cls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (Activity activity : activityStack) &#123;</span><br><span class="line">            <span class="keyword">if</span> (activity.getClass().equals(cls)) &#123;</span><br><span class="line">                finishActivity(activity);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 结束所有Activity</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finishAllActivity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>, size = activityStack.size(); i&lt;size; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != activityStack.get(i)) &#123;</span><br><span class="line">                activityStack.get(i).finish();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        activityStack.clear();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 彻底退出应用程序，安全退出</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">AppExit</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            finishAllActivity();</span><br><span class="line">            ActivityManager activityManager = (ActivityManager) context</span><br><span class="line">                    .getSystemService(Context.ACTIVITY_SERVICE);</span><br><span class="line">            activityManager.restartPackage(context.getPackageName());</span><br><span class="line">            System.exit(<span class="number">0</span>);</span><br><span class="line">            android.os.Process.killProcess(android.os.Process.myPid());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>GestureBackActivity基类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造一个手势滑动返回的基类，需要使用滑动返回的Activity只需继承该类就行</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GestureBackActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> GestureDetector myDectector;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"GestureBackActivity"</span>;</span><br><span class="line">    <span class="keyword">boolean</span> flingFinishEnabled = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        initGestureDetector();</span><br><span class="line">        AppManager.getAppManager().addActivity(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initGestureDetector</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (myDectector == <span class="keyword">null</span>) &#123;</span><br><span class="line">            myDectector = <span class="keyword">new</span> GestureDetector(<span class="keyword">this</span>, (GestureDetector.OnGestureListener) <span class="keyword">new</span> MyGestureListener());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (flingFinishEnabled) &#123;</span><br><span class="line">            <span class="keyword">return</span> myDectector.onTouchEvent(ev) || <span class="keyword">super</span>.dispatchTouchEvent(ev);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(ev);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 手势监听器</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyGestureListener</span> <span class="keyword">implements</span> <span class="title">GestureDetector</span>.<span class="title">OnGestureListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDown</span><span class="params">(MotionEvent e)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// Toast.makeText(getApplicationContext(),"down",Toast.LENGTH_SHORT).show();</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onShowPress</span><span class="params">(MotionEvent e)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSingleTapUp</span><span class="params">(MotionEvent e)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// Toast.makeText(getApplicationContext(),"onSingleTapUp",Toast.LENGTH_SHORT).show();</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onScroll</span><span class="params">(MotionEvent e1, MotionEvent e2,</span></span></span><br><span class="line"><span class="function"><span class="params">                                <span class="keyword">float</span> distanceX, <span class="keyword">float</span> distanceY)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLongPress</span><span class="params">(MotionEvent e)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onFling</span><span class="params">(MotionEvent e1, MotionEvent e2, <span class="keyword">float</span> velocityX,</span></span></span><br><span class="line"><span class="function"><span class="params">                               <span class="keyword">float</span> velocityY)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//对滑动距离的监听及判断</span></span><br><span class="line">            <span class="keyword">if</span> (e1.getX() - e2.getX() &gt; <span class="number">100</span> &amp;&amp; Math.abs(velocityX) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"向左滑动"</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e2.getX() - e1.getX() &gt; <span class="number">100</span> &amp;&amp; Math.abs(velocityX) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">"向右滑动"</span>);</span><br><span class="line">                AppManager.getAppManager().finishActivity();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方式相对于SwipeBack来说相对较好一点，不需要更改布局的背景，不过我在一开始出现了闪屏的问题，原因目前我还没找到，有懂得大佬欢迎指教。</p>
+<hr>
+<h2 id="SlidingPaneLayout"><a href="#SlidingPaneLayout" class="headerlink" title="SlidingPaneLayout"></a><a href="https://developer.android.google.cn/reference/android/support/v4/widget/SlidingPaneLayout.html" target="_blank" rel="noopener">SlidingPaneLayout</a></h2><p>效果图：</p>
+<p><a href="http://ojplrudb4.bkt.clouddn.com/SlidingPaneLayout.gif" target="_blank" rel="noopener"><img src="http://ojplrudb4.bkt.clouddn.com/SlidingPaneLayout.gif" alt="此处输入图片的描述"></a>此处输入图片的描述</p>
+<p>相对于前面两种实现方式，我个人比较喜欢这一种，因为这一种方式并不是很复杂，而且效果相对是最好的一个，但是理解的难度相对要大一点，在我看来的话，不过也不是很难，都还是比较容易学的,先给出官方文档<a href="https://developer.android.google.cn/reference/android/support/v4/widget/SlidingPaneLayout.html" target="_blank" rel="noopener">SlidingPaneLayout</a>。
+这个基类BaseActivity是根据SlidingPaneLayout来构造的，当然也需要继承AppCompatActivity，这是当我们直接继承该类时所必须的。在initSwipeBackFinish()初始化时，通过反射机制来改变通过反射改变mOverhangSize的值为0，这个mOverhangSize值为菜单到右边屏幕的最短距离，默认是32dp，现在给它改成0，然后通过slidingPaneLayout来设置视图，下面直接上代码。</p>
+<p>BaseActivity类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by HP on 2017/3/21.</span></span><br><span class="line"><span class="comment"> * 利用slidingPaneLayout构造一个基类，来实现滑动返回，继承该类，便可实现滑动返回</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">SlidingPaneLayout</span>.<span class="title">PanelSlideListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String TAG = BaseActivity.class.getCanonicalName();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    FrameLayout mContainerFl;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        initSwipeBackFinish();</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化滑动返回</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initSwipeBackFinish</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (isSupportSwipeBack()) &#123;</span><br><span class="line">            SlidingPaneLayout slidingPaneLayout = <span class="keyword">new</span> SlidingPaneLayout(<span class="keyword">this</span>);</span><br><span class="line">            <span class="comment">//通过反射改变mOverhangSize的值为0，这个mOverhangSize值为菜单到右边屏幕的最短距离，默认</span></span><br><span class="line">            <span class="comment">//是32dp，现在给它改成0</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//mOverhangSize属性，意思就是左菜单离右边屏幕边缘的距离</span></span><br><span class="line">                Field f_overHang = SlidingPaneLayout.class.getDeclaredField(<span class="string">"mOverhangSize"</span>);</span><br><span class="line">                f_overHang.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                <span class="comment">//设置左菜单离右边屏幕边缘的距离为0，设置全屏</span></span><br><span class="line">                f_overHang.set(slidingPaneLayout, <span class="number">0</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            slidingPaneLayout.setPanelSlideListener(<span class="keyword">this</span>);</span><br><span class="line">            slidingPaneLayout.setSliderFadeColor(getResources().getColor(android.R.color.transparent));</span><br><span class="line">            <span class="comment">// 左侧的透明视图</span></span><br><span class="line">            View leftView = <span class="keyword">new</span> View(<span class="keyword">this</span>);</span><br><span class="line">            leftView.setLayoutParams(<span class="keyword">new</span> ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));</span><br><span class="line">            slidingPaneLayout.addView(leftView, <span class="number">0</span>);  <span class="comment">//添加到SlidingPaneLayout中</span></span><br><span class="line">            <span class="comment">// 右侧的内容视图</span></span><br><span class="line">            ViewGroup decor = (ViewGroup) getWindow().getDecorView();</span><br><span class="line">            ViewGroup decorChild = (ViewGroup) decor.getChildAt(<span class="number">0</span>);</span><br><span class="line">            decorChild.setBackgroundColor(getResources().getColor(android.R.color.white));</span><br><span class="line">            decor.removeView(decorChild);</span><br><span class="line">            decor.addView(slidingPaneLayout);</span><br><span class="line">            <span class="comment">// 为 SlidingPaneLayout 添加内容视图</span></span><br><span class="line">            slidingPaneLayout.addView(decorChild, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否支持滑动返回</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">isSupportSwipeBack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPanelClosed</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPanelOpened</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        finish();</span><br><span class="line">        <span class="keyword">this</span>.overridePendingTransition(<span class="number">0</span>, R.anim.out_to_right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPanelSlide</span><span class="params">(View view, <span class="keyword">float</span> v)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方法算是最方便的，没有前面两种方法的BUG，只要你看懂了SlidingPaneLayout，这种方法你基本上就算会了。</p>
+<hr>
+<p>还有一种滑动返回的实现是直接在Activity里面实现的，在中间Activity里通过手势监听来实现的，但我觉得这样并没有什么兼容性，没有上面的三种方法扩展性强，所以我这里就不阐述了，给出一篇博客，有兴趣的自己看看<a href="http://blog.csdn.net/ff20081528/article/details/17845753" target="_blank" rel="noopener">android实现向右滑动返回功能</a>。
+还有看见网上有提到用ViewDragHelper来实现的，暂时我还没不太了解，我会在以后的博客中写出自己实现后的一些想法，这里就暂时先搁着。</p>
+<p>关于滑动返回的还有其他我没怎么了解的方法，但肯定还有，知道的人欢迎推荐！谢谢！</p>
+<hr>
+<h2 id="推荐博客区"><a href="#推荐博客区" class="headerlink" title="推荐博客区"></a>推荐博客区</h2><p>下面先给出与本博客相关的额博客并感谢这些博主：</p>
+<p><a href="http://blog.csdn.net/finddreams/article/details/44678171" target="_blank" rel="noopener">仿手机QQ聊天列表滑动菜单删除和手势滑动返回的两种方式</a><br><a href="http://www.jianshu.com/p/67ce59c9e747" target="_blank" rel="noopener">SlidingPaneLayout详解</a></p>
+<p>给出一些博客自行参考：</p>
+<p><a href="http://www.jianshu.com/p/5104a6a53716#" target="_blank" rel="noopener">Activity滑动返回操作</a><br><a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0729/3241.html" target="_blank" rel="noopener">一步一步教你150行代码实现简书滑动返回效果</a><br><a href="https://github.com/bingoogolapple/BGASwipeBackLayout-Android" target="_blank" rel="noopener">BGASwipeBackLayout-Android</a></p>
+<hr>
+<p>若要转载，请注明<a href="http://penghesheng.cn/" target="_blank" rel="noopener">出处</a></p>
+<p>最后，欢迎到<a href="https://github.com/PengHesheng/ToolBar-BackActivity" target="_blank" rel="noopener">代码源地址</a>进行下载学习，也欢迎大佬们指教！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/07/Android Window源码分析——DecorView为例/" rel="next" title="Android Window源码分析——DecorView为例">
+                <i class="fa fa-chevron-left"></i> Android Window源码分析——DecorView为例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/07/Java三大特性、抽象类以及接口相关/" rel="prev" title="Java三大特性、抽象类以及接口相关">
+                Java三大特性、抽象类以及接口相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Android实现滑动返回的几种方法总结"><span class="nav-number">1.</span> <span class="nav-text">关于Android实现滑动返回的几种方法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SwipeBackLayout"><span class="nav-number">1.1.</span> <span class="nav-text">SwipeBackLayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用GestureDetector类"><span class="nav-number">1.2.</span> <span class="nav-text">利用GestureDetector类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SlidingPaneLayout"><span class="nav-number">1.3.</span> <span class="nav-text">SlidingPaneLayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐博客区"><span class="nav-number">1.4.</span> <span class="nav-text">推荐博客区</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

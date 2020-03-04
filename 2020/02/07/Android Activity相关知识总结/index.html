@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] Activity相关知识总结Activity的用法Activity主要用于和用户进行交互，负责UI的加载与页面之间的跳转 应用启动的时候都会加载一个默认的Activity，这就是我们通常的主活动，在AndroidManifest里面设置intent-filter 1234&amp;lt;intent-filter&amp;gt;    &amp;lt;action android:name=&quot;andr">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Activity相关知识总结">
+<meta property="og:url" content="http://yoursite.com/2020/02/07/Android Activity相关知识总结/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="[TOC] Activity相关知识总结Activity的用法Activity主要用于和用户进行交互，负责UI的加载与页面之间的跳转 应用启动的时候都会加载一个默认的Activity，这就是我们通常的主活动，在AndroidManifest里面设置intent-filter 1234&amp;lt;intent-filter&amp;gt;    &amp;lt;action android:name=&quot;andr">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3985563-83df2c2b5d3afafd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-8ce1962079fe22e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-909953040b9cc7ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-0718c07f0a8a513a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-674b6ab8f33a39c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-1721e603d9e0de8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-08e44548d89d4933.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-f537a3dae37e9fd8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-2deca2228ccf3d3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-048db956f587adc5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-b3a68a0130c09228.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-c2ef318fad9ba1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-3d43ba6987c31fe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-efb2d9b75211992e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-c29d1feeb1430261.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-daa46052a40b37e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-fce165e51ca8bef8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3985563-a2caa08d3cbca003.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-a75c83eefd1005a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-8d2799aab84769f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-f5931b493ab0279b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-ddde0b9f57d12d84.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-1be8fe28f84d8dbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-3e81ecf46caf577f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-4e875ba6e5047470.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-903fe3056dc8a5fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-c63dfd46457150c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4061843-1b761d4a24ebdf42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.270Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Activity相关知识总结">
+<meta name="twitter:description" content="[TOC] Activity相关知识总结Activity的用法Activity主要用于和用户进行交互，负责UI的加载与页面之间的跳转 应用启动的时候都会加载一个默认的Activity，这就是我们通常的主活动，在AndroidManifest里面设置intent-filter 1234&amp;lt;intent-filter&amp;gt;    &amp;lt;action android:name=&quot;andr">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3985563-83df2c2b5d3afafd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/07/Android Activity相关知识总结/">
+
+
+
+
+
+  <title>Android Activity相关知识总结 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/Android Activity相关知识总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android Activity相关知识总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+
+
+<p>[TOC]</p>
+<h1 id="Activity相关知识总结"><a href="#Activity相关知识总结" class="headerlink" title="Activity相关知识总结"></a>Activity相关知识总结</h1><h2 id="Activity的用法"><a href="#Activity的用法" class="headerlink" title="Activity的用法"></a>Activity的用法</h2><p>Activity主要用于和用户进行交互，负责UI的加载与页面之间的跳转</p>
+<p>应用启动的时候都会加载一个默认的Activity，这就是我们通常的主活动，在AndroidManifest里面设置intent-filter</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过给Activity添加如此拦截器，设置为APP的主活动，也就是整个APP的入口（表面上的入口），同时在AndroidManifest里面，标签&lt;activity&gt;就标明了这是一个活动</p>
+<p>直接新建一个应用，默认的Activity会是这样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码中可以看出，Activity就是一个继承AppCompatActivity的类，继承这个类后，就成了一个活动，当然也可以继承Activity这个类，两者的区别在于AppCompatActivity是v7的，也就是兼容性更好，Activity兼容性相比之下比较差一点，当然，现在都一般用AppCompatActivity。</p>
+<p>由此可见，创建一个活动很简单，继承了AppCompatActivity就行了，然后你就可以去操作你的UI加载和布局了</p>
+<h2 id="Activity的启动模式"><a href="#Activity的启动模式" class="headerlink" title="Activity的启动模式"></a>Activity的启动模式</h2><p>每一个程序都有一个或很多个Activity组成，因此Android内部使用通过回退栈开管理Activity实例，这就是hiActivity栈。对于Android来说，处于栈顶的Activity就是当前显示的页面，通过返回键来销毁这个栈顶的Activity回到上一个Activity<br><a href="http://upload-images.jianshu.io/upload_images/3985563-83df2c2b5d3afafd.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3985563-83df2c2b5d3afafd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="网上找的图"></a>网上找的图</p>
+<p>通过AndroidManifest的&lt;activity&gt;标签来指定<code>android:launchMode</code>来选择启动模式（或者通过Intent设置标志位来指定启动模式<code>intent.addFlags(Intent,FLAG_ACTIVITY_NEW_TASK);</code>），进而控制Activity栈的出栈规则。Intent则是Android程序中各组件之间进行交互的一种重要方式，不仅可以指明当前组件要执行的动作，还可以在不同组件中传递数据。因此，Activity的启动一般是通过它来实现的。</p>
+<table>
+<thead>
+<tr>
+<th align="center">标志位</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">FLAG_ACTIVITY_NEW_TASK</td>
+<td align="center">新活动放置在新建的一个栈，对应singleTask</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_SINGLE_TOP</td>
+<td align="center">singleTop，处于栈顶不会新建实例</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_CLEAR_TOP</td>
+<td align="center">如果设置，并且这个Activity已经在当前的Task中运行，因此，不再是重新启动一个这个Activity的实例，而是在这个Activity上方的所有Activity都将关闭，然后这个Intent会作为一个新的Intent投递到老的Activity（现在位于顶端）中</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS</td>
+<td align="center">如果设置，新活动不保存在最近启动的活动列表中，等同于指定<code>android:excludeFromRecents=&quot;true&quot;</code></td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_NO_HISTORY</td>
+<td align="center">如果新活动不是在历史栈中，当用户离开这个活动（不管是新启动一个活动还是结束这个活动）就直接结束，设置此标志activity将不添加到回退栈（backStack）</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_MULTIPLE_TASK</td>
+<td align="center">新建一个任务栈，用于放置这个活动，这个标志总是和FLAG_ACTIVITY_NEW_DOCUMENT或者FLAG_ACTIVITY_NEW_TASK联合使用</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_BROUGHT_TO_FRONT</td>
+<td align="center">这个flag不能正常地被应用程序代码设置，而是系统为你设置由于在 launchMode 设置为singleTask模式</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_CLEAR_TASK</td>
+<td align="center">如果通过 Context.startactivity()去设置/启动一个Intent，这个flag将导致任何存在的task，将与活动开始前清除的活动相关</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_FORWARD_RESULT</td>
+<td align="center">如果设置这个intent是被用来从一个现有的acitivity启动到新的acitivity，现有activity的回复目标将被转移到新的activity</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY</td>
+<td align="center">这个flag不能正常地被应用程序代码设置，而是系统为你设置，如果这个活动正在展开的历史堆栈（长按 Home键）</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_NEW_DOCUMENT</td>
+<td align="center">此标志用于将文档打开到一个新的任务中，该任务源于intent启动的活动</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_NO_ANIMATION</td>
+<td align="center">如果通过 Context.startactivity()去设置/启动一个Intent，这个标志将阻止系统执行一个活动去下一个活动的过渡动画</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_NO_USER_ACTION</td>
+<td align="center">设置此标志，将阻止onuserleavehint()正常回调发生在当前最前的活动，在它被停下来作为新启动活动被带到前面</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_PREVIOUS_IS_TOP</td>
+<td align="center">如果设置并使用此意图从现有的一个activity a启动到新activity b，新avitivity b将不会被视为栈顶而是activity a，而是决定是否新意图传递到顶部而不是启动新的活动</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_RESET_TASK_IF_NEEDED</td>
+<td align="center">设置此标志使这个活动要么开始在一个新的任务或带到现有的任务的顶部，那么它将被启动作为任务的前门</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_REORDER_TO_FRONT</td>
+<td align="center">如果在通过 Context.startactivity()去设置/启动一个Intent，如果需要启动的activity已经运行，此标志使被启动的活动被带到任务的历史堆栈的前面</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_TASK_ON_HOME</td>
+<td align="center">如果在通过 Context.startactivity()去设置/启动一个Intent，此flag将使新启动任务置于当前活动任务的顶部（如果只有一个task时）</td>
+</tr>
+<tr>
+<td align="center">FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET</td>
+<td align="center">这个常数是在API级别21废弃掉。在API 21执用 flag_activity_new_document 替代</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, TargetActivity.class);</span><br><span class="line">intent.addFlags(Intent,FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+
+<p>这就是简单活动的启动</p>
+<p>Activity可以通过Intent来实现启动各组件之间的通信。首先我们先见识了显示启动Activity的用法，现在看看隐式使用Intent。</p>
+<p>首先在AndroidManifest中，通过&lt;activtiy&gt;标签被指&lt;intent-filter&gt;来指定活动响应的action和category</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:name=<span class="string">".SecondActivity"</span>&gt;</span><br><span class="line">    &lt;intent-filter&gt;</span><br><span class="line">        &lt;action android:name=<span class="string">"com.example.a14512.activitydemo.ACTION_START"</span>/&gt;</span><br><span class="line">        &lt;category android:name=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span><br><span class="line">        &lt;category android:name=<span class="string">"com.example.a14512.activitydemo.MY_CATEGORY"</span>/&gt;</span><br><span class="line">    &lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//启动活动，传入action</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.example.a14512.activitydemo.ACTION_START"</span>);</span><br><span class="line"><span class="comment">//添加category</span></span><br><span class="line">intent.addCategory(<span class="string">"com.example.a14512.activitydemo.MY_CATEGORY"</span>);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+
+<p>每个Intent只能指定一个action，但是可以指定多个category，通过addCategory来添加（启动活动时一定要注意action和category要与AndroidManifest中的匹配对应，否则出现找不到Activity的崩溃）；除了action和category外，还有一个data，一旦在&lt;intent-filter&gt;设置了这三个过滤类别，当启动activity的时候，Intent必须完全匹配这些才能成功启动Activity。另外，一个intent-filter可以有有多个action、category、data，而一个Activity可以有多个intent-filter，一个Intent只要能匹配其中一个组就可以启动Activity</p>
+<ul>
+<li><p>Intent-filter匹配规则</p>
+<ol>
+<li><p>action<br> 是一个字符串，系统预定义了一些action，同时我们也可以定义自己的action。Intent中的action必须和intent-filter中的action匹配（字符串值完全一样）。 action字符串区分大小写</p>
+</li>
+<li><p>category<br> 是一个字符串，系统预定义了一些category，也可以自定义。Intent中可以不用设置category（系统会默认添加默认的default，intent-filter必须添加一个default的category），但一旦设置了，就必须和intent-filter中的category中的一个匹配</p>
+</li>
+<li><p>data<br> 和action类似，如果intent-filter中定义了data，Intent必须也要定义可匹配的data<br> data语法：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;data android:scheme=<span class="string">"string"</span></span><br><span class="line">            android:host=<span class="string">"string"</span></span><br><span class="line">            android:port=<span class="string">"string"</span></span><br><span class="line">            android:path=<span class="string">"string"</span></span><br><span class="line">            android:pathPattern=<span class="string">"string"</span></span><br><span class="line">            android:pathPrefix=<span class="string">"string"</span></span><br><span class="line">            android:mimeType=<span class="string">"string"</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p> data由mimeType和URI两部分组成，mimeType指媒体类型，比如image/jpeg、video/*等，可以表示图片、文本、视频等不同的媒体格式。</p>
+<p> URI的结构：<br> <code>&lt;scheme&gt;://&lt;host&gt;:&lt;port&gt;/[&lt;path&gt;|&lt;pathPrefix&gt;|&lt;pathPattern&gt;]</code></p>
+<blockquote>
+<p>scheme：URI的模式，比如http、file、content；如果没有指定scheme，则整个URI无效<br>host：URI的主机名<br>port：URI中的端口号<br>path、pathPattern、pathPrefix：表述路径信息，path表示完整路径，pathPattern也表示完整路径，但是可以包含*统配符，pathPrefix表示路径的前缀信息</p>
+</blockquote>
+<p> 一个小例子：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;intent-filter&gt;</span><br><span class="line">        ...</span><br><span class="line">        &lt;data android:scheme=<span class="string">"image/*"</span>/&gt;</span><br><span class="line">&lt;/intent-filter&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//intent使用，如果传入的uri参数与intent-filter中不匹配就会报错</span></span><br><span class="line"><span class="comment">//不能先调用setData，再调用setType</span></span><br><span class="line">intent.setDataAndType(Uri.parse(<span class="string">"file://abc"</span>), <span class="string">"image/png"</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ul>
+<p>在每次使用隐式启动Activity时，可以通过PackageManager的resolveActivity或Intent的resolveActivity方法先检测是否有Activity匹配，放止找不到Activity。</p>
+<ul>
+<li><p>隐式Intent的其他用法</p>
+<ol>
+<li><p>打开网页</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Android内置的动作</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</span><br><span class="line"><span class="comment">//setData接受一个Uri对象，主要用于指定正在操作的数据</span></span><br><span class="line">intent.setData(Uri.parse(<span class="string">"http://www.baidu.com"</span>));</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用拨号</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//内置的动作</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_DIAL);</span><br><span class="line"><span class="comment">//同样一个Uri对象</span></span><br><span class="line">intent.setData(Uri.parse(<span class="string">"tel:10086"</span>));</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ul>
+<p>下面介绍四种启动模式</p>
+<h3 id="standard"><a href="#standard" class="headerlink" title="standard"></a><strong>standard</strong></h3><p>Activity的标准启动模式，当你没有通过<code>android:launchMode</code>来指定启动模式的时候，Activity的启动模式就是这个了。</p>
+<p>在这种情况下，Activity的实例可以有多个，Activity可以被多次实例化。每启动一个Activity，Activity栈中就会有这么一个实例，Activity栈不会管之前创建没有，会重复实例化。<br><a href="https://upload-images.jianshu.io/upload_images/4061843-8ce1962079fe22e0.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-8ce1962079fe22e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="借用郭神的示例图"></a>借用郭神的示例图</p>
+<p>在MainActivity的布局添加一个Button，用来启动Activity，打印日志<br><a href="https://upload-images.jianshu.io/upload_images/4061843-909953040b9cc7ad.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-909953040b9cc7ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="standard"></a>standard由此可见，每启动一个Activity，就会新建一个Activity的实例，依次放入栈中</p>
+<h3 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a><strong>singleTop</strong></h3><p>栈顶复用模式，在这中模式下，如果Activity已经处于栈顶，重复启动这个Activity的话，不会新建这个Activity的实例，会重用这个已经在栈顶的Activity，并会调用该实例的onNewIntent函数将Intent对象传递到这个实例中；但是如果不在栈顶的话，启动一个Activity就会新建一个Activity的实例，即使以前创建了一次，这也就意味着，不是栈顶的Activity仍然可以重复实例化<br><a href="https://upload-images.jianshu.io/upload_images/4061843-0718c07f0a8a513a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-0718c07f0a8a513a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="处于栈顶"></a>处于栈顶<br><a href="https://upload-images.jianshu.io/upload_images/4061843-674b6ab8f33a39c2.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-674b6ab8f33a39c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="没有处于栈顶"></a>没有处于栈顶</p>
+<p>新建一个SecondActivity，将SecondActivity和MainActivity的启动模式设为singleTop，先启动SecondActivity，再启动一次SecondActivity，打印日志<br><a href="https://upload-images.jianshu.io/upload_images/4061843-1721e603d9e0de8c.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-1721e603d9e0de8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png由此可见，不管你在SecondActivity启动几次SecondActivity，它总是不会新建实例，只会重新调用onNewIntent这个方法来接受传递过来的Intent</p>
+<p>然后再试一下，启动MainActivity，再启动SecondActivity，最后再启动MainActivity<br><a href="https://upload-images.jianshu.io/upload_images/4061843-08e44548d89d4933.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-08e44548d89d4933.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png可以看见，当MainActivity和SecondActivity不是处于栈顶的时候，就可以再次创建自己的实例</p>
+<h3 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a><strong>singleTask</strong></h3><p>栈内复用模式，是一种单实例模式，在一个Activity栈中只能存在一个实例，当启动一个Activity后，系统会首先查找是由存在A想要的任务栈，如果不存在，就要重新创建一个，然后在把这个Activity的实例放到任务栈中；如果已经存在这个Activity要的任务栈，就查看栈中是否有这个Activity的实例，如果已存在这个Activity的实例，当再一次启动的时候，如果上面有其他的Activity，就会销毁该Activity上的所有Activity，最终让这个Activity处于栈顶，然后调用onNewIntent函数</p>
+<ul>
+<li><p>如果要启动的Activity需要的栈就是跟MainActivity一个栈<br>  <a href="https://upload-images.jianshu.io/upload_images/4061843-f537a3dae37e9fd8.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-f537a3dae37e9fd8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="同一个栈"></a>同一个栈</p>
+</li>
+<li><p>要启动的Activity跟MainActivity不是同一个栈（开发艺术探索）<br>  <a href="https://upload-images.jianshu.io/upload_images/4061843-2deca2228ccf3d3a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-2deca2228ccf3d3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不同栈，且处于栈顶"></a>不同栈，且处于栈顶</p>
+<p>  <a href="https://upload-images.jianshu.io/upload_images/4061843-048db956f587adc5.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-048db956f587adc5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不同栈，但不是栈顶"></a>不同栈，但不是栈顶</p>
+</li>
+</ul>
+<p>创建ThirdActivity，启动模式设为singlTask。其余默认<br><a href="https://upload-images.jianshu.io/upload_images/4061843-b3a68a0130c09228.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-b3a68a0130c09228.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png可以看到，先启动了ThirdActivity，接着启动了SecondActivity，然后又启动ThirdActivity，ThirdActivity并没有重新实例化，而是restart了之前的，并销毁了SecondActivity。</p>
+<p>将ThirdActivity单独指定一个栈，启动模式为singleTask，其余为默认，然后一次启动MainActivity、SecondActivity、ThirdActivity，再次启动ThirdActivity<br><a href="https://upload-images.jianshu.io/upload_images/4061843-c2ef318fad9ba1f1.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-c2ef318fad9ba1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不同栈，且处于栈顶"></a>不同栈，且处于栈顶可以看出，单独一个栈的ThirdActivity已经处于栈顶，不管你重复启动多少次，都不会变</p>
+<p>将FourthActivity和ThirdActivity单独指定一个栈，利用<code>android:taskAffinity</code>指定，ThirdActivity设置启动模式为singleTask，其他默认，然后先启动SecondActivity，接着启动ThirdActivity，再启动FourthActivity，再启动ThirdActivity，打印日志<br><a href="https://upload-images.jianshu.io/upload_images/4061843-3d43ba6987c31fe2.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-3d43ba6987c31fe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不同栈，不是栈顶"></a>不同栈，不是栈顶可以看出，当单独一个栈的ThirdActivity和FourthActivity，重新启动ThirdActivity，会销毁FourthActivity，但不会影响MainActivity这个栈的活动</p>
+<h3 id="singleInstance"><a href="#singleInstance" class="headerlink" title="singleInstance"></a><strong>singleInstance</strong></h3><p>这是一种加强的单实例模式，在一个Activity栈中只能存在一个实例，且这个栈是独立的一个栈，保证整<br>个系统中只有一个singleInstance的栈和一个Activity实例<br><a href="https://upload-images.jianshu.io/upload_images/4061843-efb2d9b75211992e.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-efb2d9b75211992e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png</p>
+<p>将SecondActivity的启动模式改为singleInstance，其余默认，然后依次启动MainActivity、SecondActivity、FourthActivity<br><a href="https://upload-images.jianshu.io/upload_images/4061843-c29d1feeb1430261.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-c29d1feeb1430261.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png可以看出，SecondActivity和MainActivity的TaskId并不一致，说明它们不处于同一个栈</p>
+<h2 id="Activity和其他组件的通信"><a href="#Activity和其他组件的通信" class="headerlink" title="Activity和其他组件的通信"></a>Activity和其他组件的通信</h2><h3 id="Activity和Activity"><a href="#Activity和Activity" class="headerlink" title="Activity和Activity"></a>Activity和Activity</h3><p>首先，我们可以通过Intent来显示启动活动，那么与此同时，我们可以通过Intent来向启动的活动传递数据，进而进行通信</p>
+<h4 id="使用Intent"><a href="#使用Intent" class="headerlink" title="使用Intent"></a>使用Intent</h4><ul>
+<li><p>intent向下一个活动传递数据：<br>  先来个简单的例子</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, SecondActivity.class);</span><br><span class="line"><span class="comment">//传递一个String数据</span></span><br><span class="line">intent.putExtra(<span class="string">"data_key"</span>, <span class="string">"MainActivity"</span>);</span><br><span class="line">startActivity(intent);</span><br><span class="line"></span><br><span class="line">Intent intent = getIntent();</span><br><span class="line"><span class="comment">//根据key值接收String数据</span></span><br><span class="line">String data = intent.getStringExtra(<span class="string">"data_key"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>  这就是一个简单的数据传递</p>
+<p>  Intent传递的数据也是有限的，只能传递基本类型、String、Parcelable、Serializable以及它们相关的数组类型，这是Intent可以直接传递的类型，当然，还可以将数据装在Bundle里面，通过Intent来传递，同样在传递时，都需要指定一个String的name值，方便在接收的时候准确获取对应的数据。</p>
+</li>
+<li><p>intent返回数据给上一个活动<br>  一个例子</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//启动活动</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, SecondActivity.class);</span><br><span class="line"><span class="comment">//requestCode设置为1</span></span><br><span class="line">startActivityForResult(intent, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//重写方法，requestCode一般使用系统内置的，也可以自己自定义，resultCode时我们前面设置的</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (resultCode == RESULT_OK) &#123;</span><br><span class="line">        <span class="keyword">switch</span> (requestCode) &#123;</span><br><span class="line">            <span class="comment">//判断数据来源</span></span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="comment">//获取数据</span></span><br><span class="line">                String resultData = data.getStringExtra(<span class="string">"data_key"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在结束活动的时候</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">intent.putExtra(<span class="string">"data_key"</span>, <span class="string">"result"</span>);</span><br><span class="line"><span class="comment">//第一个参数用于向上一个活动返回处理结果，一般为RESULT_OK或RESULT_CANCELED，第二个参数用于返回带有数据的Intent</span></span><br><span class="line">setResult(RESULT_OK, intent);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="借助类的静态变量"><a href="#借助类的静态变量" class="headerlink" title="借助类的静态变量"></a>借助类的静态变量</h4><p>由于类的静态成员可以通过“className.fileName”进行访问，所以可以在Activity中生命一个静态变量从而实现Activity之间的数据通信</p>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MainActivity中</span></span><br><span class="line"><span class="comment">//先查看值</span></span><br><span class="line">LogUtil.d(SecondActivity.name);</span><br><span class="line">SecondActivity.name = <span class="string">"MainActivity change"</span>;</span><br><span class="line"><span class="comment">//查看修改后的值</span></span><br><span class="line">LogUtil.d(SecondActivity.name);</span><br><span class="line">Button button = findViewById(R.id.btnStartActivity);</span><br><span class="line">button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, SecondActivity.class);</span><br><span class="line">        startActivity(intent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//SecondActivity中，声明一个静态变量并赋予初值</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String name = <span class="string">"SecondActivity"</span>;</span><br><span class="line"><span class="comment">//启动SecondActivity后查看值是否变更</span></span><br><span class="line">LogUtil.d(name);</span><br></pre></td></tr></table></figure>
+
+<p>结果：<br><a href="https://upload-images.jianshu.io/upload_images/4061843-daa46052a40b37e3.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-daa46052a40b37e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png<br>可以看出，我们可以访问SecondActivity的静态变量，通过这个例子，我们也可以实现两个Activity之间的通信</p>
+<h4 id="通过全局变量-Application"><a href="#通过全局变量-Application" class="headerlink" title="通过全局变量/Application"></a>通过全局变量/Application</h4><p>跟在Activity中生命一个静态变量类似，只不过单独一个类生命的静态变量就是全局访问的，这就跟我们平时会写一个Config类来管理全局静态常量类似。就是访问同一块内存区（内存共享）</p>
+<p>小例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第三方类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Config</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String name = <span class="string">"Config"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MainActivity中</span></span><br><span class="line">LogUtil.d(Config.name);</span><br><span class="line">Config.name = <span class="string">"MainActivity change"</span>;</span><br><span class="line">LogUtil.d(Config.name);</span><br><span class="line"></span><br><span class="line"><span class="comment">//SecondActivity中</span></span><br><span class="line">LogUtil.d(Config.name);</span><br></pre></td></tr></table></figure>
+
+<p>结果：<br><a href="https://upload-images.jianshu.io/upload_images/4061843-fce165e51ca8bef8.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-fce165e51ca8bef8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png<br>从结果中就可以看出，效果跟前面一个是一样的，原理其实也差不多</p>
+<h4 id="Broadcast或者LocalBroadcast"><a href="#Broadcast或者LocalBroadcast" class="headerlink" title="Broadcast或者LocalBroadcast"></a>Broadcast或者LocalBroadcast</h4><p>在一个Activity发送广播，在另一个接受并解析数据</p>
+<h4 id="外部存储"><a href="#外部存储" class="headerlink" title="外部存储"></a>外部存储</h4><p>外部存储就是通过访问第三方，来实现数据通信（这个需要注意同步并发的问题），一下几个基本上都是数据的持久化</p>
+<ul>
+<li>SharedPreference</li>
+<li>SQLite</li>
+<li>File</li>
+<li>Service<br>  后台服务，数据存取，直连的Activity就可以使用这些数据</li>
+</ul>
+<h4 id="EventBus"><a href="#EventBus" class="headerlink" title="EventBus"></a>EventBus</h4><p>适用于页面之间的信息传递和同步，EventBus是一个第三方库，不仅可以用于Activity和Activity，其余的组件间都可以，这个开源库就是用来进行组件间的通信的</p>
+<h4 id="RxBus"><a href="#RxBus" class="headerlink" title="RxBus"></a>RxBus</h4><p>类似于EventBus，就是EventBus的一种替代</p>
+<h4 id="otto"><a href="#otto" class="headerlink" title="otto"></a>otto</h4><p>OTTO是Square推出的库，原理与EventBus相同，实现方式也非常类似。不同的是接收方的回调方法不是固定的那四个，而是通过@Subscribe注解标志来识别接收方的回调方法的。</p>
+<h3 id="Activity和Fragment"><a href="#Activity和Fragment" class="headerlink" title="Activity和Fragment"></a>Activity和Fragment</h3><ol>
+<li><p>如果Activity中有Fragment实例，可以通过直接调用Fragment中的public方法</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fragment1</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getFun</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"fragment"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Activity中使用</span></span><br><span class="line">Fragment1 fragment1 = <span class="keyword">new</span> Fragment1();</span><br><span class="line">fragment1.getFun();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果Activity中没有Fragment实例，每个Fragment都有唯一的TAG或者ID,可以通过getFragmentManager.findFragmentByTag()或者findFragmentById()获得任何Fragment实例，然后进行1中的操作</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过findFragmentById方法获取Fragment</span></span><br><span class="line">Fragment1 fragment1 = (Fragment1) getSupportFragmentManager().findFragmentById(R.id.fragment1);</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过findFragmentByTag</span></span><br><span class="line">Fragment1 fragment1 = (Fragment1) getSupportFragmentManager().findFragmentByTag(<span class="string">"Fragment1"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果Activity向Fragment传递参数，在Activity通过setArguments传递，在Fragment通过getArguments获取<br> 官方文档推荐，在每个Frament里必须有一个空的构造函数，以便其可以实例化，但是不推荐含有带参的构造方法，用来传递参数，因为这些构造函数，并不能在调用Fragment时，将Fragment重新实例化，如果需要传递参数，可以通过setArguments传递，在Fragment通过getArguments。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Fragment1 fragment1 = <span class="keyword">new</span> Fragment1();</span><br><span class="line"><span class="comment">//通过setArguments和Bundle传递数据</span></span><br><span class="line">fragment1.setArguments(<span class="keyword">new</span> Bundle());</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取Activity传递过来的数据</span></span><br><span class="line">Bundle bundle = getArguments();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过回调<br> （1）在Activity中写接口，Fragment实现接口，在Activity回调</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Activity中</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MainListener</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getFun1</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> MainListener mMainListener;</span><br><span class="line">Fragment1 fragment1 = <span class="keyword">new</span> Fragment1();</span><br><span class="line">mMainListener = fragment1;</span><br><span class="line"><span class="comment">//回调</span></span><br><span class="line">mMainListener.getFun1();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Fragment中</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fragment1</span> <span class="keyword">extends</span> <span class="title">Fragment</span> <span class="keyword">implements</span> <span class="title">MainActivity</span>.<span class="title">MainListener</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getFun1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        LogUtil.d(<span class="string">"main interface"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> （2）在Fragment中写接口，Activity实现接口，在Fragment中回调</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Fragment中</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fragment1</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> FragmentListener mListener;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        mListener = (FragmentListener) getActivity();</span><br><span class="line">        <span class="comment">//回调</span></span><br><span class="line">        mListener.getFun2();</span><br><span class="line">        View view = inflater.inflate(R.layout.fragment1, container, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> view;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FragmentListener</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">getFun2</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Activity中实现接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">Fragment1</span>.<span class="title">FragmentListener</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getFun2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        LogUtil.d(<span class="string">"fragment interface"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 由此看来，回调的方法是可以行的，不管你在Activity中回调还是在Fragment中回调都是可以的</p>
+</li>
+<li><p>Handler<br> 也可以使用Handler实现组件通信</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Activity</span></span><br><span class="line"><span class="meta">@SuppressLint</span>(<span class="string">"HandlerLeak"</span>)</span><br><span class="line"><span class="keyword">public</span> Handler mHandler = <span class="keyword">new</span> Handler() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Fragment</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onAttach(activity);</span><br><span class="line">    <span class="keyword">if</span> (activity <span class="keyword">instanceof</span> MainActivity) &#123;</span><br><span class="line">        Handler handler = ((MainActivity) activity).mHandler;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>广播</p>
+</li>
+<li><p>EventBus</p>
+</li>
+<li><p>RxBus</p>
+</li>
+</ol>
+<h3 id="Activity和Service"><a href="#Activity和Service" class="headerlink" title="Activity和Service"></a>Activity和Service</h3><ul>
+<li><p>Activity启动Service的两种方式:</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CustomService 是自定义Service，完成一些后台操作</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>，CustomService.class)；</span><br><span class="line"><span class="comment">//start和stop Service的时候都可以进行数据传递</span></span><br><span class="line">startService(intent);</span><br><span class="line">stopService(intent);</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以通过绑定服务启动，来进行一些操作</span></span><br><span class="line">bindService(<span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>，CustomService.class)), <span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//当前启动的service 一些数据就会回调回这里，我们在Activity中操作这些数据即可</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, flags);</span><br></pre></td></tr></table></figure>
+
+<p>  从启动方式就可以看出，通过Bundle对象的形式存储，通过Intent传输，来完成Activity向Service传递数据的操作</p>
+</li>
+<li><p>接口回调<br>  Service设置接口实例，Activity实现</p>
+</li>
+</ul>
+<h3 id="Activity和Broadcast"><a href="#Activity和Broadcast" class="headerlink" title="Activity和Broadcast"></a>Activity和Broadcast</h3><p>通过发送广播，利用Intent传递数据，实现Activity和Broadcast的通信</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
+
+<p>Activity与BroadcastReceiver通信时，用的也是Intent传递，Bundle存储</p>
+<h2 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a>Activity的生命周期</h2><p><a href="http://upload-images.jianshu.io/upload_images/3985563-a2caa08d3cbca003.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3985563-a2caa08d3cbca003.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="经典周期图"></a>经典周期图</p>
+<h3 id="典型情况下的生命周期"><a href="#典型情况下的生命周期" class="headerlink" title="典型情况下的生命周期"></a>典型情况下的生命周期</h3><ol>
+<li>onCreat<br> 表示Activity正在被创建，生命周期的第一个方法。一般做一些初始化的工作</li>
+<li>onStart<br> 表示Activity正在启动，即将开始，Activity已经可见，但是没有出现在前台（在后台），还无法和用户交互（我们无法看到，但是Activity已经显示出来）</li>
+<li>onResume<br> 表示Activity已经可见了，并且出现在前台并开始活动。</li>
+<li>onPause<br> 表示Activity正在停止，正常情况onStop会接着调用。特殊情况下，如果快速地返回当前Activity，会调用onResume</li>
+<li>onStop<br> 表示Activity即将停止，可以做一些稍微重量级的回收工作，不能耗时操作</li>
+<li>onDestroy<br> 表示Activity即将被销毁，做一些回收工作和最终的资源释放</li>
+<li>onRestart<br> 表示Activity正在重新启动。一般情况下，Activity由不可见重新变为可见状态时调用</li>
+</ol>
+<p>除了onRestart方法，其余的都是两两相对的，从而可以分为3中生存期</p>
+<ul>
+<li>完整生存期<br>  在onCreat和onDestroy方法之间所经历的就是一个正常的完整的周期</li>
+<li>可见生存周期<br>  在onStart和onStop方法之间所经历的就是可见生存期，在这个周期内，活动对于用户总是可见的，即使可能无法交互。</li>
+<li>前台生存期<br>  在onResume和onPause方法之间所经历的就是前台生存期，在这个期间，活动总是处于运行状态的，可以和用户交互</li>
+</ul>
+<p>小例子：<br>当启动一个正常的活动时，观察MainActivity的生命周期，当启动MainActivity时，onCreat、onStart、onResume先后调用<br><a href="https://upload-images.jianshu.io/upload_images/4061843-a75c83eefd1005a0.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-a75c83eefd1005a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png</p>
+<p>接着启动SecondActivity，观察MainActivity的周期，发现，onPause、onStop被调用了，此时MainActivity被SecondActivity遮挡了。从结果中同样可以观察到，先是MainActivity的onPause调用，然后是SecondActivity的onCreate、onStart、onResume被调用（此时，MainActivity变为完全不可见了），然后MainActivity的onSavaInstanceState、onStop被调用<br><a href="https://upload-images.jianshu.io/upload_images/4061843-8d2799aab84769f6.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-8d2799aab84769f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png</p>
+<p>接着按下back键，返回MainActivity，此时onRestart、onStart、onResume调用（此前MainActivity是停止状态，所以不会重建调用onCreate）。从结果中还以知道，先是SecondActivity的onPause被调用，接着MainActivity的onRestart、onStart、onResume被调用，然后SecondActivity的onStop、onDestroy被调用。说明SecondActivity的回收需要时间，会先onPause，然后展示MainActivity让它置于前台，最后才慢慢收回SecondActivity<br><a href="https://upload-images.jianshu.io/upload_images/4061843-f5931b493ab0279b.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-f5931b493ab0279b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png</p>
+<p>当点击按钮，启动DialogActivity（主题设置为Dialog，对话框式的活动），发现MainActivity只有onPause调用了，onStop并没有调用（因为Dialog并没有完全遮挡MainActivity），按下back键，MainActivity的onResume调用。<br><a href="https://upload-images.jianshu.io/upload_images/4061843-ddde0b9f57d12d84.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-ddde0b9f57d12d84.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png<br><a href="https://upload-images.jianshu.io/upload_images/4061843-1be8fe28f84d8dbd.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-1be8fe28f84d8dbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png</p>
+<p>同理，如果启动一个Activity采用了透明主题，那么也会只调用onPause而不会调用onStop<br><a href="https://upload-images.jianshu.io/upload_images/4061843-3e81ecf46caf577f.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-3e81ecf46caf577f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png<br>按下back键后，MainActivity不会调用onRestart、onStart方法，直接调用onResume<br><a href="https://upload-images.jianshu.io/upload_images/4061843-4e875ba6e5047470.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-4e875ba6e5047470.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png</p>
+<p>最后back键退出MainActivity，onPause、onStop、onDestroy依次调用<br><a href="https://upload-images.jianshu.io/upload_images/4061843-903fe3056dc8a5fd.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-903fe3056dc8a5fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png</p>
+<p>onSaveInstanceState方法用于数据临时保存，在活动被系统回收之前一定会被调用，主动销毁活动不会调用这个方法。</p>
+<p>当targetSdkVersion小于等于11（也就是2.3及其之前）时onSaveInstanceState是在onPause方法中调用的，而大于11（3.0开始）时是在onStop方法中调用的。<br>而onRestoreInstanceState是在onStart之后、onResume之前调用的</p>
+<h3 id="异常情况下的生命周期"><a href="#异常情况下的生命周期" class="headerlink" title="异常情况下的生命周期"></a>异常情况下的生命周期</h3><ul>
+<li><p>资源相关的系统配置发生改变导致Activity被杀死并重新创建<br>  例如横竖屏切换：targetSdkVersion小于等于10时<a href="https://upload-images.jianshu.io/upload_images/4061843-c63dfd46457150c5.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-c63dfd46457150c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png<br>  targetSdkVersion大于10时<br>  <a href="https://upload-images.jianshu.io/upload_images/4061843-1b761d4a24ebdf42.png?imageMogr2/auto-orient/strip|imageView2/2/w/1240" target="_blank" rel="noopener"><img src="https://upload-images.jianshu.io/upload_images/4061843-1b761d4a24ebdf42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></a>image.png<br>  这两者的区别就是onSaveInstanceState和onPause调用的先后顺序不同，&lt;=10的时候式onSaveInstanceState先于onPause被调用，&gt;10的的时候式onPause先于onSaveInstanceState被调用</p>
+</li>
+<li><p>资源内存不足导致低优先级的Activity被杀死<br>  优先级：</p>
+<blockquote>
+<p>(1) 前台Activity——正在和用户交互的Activity，优先级最高<br>(2) 可见但非前台Activity——比如Activity中弹出了一个对话框，导致Activity可见但是位于后台无法和用户交互<br>(3) 后台Activity——已经被暂停的Activity，比如执行了onStop，优先级最低</p>
+</blockquote>
+<p>  当系统内存不足时，会按照上述优先级从低到高去杀死目标Activity所在的进程。我们在平常使用手机时，能经常感受到这一现象。这种情况下数组存储和恢复过程和上述情况一致，生命周期情况也一样</p>
+<p>  对应的三种运行状态：</p>
+<blockquote>
+<p>(1)Resumed（活动状态） 又叫Running状态，这个Activity正在屏幕上显示，并且有用户焦点。这个很好理解，就是用户正在操作的那个界面</p>
+<p>②Paused（暂停状态） 这是一个比较不常见的状态。这个Activity在屏幕上是可见的，但是并不是在屏幕最前端的那个Activity。比如有另一个非全屏或者透明的Activity是Resumed状态，没有完全遮盖这个Activity</p>
+<p>③Stopped（停止状态） 当Activity完全不可见时，此时Activity还在后台运行，仍然在内存中保留Activity的状态，并不是完全销毁。这个也很好理解，当跳转的另外一个界面，之前的界面还在后台，按回退按钮还会恢复原来的状态，大部分软件在打开的时候，直接按Home键，并不会关闭它，此时的Activity就是Stopped状态</p>
+</blockquote>
+</li>
+</ul>
+<p>可以通过在AndroidManifest文件的Activity中指定如下属性：<code>android:configChanges = &quot;orientation| screenSize&quot;</code>来避免横竖屏切换时，Activity的销毁和重建，而是回调了下面的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onConfigurationChanged</span><span class="params">(Configuration newConfig)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onConfigurationChanged(newConfig);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">configChanges的项目</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">locale</td>
+<td align="center">设备的本地位置发生了改变，一般指切换了语言</td>
+</tr>
+<tr>
+<td align="center">orientation</td>
+<td align="center">屏幕方向发生了改变，比如旋转屏幕</td>
+</tr>
+<tr>
+<td align="center">keyboardHidden</td>
+<td align="center">键盘的访问性发生了改变，比如调出键盘</td>
+</tr>
+<tr>
+<td align="center">mcc</td>
+<td align="center">SIM卡唯一标识的国家代码，标识mcc代码发生了改变</td>
+</tr>
+<tr>
+<td align="center">mnc</td>
+<td align="center">SIM的运营商代码。标识mnc发生改变</td>
+</tr>
+<tr>
+<td align="center">touchscreen</td>
+<td align="center">触摸屏发生了改变，正常情况不会发生</td>
+</tr>
+<tr>
+<td align="center">keyboard</td>
+<td align="center">键盘类型发生了改变，比如使用了外接键盘</td>
+</tr>
+<tr>
+<td align="center">navigation</td>
+<td align="center">系统导航方式发生了改变，比如是否开启了夜间模式</td>
+</tr>
+<tr>
+<td align="center">screenLayout</td>
+<td align="center">屏幕布局发生了改变，很可能是用户激活了另外一个显示设备</td>
+</tr>
+<tr>
+<td align="center">fontScale</td>
+<td align="center">系统字体缩放比例发生了改变，比如选择一个新字号</td>
+</tr>
+<tr>
+<td align="center">uiMode</td>
+<td align="center">用户界面模式发生了改变，比如开启夜间模式</td>
+</tr>
+<tr>
+<td align="center">screenSize</td>
+<td align="center">屏幕的尺寸信息发生了改变，当旋转屏幕时，屏幕尺寸会发生变化</td>
+</tr>
+<tr>
+<td align="center">smallestScreenSize</td>
+<td align="center">设备的物理屏幕尺寸发生改变</td>
+</tr>
+<tr>
+<td align="center">layoutDirection</td>
+<td align="center">布局方向发生改变</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>只有前三个经常用到，其他很少使用</p>
+<h2 id="Activity的启动过程（源码分析）"><a href="#Activity的启动过程（源码分析）" class="headerlink" title="Activity的启动过程（源码分析）"></a>Activity的启动过程（源码分析）</h2><h2 id="相关面试题"><a href="#相关面试题" class="headerlink" title="相关面试题"></a>相关面试题</h2><ol>
+<li><p>Activity与Service通信的方式<br> 启动服务的时候可以通信<br> bindService的时候，进行通信<br> 回调接口，在Service中实例回调，Activity中实现</p>
+</li>
+<li><p>前台切换到后台，然后再回到前台，Activity生命周期回调方法。弹出Dialog，生命值周期回调方法。<br> 先是onPasuse，然后新活动的onCreate、onStart、onResume，再是旧的onSaveInstanceState用于保存数据，接着是onStop</p>
+<p> 弹出Dialog，activity的生命周期不变，Dialog和Toast时通过Window添加的View，不会对Activity的生命周期有影响</p>
+</li>
+<li><p>Activity 上有 Dialog 的时候按 home 键时的生命周期<br> onPause、onSaveInstanceState、onStop</p>
+</li>
+<li><p>横竖屏切换的时候，Activity 各种情况下的生命周期<br> 当targetSdkVersion大于等于10时：<br> onPase、onSavInstanceState、onStop、onDestroy、onCreate、onStart、onRestoreInstanceState、onResume</p>
+<p> 当targetSdkVersion小于10时：<br> onSavInstanceState、onPase、onStop、onDestroy、onCreate、onStart、onRestoreInstanceState、onResume</p>
+</li>
+<li><p>四大组件<br> Activity：一个界面、活动<br> Service：服务<br> Broadcast：你的应用可以使用它对外部事件进行过滤只对感兴趣的外部事件(如当电话呼入时，或者数据网络可用时)进行接收并做出响应<br> ContentProvider：使一个应用程序的指定数据集提供给其他应用程序</p>
+</li>
+<li><p>四大组件是在主线程运行的吗<br> 都是的</p>
+</li>
+<li><p>怎么启动activity<br> Intent隐式启动或显示启动<br> 隐式启动：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:name=<span class="string">".SecondActivity"</span>&gt;</span><br><span class="line">    &lt;intent-filter&gt;</span><br><span class="line">        &lt;action android:name=<span class="string">"com.example.a14512.activitydemo.ACTION_START"</span>/&gt;</span><br><span class="line">        &lt;category android:name=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span><br><span class="line">        &lt;category android:name=<span class="string">"com.example.a14512.activitydemo.MY_CATEGORY"</span>/&gt;</span><br><span class="line">    &lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//启动活动，传入action</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.example.a14512.activitydemo.ACTION_START"</span>);</span><br><span class="line"><span class="comment">//添加category</span></span><br><span class="line">intent.addCategory(<span class="string">"com.example.a14512.activitydemo.MY_CATEGORY"</span>);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+
+<p> 显示启动：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, TargetActivity.class);</span><br><span class="line">intent.addFlags(Intent,FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>描述一下Activity栈<br> Activity的管理是采用任务栈的形式，任务栈采用“后进先出”的栈结构</p>
+</li>
+<li><p>保存Activity状态<br> onSaveInstanceState、onRestoreInstanceState</p>
+</li>
+<li><p>下拉状态栏是不是影响activity的生命周期，如果在onStop的时候做了网络请求，onResume的时候怎么恢复<br>下拉状态栏不影响生命周期</p>
+</li>
+<li><p>两个Activity 之间跳转时必然会执行的是哪几个方法？<br>旧Activity的onPause，新Activity的onCreate、onStart、onResume，旧Activity的onStop、onSaveInstanceState</p>
+</li>
+<li><p>Activity之间的通信方式<br>Intent、广播、EventBus、RxBus、otto、静态变量、全局变量、外部存储</p>
+</li>
+<li><p>Activity的启动模式，每种启动模式的使用场景，singletop中回调onNewIntent和finish掉之后onCreate()有什么不同？<br>singleTop的模式下，如果Activity已经处于栈顶，那么接着再次启动这个Activity，就会调用onNewIntent来接受Intent实例，因为这个Activity没有发生改变，而不是重新新建一个Activity的实例放于任务栈中。如果不是栈顶，那么还是会新建要给实例，会调用onCreate</p>
+<p>而finish掉后的onCreate就是新建了一个Activity的实例，然后放于任务栈中</p>
+</li>
+<li><p>singleTask启动模式、Activity的启动模式以及使用场景<br>栈内复用模式，是一种单实例模式，在一个Activity栈中只能存在一个实例，当启动一个Activity后，系统会首先查找是由存在A想要的任务栈，如果不存在，就要重新创建一个，然后在把这个Activity的实例放到任务栈中；如果已经存在这个Activity要的任务栈，就查看栈中是否有这个Activity的实例，如果已存在这个Activity的实例，当再一次启动的时候，如果上面有其他的Activity，就会销毁该Activity上的所有Activity，最终让这个Activity处于栈顶，然后调用onNewIntent函数</p>
+</li>
+<li><p>Activity的生命周期和缓存<br>正常的生命周期：onCreate、onStart、onResume、onPause、onStop、onDestroy（可能会出现的onRestart）</p>
+<p>缓存：Activity 由于异常终止时，系统会调用 onSaveInstanceState()来保存 Activity 状态(onStop()之前和onPause()没有既定的时序关系)。当重建时，会调用 onRestoreInstanceState()，并且把 Activity 销毁时 onSaveInstanceState()方法所保存的 Bundle 对象参数同时传递给 onSaveInstanceState()和onCreate()方法。因此，可通过 onRestoreInstanceState()方法来恢复 Activity 的状态，该方法的调用时机是在 onStart()之后。onCreate()和 onRestoreInstanceState()的区别：onRestoreInstanceState()回调则表明其中Bundle对象非空，不用加非空判断。onCreate()需要非空判断。建议使用onRestoreInstanceState().</p>
+</li>
+<li><p>切换activity执行顺序<br>旧Activity的onPause，新Activity的onCreate、onStart、onResume，旧Activity的onStop、onSaveInstanceState</p>
+</li>
+<li><p>如何安全的退出一个已经开启多个activity的APP<br>使用广播关闭所有的Activity或者通过Activity栈来管理所有的活动，在退出时安全结束所有的活动</p>
+</li>
+<li><p>Activity启动模式，intent匹配规则<br>standard、singleTop、singleTask、singleInstance<br>匹配规则：Intent指定的唯一action、多个category、多个data都要在intent-filter中匹配（找到字符串值相同的）才算匹配成功，如果匹配一个没有在intent-filter中声明的活动会直接报错</p>
+</li>
+<li><p>如何判断一个activity（启动方式是singtonTop）是正常启动还是复用启动<br>生命周期可以监测到，正常启动的Activity会经历onCreate、onStart、onResume方法，而复用启动的Activity不会onCreate、onStart</p>
+<p>还可以查看onNewIntent方法是否被调用，只有复用启动的情况下，onNewIntent方法会调用</p>
+</li>
+<li><p>Android里的Intent传递的数据有大小限制吗，如何解决？<br>不仅有大小限制（1MB左右，不同机型不一样），而且还有类型限制，最好的方式就是通过Bundle这个容器来装数据（也不建议传递大量数据），然后进行数据传递</p>
+<p>数据持久化、ContentProvider、EventBus</p>
+</li>
+<li><p>Intent的使用方法，可以传递哪些数据类型<br>显示或隐式启动一个活动，传递数据<br>可以传递基本类型、String、Parcelable、Serializable及其数组类型，还有就是Bundle容器</p>
+</li>
+<li><p>四种LaunchMode及其使用场景<br>standard：绝大多数Activity。如果以这种方式启动的Activity被跨进程调用，在5.0之前新启动的Activity实例会放入发送Intent的Task的栈的顶部，尽管它们属于不同的程序，这似乎有点费解看起来也不是那么合理，所以在5.0之后，上述情景会创建一个新的Task，新启动的Activity就会放入刚创建的Task中，这样就合理的多了</p>
+<p>singleTop：在通知栏点击收到的通知，然后需要启动一个Activity，这个Activity就可以用singleTop，否则每次点击都会新建一个Activity。当然实际的开发过程中，测试妹纸没准给你提过这样的bug：某个场景下连续快速点击，启动了两个Activity。如果这个时候待启动的Activity使用 singleTop模式也是可以避免这个Bug的。同standard模式，如果是外部程序启动singleTop的Activity，在Android 5.0之前新创建的Activity会位于调用者的Task中，5.0及以后会放入新的Task中</p>
+<p>singleTask：大多数App的主页。对于大部分应用，当我们在主界面点击回退按钮的时候都是退出应用，那么当我们第一次进入主界面之后，主界面位于栈底，以后不管我们打开了多少个Activity，只要我们再次回到主界面，都应该使用将主界面Activity上所有的Activity移除的方式来让主界面Activity处于栈顶，而不是往栈顶新加一个主界面Activity的实例，通过这种方式能够保证退出应用时所有的Activity都能报销毁。在跨应用Intent传递时，如果系统中不存在singleTask Activity的实例，那么将创建一个新的Task，然后创建SingleTask Activity的实例，将其放入新的Task中</p>
+<p>singleInstance： 呼叫来电界面。这种模式的使用情况比较罕见，在Launcher中可能使用。或者你确定你需要使Activity只有一个实例。建议谨慎使用</p>
+</li>
+<li><p>Android中main方法入口在哪里<br>ActivityThread里面，有一个main函数</p>
+</li>
+<li><p>activity的startActivity和context的startActivity区别<br>最终调用的都是 Activity 类实现的 startActivity 方法<br>activity的startActivity是直接调用的Activity的startActivity<br>context的startActivity是Context的抽象方法，而Context的一个子类ContextWrapper简单实现了这个方法，但是需要实例化，接着是ContextWrapper的一个子类ContextThemeWrapper并没有实现这个方法，而Activity是继承ContextThemeWrapper的，所以自然而然startActivity方法最终回到了Activity中</p>
+</li>
+</ol>
+<h2 id="相关参考"><a href="#相关参考" class="headerlink" title="相关参考"></a>相关参考</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/07/Android Activity的启动过程（API27 源码分析）/" rel="next" title="Android Activity的启动过程（API27 源码分析）">
+                <i class="fa fa-chevron-left"></i> Android Activity的启动过程（API27 源码分析）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/07/Android Broadcast源码分析/" rel="prev" title="Android Broadcast源码分析">
+                Android Broadcast源码分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity相关知识总结"><span class="nav-number">1.</span> <span class="nav-text">Activity相关知识总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity的用法"><span class="nav-number">1.1.</span> <span class="nav-text">Activity的用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity的启动模式"><span class="nav-number">1.2.</span> <span class="nav-text">Activity的启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#standard"><span class="nav-number">1.2.1.</span> <span class="nav-text">standard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#singleTop"><span class="nav-number">1.2.2.</span> <span class="nav-text">singleTop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#singleTask"><span class="nav-number">1.2.3.</span> <span class="nav-text">singleTask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#singleInstance"><span class="nav-number">1.2.4.</span> <span class="nav-text">singleInstance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity和其他组件的通信"><span class="nav-number">1.3.</span> <span class="nav-text">Activity和其他组件的通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity和Activity"><span class="nav-number">1.3.1.</span> <span class="nav-text">Activity和Activity</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Intent"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">使用Intent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#借助类的静态变量"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">借助类的静态变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过全局变量-Application"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">通过全局变量/Application</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Broadcast或者LocalBroadcast"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">Broadcast或者LocalBroadcast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外部存储"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">外部存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EventBus"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">EventBus</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RxBus"><span class="nav-number">1.3.1.7.</span> <span class="nav-text">RxBus</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#otto"><span class="nav-number">1.3.1.8.</span> <span class="nav-text">otto</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity和Fragment"><span class="nav-number">1.3.2.</span> <span class="nav-text">Activity和Fragment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity和Service"><span class="nav-number">1.3.3.</span> <span class="nav-text">Activity和Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity和Broadcast"><span class="nav-number">1.3.4.</span> <span class="nav-text">Activity和Broadcast</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity的生命周期"><span class="nav-number">1.4.</span> <span class="nav-text">Activity的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型情况下的生命周期"><span class="nav-number">1.4.1.</span> <span class="nav-text">典型情况下的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常情况下的生命周期"><span class="nav-number">1.4.2.</span> <span class="nav-text">异常情况下的生命周期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity的启动过程（源码分析）"><span class="nav-number">1.5.</span> <span class="nav-text">Activity的启动过程（源码分析）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关面试题"><span class="nav-number">1.6.</span> <span class="nav-text">相关面试题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关参考"><span class="nav-number">1.7.</span> <span class="nav-text">相关参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

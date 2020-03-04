@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="web,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前端学习笔记HTML图像 img：&amp;lt;img src=&amp;quot;图片地址&amp;quot; alt=&amp;quot;图片无法加载时显示，可替换的额文本&amp;quot; width=&amp;quot;&amp;quot; height=&amp;quot;&amp;quot;&amp;gt; map：图像地图 area：图像地图中可点击区域  表格 table：定义表格，border（边框属性） th：表头 tr：定义行 td：定义每行的格数，">
+<meta name="keywords" content="web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端开发学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/05/20/前端学习笔记/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="前端学习笔记HTML图像 img：&amp;lt;img src=&amp;quot;图片地址&amp;quot; alt=&amp;quot;图片无法加载时显示，可替换的额文本&amp;quot; width=&amp;quot;&amp;quot; height=&amp;quot;&amp;quot;&amp;gt; map：图像地图 area：图像地图中可点击区域  表格 table：定义表格，border（边框属性） th：表头 tr：定义行 td：定义每行的格数，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-07T07:37:40.299Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端开发学习笔记">
+<meta name="twitter:description" content="前端学习笔记HTML图像 img：&amp;lt;img src=&amp;quot;图片地址&amp;quot; alt=&amp;quot;图片无法加载时显示，可替换的额文本&amp;quot; width=&amp;quot;&amp;quot; height=&amp;quot;&amp;quot;&amp;gt; map：图像地图 area：图像地图中可点击区域  表格 table：定义表格，border（边框属性） th：表头 tr：定义行 td：定义每行的格数，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/20/前端学习笔记/">
+
+
+
+
+
+  <title>前端开发学习笔记 | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/前端学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端开发学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-20T00:00:00+08:00">
+                2019-05-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-02-07T15:37:40+08:00">
+                2020-02-07
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前端学习笔记"><a href="#前端学习笔记" class="headerlink" title="前端学习笔记"></a>前端学习笔记</h1><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><h3 id="图像"><a href="#图像" class="headerlink" title="图像"></a>图像</h3><ul>
+<li>img：<code>&lt;img src=&quot;图片地址&quot; alt=&quot;图片无法加载时显示，可替换的额文本&quot; width=&quot;&quot; height=&quot;&quot;&gt;</code></li>
+<li>map：图像地图</li>
+<li>area：图像地图中可点击区域</li>
+</ul>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><ul>
+<li>table：定义表格，border（边框属性）</li>
+<li>th：表头</li>
+<li>tr：定义行</li>
+<li>td：定义每行的格数，也就是单元格的数据内容</li>
+<li>caption：表格标题</li>
+<li>colgroup：定义表格列的组</li>
+<li>col：定义表格列的属性</li>
+<li>tbody：表格的主体</li>
+<li>tfoot：表格的页脚</li>
+</ul>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><ul>
+<li>ul：无序列表</li>
+<li>ol：有序列表</li>
+<li>li：列表项</li>
+<li>dl：自定义列表</li>
+<li>dd：自定义列表的项的描述</li>
+<li>dt：自定义列表项目</li>
+</ul>
+<h3 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h3><ul>
+<li>div：区块元素，属于块级元素</li>
+<li>span：内联元素，文本容器</li>
+</ul>
+<h3 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h3><ul>
+<li>form：允许输入内容</li>
+<li>input：输入标签，输入类型由tyoe决定<ul>
+<li>text：文本内容</li>
+<li>password：密码</li>
+<li>radio：单选按钮</li>
+<li>checkbox：复选框</li>
+<li>submit：提交按钮</li>
+</ul>
+</li>
+<li>textarea：文本域，一个多行输入的控件</li>
+<li>label：input的输入标题</li>
+<li>fieldset：相关表单元素，使用外框包含</li>
+<li>legend：定义fieldset元素的标题</li>
+<li>select：下拉选项列表</li>
+<li>optgroup：选项组</li>
+<li>option：下拉列表中的选项</li>
+<li>button：按钮</li>
+<li>datalist：指定一个预先定义的输入控件选项列表</li>
+<li>keygen：定义了表单的密钥对生成器字段</li>
+<li>output：定义一个计算结果</li>
+</ul>
+<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><ul>
+<li>iframe：<code>&lt;iframe src=“展示的html” width=&quot;&quot; height=&quot;&quot; frameborder=&quot;0（一处边框）&quot;</code></li>
+</ul>
+<h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><ul>
+<li>script：一般是JS脚本</li>
+<li>noscript：提供无法使用脚本时的替代内容</li>
+</ul>
+<h3 id="字符实体"><a href="#字符实体" class="headerlink" title="字符实体"></a>字符实体</h3><ul>
+<li>&amp;lt，&amp;#60，&amp;#060：小于符号（&lt;）</li>
+<li>&amp;gt，&amp;#62：大于符号</li>
+<li>&amp;amp，&amp;#38：&amp;符号</li>
+<li>&amp;quot，&amp;#34：“引号</li>
+<li>&amp;cent，&amp;#39：‘撇号</li>
+<li>&amp;nbsp：不间断空格</li>
+<li>&amp;times，&amp;#215：x乘号</li>
+<li>&amp;divide，&amp;#247：除号</li>
+<li>音标符</li>
+</ul>
+<h3 id="H5新元素"><a href="#H5新元素" class="headerlink" title="H5新元素"></a>H5新元素</h3><ul>
+<li>canvas：定义图形，绘图API</li>
+<li>audio：音频内容</li>
+<li>video：视频内容</li>
+<li>source：多媒体资源</li>
+<li>embed：嵌入的内容，比如插件</li>
+<li>track：为video、audio规定外部文本轨道</li>
+<li>article：页面独立的内容区域</li>
+<li>aside：页面的侧边栏内容</li>
+<li>bdi：允许设置一段文本，使其脱离其父元素的文本方向设置</li>
+<li>command：命令按钮</li>
+<li>derails：用于描述文档和文档某个部分的细节</li>
+<li>dialog：定义对话框</li>
+<li>summary：标签包含details元素的标题</li>
+<li>figure：规定独立的流内容</li>
+<li>figcaption：定义figure元素的标题</li>
+<li>footer：页脚</li>
+<li>header：文档的头部区域</li>
+<li>mark：带有记号的文本</li>
+<li>nav：导航链接部分</li>
+<li>progress：任务进度</li>
+<li>ruby：定义ruby注释</li>
+<li>rt：定义字符的解释或发音</li>
+<li>rp：在ruby中使用</li>
+<li>section：定义文档的节</li>
+<li>time：定义日期或时间</li>
+</ul>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="id和class"><a href="#id和class" class="headerlink" title="id和class"></a>id和class</h3><ul>
+<li>class：class选择器，指定style</li>
+<li>id</li>
+</ul>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><ul>
+<li><p>background：简写属性，按照后续的顺序</p>
+</li>
+<li><p>background-color：背景颜色</p>
+</li>
+<li><p>background-image：背景图片<code>{background-image:url(&#39;bgdesert.jpg&#39;);}</code></p>
+</li>
+<li><p>background-repeat：水平或者垂直平铺，repeat-x——水平，repeat-y——垂直，no-repeat——不平铺</p>
+</li>
+<li><p>background-attachment：北京图像是否固定或者随着页面的其余滚动</p>
+</li>
+<li><p>background-position：设置定位，和no-repear一起使用，right top</p>
+</li>
+</ul>
+<h3 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h3><ul>
+<li>color：文本颜色</li>
+<li>direction：文本方向</li>
+<li>letter-spacing：字符间距</li>
+<li>line-height：行高</li>
+<li>text-align：文本对齐方式，center——居中，right——右对齐，justify——每一行被展开为宽度相等，左，右外边距是对齐</li>
+<li>text-decoration：用来设置或删除文本的装饰</li>
+<li>text-transform：文本转换属性，用来指定在一个文本中的大写和小写字母，uppercase——大写，lowercase——小写，capitalize——首字母大写</li>
+<li>text-indent：文本缩进，指定第一行的缩进</li>
+<li>text-shadow：文本阴影</li>
+<li>vertical-align：设置元素的垂直对齐</li>
+<li>white-space：设置元素中空白的处理方式</li>
+<li>word-spacing：字间距</li>
+</ul>
+<h3 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h3><ul>
+<li>font：所有字体属性，简写</li>
+<li>font-family：字体系列</li>
+<li>font-size：字体大小</li>
+<li>font-style：字体样式，normal——正常，italic——斜体，oblique——倾斜的文字</li>
+<li>font-variant：小型大写字体或者正常字体显示文本</li>
+</ul>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul>
+<li>link：未访问，可以设置color、background-color、text-decoration等</li>
+<li>visitid：已访问</li>
+<li>hover：鼠标移动到链接上</li>
+<li>active：鼠标点击时</li>
+</ul>
+<h3 id="列表-1"><a href="#列表-1" class="headerlink" title="列表"></a>列表</h3><ul>
+<li>list-style：简写属性</li>
+<li>list-style-type：指定列表项标记的类型，circle、square、upper-roman、lower-alpha</li>
+<li>list-style-position：列表项标志的位置</li>
+<li>list-style-image：指定列表项标记的图像，url()</li>
+</ul>
+<h3 id="表格-1"><a href="#表格-1" class="headerlink" title="表格"></a>表格</h3><ul>
+<li>border：边框，<code>border: 1px solid black;</code>宽度、类型、颜色</li>
+<li>border-collapse：折叠边框，collapse</li>
+<li>width</li>
+<li>height</li>
+<li>text-algin：</li>
+<li>padding：</li>
+<li>color：表格颜色</li>
+<li>background-color：背景颜色</li>
+</ul>
+<h3 id="边框"><a href="#边框" class="headerlink" title="边框"></a>边框</h3><ul>
+<li>border-style：边框样式，简写设置依次是上、右、下、左<ul>
+<li>none——默认无样式</li>
+<li>dotted——点线边框</li>
+<li>dashed——虚线边框</li>
+<li>solid——实线边框</li>
+<li>double——两个边框</li>
+<li>groove：3D沟槽边框</li>
+<li>ridge：3D脊边框</li>
+<li>inset：3D嵌入边框</li>
+<li>outset：3D突出边框</li>
+</ul>
+</li>
+<li>border-width：宽度</li>
+<li>border-color：边框颜色</li>
+<li>border-top-style：设置上边框的样式，或者上边框的颜色、宽度等，同理还有右、下、左</li>
+</ul>
+<h3 id="轮廓"><a href="#轮廓" class="headerlink" title="轮廓"></a>轮廓</h3><ul>
+<li>outline：轮廓属性</li>
+<li>outline-color：轮廓颜色</li>
+<li>outline-style：轮廓样式</li>
+<li>outline-width：轮廓宽度</li>
+</ul>
+<h3 id="定位position"><a href="#定位position" class="headerlink" title="定位position"></a>定位position</h3><ul>
+<li>static：没有定位。默认值，遵循正常的文档流</li>
+<li>fixed：元素的位置相对于浏览器窗口是固定位置</li>
+<li>relative：相对位置</li>
+<li>absolute：绝对定位</li>
+<li>sticky：粘性定位</li>
+</ul>
+<h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/06/Java集合框架整理(二)——HashMap源码分析/" rel="next" title="Java集合框架整理(二)——HashMap源码分析">
+                <i class="fa fa-chevron-left"></i> Java集合框架整理(二)——HashMap源码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/25/小程序学习笔记/" rel="prev" title="小程序学习笔记">
+                小程序学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前端学习笔记"><span class="nav-number">1.</span> <span class="nav-text">前端学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML"><span class="nav-number">1.1.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像"><span class="nav-number">1.1.1.</span> <span class="nav-text">图像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表格"><span class="nav-number">1.1.2.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表"><span class="nav-number">1.1.3.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区块"><span class="nav-number">1.1.4.</span> <span class="nav-text">区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单"><span class="nav-number">1.1.5.</span> <span class="nav-text">表单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架"><span class="nav-number">1.1.6.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#脚本"><span class="nav-number">1.1.7.</span> <span class="nav-text">脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符实体"><span class="nav-number">1.1.8.</span> <span class="nav-text">字符实体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#H5新元素"><span class="nav-number">1.1.9.</span> <span class="nav-text">H5新元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">1.2.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#id和class"><span class="nav-number">1.2.1.</span> <span class="nav-text">id和class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.2.2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本"><span class="nav-number">1.2.3.</span> <span class="nav-text">文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字体"><span class="nav-number">1.2.4.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接"><span class="nav-number">1.2.5.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表-1"><span class="nav-number">1.2.6.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表格-1"><span class="nav-number">1.2.7.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边框"><span class="nav-number">1.2.8.</span> <span class="nav-text">边框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#轮廓"><span class="nav-number">1.2.9.</span> <span class="nav-text">轮廓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位position"><span class="nav-number">1.2.10.</span> <span class="nav-text">定位position</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS"><span class="nav-number">1.3.</span> <span class="nav-text">JS</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
