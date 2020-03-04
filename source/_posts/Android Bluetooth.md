@@ -1,3 +1,11 @@
+---
+title: Android Bluetooth
+date: 2019-11-20
+tag: Android
+category: Android
+
+---
+
 [TOC]
 
 # 蓝牙

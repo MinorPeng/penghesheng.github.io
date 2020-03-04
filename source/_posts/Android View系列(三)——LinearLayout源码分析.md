@@ -1,6 +1,7 @@
 ---
 title: Android View系列(三)——LinearLayout源码分析
-tag: Android
+tag: Android源码
+category: Android
 date: 2019-04-29
 
 ---

@@ -1,6 +1,7 @@
 ---
 title: JVM相关总结
-tag: Java
+tag: JVM
+category: Java
 
 ---
 

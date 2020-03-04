@@ -1,6 +1,7 @@
 ---
 title: Java基本数据类型、String总结
 tag: Java
+category: Java
 
 ---
 

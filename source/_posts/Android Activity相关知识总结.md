@@ -1,6 +1,7 @@
 ---
 title: Android Activity相关知识总结
 tag: Android 
+category: Android
 
 ---
 

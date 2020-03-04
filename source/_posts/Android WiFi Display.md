@@ -1,3 +1,15 @@
+---
+title: Android WiFi Display
+tag: Android
+category: Android
+date: 2019-12-01
+
+---
+
+[toc]
+
+
+
 # Android WiFi Display (Miracast)
 
 **投屏技术协议**：

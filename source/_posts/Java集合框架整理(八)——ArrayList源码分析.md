@@ -1,7 +1,8 @@
 ---
 title: Java集合框架整理(八)——ArrayList源码分析
-tag: Java
+tag: Java集合
 date: 
+category: Java
 
 ---
 

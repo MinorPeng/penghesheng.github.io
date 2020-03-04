@@ -1,6 +1,7 @@
 ---
 title: 关于如何利用Github Pages搭建个人博客
-tag: other
+tag: 其他
+category: 其他
 
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Linux学习(六)——进程操作
 tag: Linux
+category: Linux
 date: 2018-05-14
 
 ---

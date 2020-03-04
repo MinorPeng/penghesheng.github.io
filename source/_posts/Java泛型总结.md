@@ -1,6 +1,7 @@
 ---
 title: Java 泛型总结
 tag: Java
+category: Java
 
 ---
 

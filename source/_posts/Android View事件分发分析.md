@@ -1,6 +1,7 @@
 ---
 title: Android View事件分发分析
-tag: Android
+tag: Android源码
+category: Android
 
 ---
 

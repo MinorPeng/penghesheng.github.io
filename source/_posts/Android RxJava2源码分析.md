@@ -1,6 +1,7 @@
 ---
 title: Android RxJava2源码浅析
 tag: Android第三方框架
+category: Android
 date: 2019-06-11 9:21
 
 ---

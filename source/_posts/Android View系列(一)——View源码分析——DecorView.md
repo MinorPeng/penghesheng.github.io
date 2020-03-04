@@ -1,6 +1,7 @@
 ---
 title: Android View系列(一)——View源码分析——DecorView
-tag: Android
+tag: Android源码
+category: Android
 
 ---
 

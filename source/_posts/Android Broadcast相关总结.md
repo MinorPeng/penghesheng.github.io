@@ -1,6 +1,7 @@
 ---
 title: Android Broadcast相关总结
 tag: Android
+category: Android
 
 ---
 

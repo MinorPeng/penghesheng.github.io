@@ -1,6 +1,7 @@
 ---
 title: Markdown学习笔记
-tag: other
+tag: 其他
+category: 其他
 date: 2016-11-01
 ---
 

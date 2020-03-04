@@ -1,6 +1,7 @@
 ---
 title: Linux学习(七)——进程间通信
 tag: Linux
+category: Linux
 date: 2018-06-11
 
 ---

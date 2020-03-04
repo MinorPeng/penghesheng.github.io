@@ -1,6 +1,7 @@
 ---
 title: Android——Binder机制
 tag: Android
+category: Android
 date: 2019-06-02
 ---
 

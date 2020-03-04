@@ -1,6 +1,7 @@
 ---
 title: Android Window源码分析——DecorView为例
-tag: Android
+tag: Android源码
+category: Android
 
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Android Fragment相关总结
 tag: Android
+category: Android
 
 ---
 

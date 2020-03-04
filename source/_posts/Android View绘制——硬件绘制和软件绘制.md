@@ -1,7 +1,9 @@
 ---
 title: Android View绘制——硬件绘制和软件绘制
 date: 2019-08-10
-tag: Android
+tag: Android源码
+category: Android
+
 ---
 
 <meta name="referrer" content="no-referrer" />

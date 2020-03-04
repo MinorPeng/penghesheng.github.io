@@ -1,6 +1,7 @@
 ---
 title: Linux学习(一)——常用命令
 tag: Linux
+category: Linux
 date: 2018-04-18
 
 ---

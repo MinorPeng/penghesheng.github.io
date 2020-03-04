@@ -1,6 +1,7 @@
 ---
 title: Linux学习(二)——shell编程
 tag: Linux
+category: Linux
 date: 2018-03-26
 
 ---

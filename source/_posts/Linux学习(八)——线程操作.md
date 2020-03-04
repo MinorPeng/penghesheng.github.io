@@ -1,6 +1,7 @@
 ---
 title: Linux学习(八)——线程操作
 tag: Linux
+category: Linux
 date: 2018-06-25	
 
 ---

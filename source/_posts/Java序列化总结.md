@@ -1,6 +1,7 @@
 ---
 title: Java序列化总结
 tag: Java
+category: Java
 
 ---
 

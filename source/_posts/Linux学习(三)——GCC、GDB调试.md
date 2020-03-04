@@ -1,6 +1,7 @@
 ---
 title: Linux学习(三)——GCC编程、GDB调试
 tag: Linux
+category: Linux
 date: 2018-04-16
 
 ---

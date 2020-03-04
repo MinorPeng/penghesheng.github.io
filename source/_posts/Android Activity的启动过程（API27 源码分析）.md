@@ -1,6 +1,7 @@
 ---
 title: Android Activity的启动过程（API27 源码分析）
-tag: Android
+tag: Android源码
+category: Android
 
 ---
 

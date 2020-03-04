@@ -1,6 +1,7 @@
 ---
 title: Java内部类
 tag: Java
+category: Java
 
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Android实现滑动返回的几种方法总结
 tag: Android
+category: Android
 
 ---
 

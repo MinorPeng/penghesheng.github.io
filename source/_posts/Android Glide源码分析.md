@@ -2,6 +2,8 @@
 title: Android Glide源码分析
 date: 2019-08-11
 tag: Android第三方框架
+category: Android
+
 ---
 
 <meta name="referrer" content="no-referrer" />
