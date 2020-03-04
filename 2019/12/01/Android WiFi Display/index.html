@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[toc] Android WiFi Display (Miracast)投屏技术协议：  DLNA：Digital Living Network Alliance，PC、移动设备、消费电器之间互联互通的协议 AirPlay：苹果开发的无线技术，通过WiFi传输，支持DLNA没有的镜像（设备显示什么，显示屏幕也显示什么） Miracast：以WiFi Direct为基础的无线显示标准  DLNA">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android WiFi Display">
+<meta property="og:url" content="http://yoursite.com/2019/12/01/Android WiFi Display/index.html">
+<meta property="og:site_name" content="PHS1024">
+<meta property="og:description" content="[toc] Android WiFi Display (Miracast)投屏技术协议：  DLNA：Digital Living Network Alliance，PC、移动设备、消费电器之间互联互通的协议 AirPlay：苹果开发的无线技术，通过WiFi传输，支持DLNA没有的镜像（设备显示什么，显示屏幕也显示什么） Miracast：以WiFi Direct为基础的无线显示标准  DLNA">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/12/01/images/wifi_miracast_model.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/01/images/wifi_display_process.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/01/images/wifi_miracast_specification.png">
+<meta property="og:image" content="https://img-my.csdn.net/us/201301/06/1357478758_9825.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/01/images/wifi_p2p_num.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/01/images/wifi_p2p_process_img.png">
+<meta property="og:updated_time" content="2020-03-04T09:07:52.072Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android WiFi Display">
+<meta name="twitter:description" content="[toc] Android WiFi Display (Miracast)投屏技术协议：  DLNA：Digital Living Network Alliance，PC、移动设备、消费电器之间互联互通的协议 AirPlay：苹果开发的无线技术，通过WiFi传输，支持DLNA没有的镜像（设备显示什么，显示屏幕也显示什么） Miracast：以WiFi Direct为基础的无线显示标准  DLNA">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/01/images/wifi_miracast_model.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/01/Android WiFi Display/">
+
+
+
+
+
+  <title>Android WiFi Display | PHS1024</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">PHS1024</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">PHS1024</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/01/Android WiFi Display/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PHS1024">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PHS1024">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android WiFi Display</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-01T00:00:00+08:00">
+                2019-12-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-04T17:07:52+08:00">
+                2020-03-04
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[toc]</p>
+<h1 id="Android-WiFi-Display-Miracast"><a href="#Android-WiFi-Display-Miracast" class="headerlink" title="Android WiFi Display (Miracast)"></a>Android WiFi Display (Miracast)</h1><p><strong>投屏技术协议</strong>：</p>
+<blockquote>
+<p>DLNA：Digital Living Network Alliance，PC、移动设备、消费电器之间互联互通的协议</p>
+<p>AirPlay：苹果开发的无线技术，通过WiFi传输，支持DLNA没有的镜像（设备显示什么，显示屏幕也显示什么）</p>
+<p>Miracast：以WiFi Direct为基础的无线显示标准</p>
+</blockquote>
+<p>DLNA</p>
+<p>蓝牙：蓝牙发现</p>
+<p>WiFi Direct：WiFi直连</p>
+<p>Nsd：网络服务发现</p>
+<h2 id="技术体系："><a href="#技术体系：" class="headerlink" title="技术体系："></a>技术体系：</h2><p><img src="../images/wifi_miracast_model.png" alt="image-20191108164621905"></p>
+<ol>
+<li>WiFi Direct：WiFi P2P，支持在没有AP（Access Point）下，WiFi设备直连并通信</li>
+<li>WiFi Protected Setup：用于用户自动配置WiFi网络、添加WiFi设备</li>
+<li>11n/WMM/WPA2：11n是802.11n协议（56M提升至600M）；WMM是WiFi Multimedia，针对实时视音频数据的QoS服务；WPA2是WiFi Protected Acess2，传输加密保护</li>
+</ol>
+<ul>
+<li>WiFi Display相关Service：</li>
+</ul>
+<blockquote>
+<p>MediaPlayerService及相关模块：RTP/RTSP及相应的编解码技术</p>
+<p>SurfaceFlinger及相关模块：SurfaceFlinger是将各层UI数据混屏并投递到显示设备中去显示</p>
+<p>WindowManagerService及相关模块：用于管理系统中各个UI层的位置和属性</p>
+<p>DisplayManagerService：用于管理系统显示设备的生命周期，包括物理屏幕、虚拟屏幕、WiFi Display</p>
+<p>WifiService及相关模块：WifiDisplay建立在P2P基础上</p>
+<p>MediaRouterService：管理各个应用程序的多媒体播放的行为</p>
+<p>MediaRouter：用于和MediaRouterService交互一起管理多媒体的播放行为，并维护当前已经配对上的remote display设备，包括WiFi Display、蓝牙A2DP、chromecast设备</p>
+<p>WifiDisplayAdapter：用于DisplayManagerService管理WiFi Display显示的Adapter</p>
+<p>WifiDisplayController：用于控制扫描wifi display设备、连接、断开等操作</p>
+</blockquote>
+<p>Android中关注：WiFi Direct（WifiP2pService管理和控制），WiFi Multimedia</p>
+<p>Miracast工作流程：</p>
+<p><img src="../images/wifi_display_process.png" alt="image-20191108165421163"></p>
+<p><img src="../images/wifi_miracast_specification.png" alt="image-20191112110229164"></p>
+<p><img src="https://img-my.csdn.net/us/201301/06/1357478758_9825.png" alt="img"></p>
+<p><img src="../images/wifi_p2p_num.png" alt="image-20191112101244978"></p>
+<p>SurfaceFlinger对Miracast的支持</p>
+<p>Wifi P2P：<a href="https://blog.csdn.net/u011913612/article/details/52795464" target="_blank" rel="noopener">Android wifi探究三：Wifi P2P 连接附近设备</a></p>
+<h2 id="流媒体协议"><a href="#流媒体协议" class="headerlink" title="流媒体协议"></a>流媒体协议</h2><ol>
+<li><p>RTP：Real-time Transport Protocol，传送具有实时属性的数据，建立在UDP上，不保证传送或防止无序传送，允许接收方重组发送方的包序列（例子：视频解码，就不需要顺序解码）</p>
+</li>
+<li><p>RTCP：Real-time Transport Control Protocol，RTP的控制协议，监控服务质量并传送正在进行的会话参与者的相关信息；为RTP媒体流提供信道外控制</p>
+</li>
+<li><p>SRTCP：Secure Real-time Transport Protocol，在RTP基础上定义的一个协议，用于为单播和多播应用程序中的实时传输协议的数据提供加密、消息认证、完整性保护和重放保护</p>
+</li>
+<li><p>RTSP：Real-time Streaming Protocol，控制声音或影像的多媒体串流协议，并允许同时多个串流需求控制； 该协议目的在于控制多个数据发送连接，为选择发送通道，如UDP、多播UDP与TCP提供途径，并为选择基于RTP上发送机制提供方法 ；RTSP是双向实时数据传输协议，允许客户端向服务端发送请求（如回放、快进、倒退等）；（<strong>算是在应用层协议？？？？</strong>）</p>
+</li>
+<li><p>SDP：会话描述协议</p>
+<p><strong>RTSP发起/终结流媒体、RTP传输流媒体数据 、RTCP对RTP进行控制，同步</strong> </p>
+</li>
+</ol>
+<p><a href="https://www.zhihu.com/question/20278635" target="_blank" rel="noopener">RTP/RTSP/RTCP</a></p>
+<h2 id="P2P使用demo"><a href="#P2P使用demo" class="headerlink" title="P2P使用demo"></a>P2P使用demo</h2><p><img src="../images/wifi_p2p_process_img.png" alt="image-20191115102040874"></p>
+<h3 id="client端"><a href="#client端" class="headerlink" title="client端"></a>client端</h3><ul>
+<li><p>权限申请和检查：</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_COARSE_LOCATION"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_FINE_LOCATION"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--Wifi P2P 权限一定要有，不然获取不到--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_WIFI_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CHANGE_WIFI_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CHANGE_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_PHONE_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.wifi.direct"</span> <span class="attr">android:required</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>  部分权限根据API需要动态申请，如WiFi的状态和打开、位置信息的获取</p>
+</li>
+<li><p>初始化P2P设备，注册广播监听器：</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> intentFilter = IntentFilter().apply &#123;</span><br><span class="line">    addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION)</span><br><span class="line">        addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)</span><br><span class="line">        addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION)</span><br><span class="line">        addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION)</span><br><span class="line">&#125;</span><br><span class="line">registerReceiver(mReceiver, intentFilter)</span><br><span class="line">mWifiP2pManager = getSystemService(Context.WIFI_P2P_SERVICE) <span class="keyword">as</span> WifiP2pManager</span><br><span class="line"><span class="comment">// 用这个通道来查找和连接P2P设备 在 WLAN P2P 框架中注册您的应用</span></span><br><span class="line">mChannel = mWifiP2pManager?.initialize(<span class="keyword">this</span>, mainLooper) &#123; Log.d(localClassName, <span class="string">"channel disconnected"</span>) &#125;</span><br><span class="line"><span class="comment">// 查找附近P2P设备</span></span><br><span class="line">mWifiP2pManager?.discoverPeers(mChannel, <span class="keyword">object</span> : WifiP2pManager.ActionListener &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onSuccess</span><span class="params">()</span></span> &#123;</span><br><span class="line">        Log.d(localClassName, <span class="string">"discoverPeers onSuccess"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFailure</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        Log.w(localClassName, <span class="string">"discoverPeers onFailure:<span class="variable">$reason</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>广播接收：</p>
+<ul>
+<li><p>保证P2P打开：</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION -&gt; &#123;</span><br><span class="line">    <span class="keyword">when</span> (intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -<span class="number">1</span>)) &#123;</span><br><span class="line">        WifiP2pManager.WIFI_P2P_STATE_ENABLED -&gt; &#123;</span><br><span class="line">            <span class="comment">// Wifi P2P is enabled</span></span><br><span class="line">            Log.d(localClassName, <span class="string">"P2P is enabled"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">            <span class="comment">// Wi-Fi P2P is not enabled</span></span><br><span class="line">            Log.d(localClassName, <span class="string">"P2P is not enabled"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- 得到附近所有的支持P2P的设备peers：
+
+    <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION -&gt; &#123;</span><br><span class="line">    Log.d(localClassName, <span class="string">"可用的peer list发生改变"</span>)</span><br><span class="line">    mWifiP2pManager?.requestPeers(mChannel) &#123; peers -&gt; availablePeers(peers) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">availablePeers</span><span class="params">(peers: <span class="type">WifiP2pDeviceList</span>?)</span></span> &#123;</span><br><span class="line">    Log.d(localClassName, <span class="string">"size:<span class="subst">$&#123;peers?.deviceList?.size&#125;</span>"</span>)</span><br><span class="line">    mAdapter.clear()</span><br><span class="line">    peers?.deviceList?.forEach &#123; wifiP2pDevice -&gt;</span><br><span class="line">		<span class="keyword">val</span> name = wifiP2pDevice.deviceName</span><br><span class="line">		<span class="keyword">val</span> address = wifiP2pDevice.deviceAddress</span><br><span class="line">		<span class="keyword">val</span> status = <span class="keyword">when</span>(wifiP2pDevice.status) &#123;</span><br><span class="line">			WifiP2pDevice.CONNECTED -&gt; <span class="string">"connected"</span></span><br><span class="line">			WifiP2pDevice.INVITED -&gt; <span class="string">"invited"</span></span><br><span class="line">			WifiP2pDevice.FAILED -&gt; <span class="string">"failed"</span></span><br><span class="line">			WifiP2pDevice.AVAILABLE -&gt; <span class="string">"available"</span></span><br><span class="line">			WifiP2pDevice.UNAVAILABLE -&gt; <span class="string">"unavailable"</span></span><br><span class="line">			<span class="keyword">else</span> -&gt; <span class="string">"unknown"</span></span><br><span class="line">		&#125;</span><br><span class="line">		mAdapter.add(<span class="string">"<span class="variable">$name</span> : <span class="variable">$status</span>\n<span class="variable">$address</span>"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">    mAdapter.notifyDataSetChanged()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+- 选择连接：
+
+    <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> str = mAdapter.getItem(position)</span><br><span class="line"><span class="keyword">val</span> strs = str?.split(<span class="string">'\n'</span>)</span><br><span class="line"><span class="keyword">val</span> address = strs?.<span class="keyword">get</span>(<span class="number">1</span>)</span><br><span class="line">Log.d(localClassName, <span class="string">"item click: <span class="variable">$str</span> address: <span class="variable">$address</span>"</span>)</span><br><span class="line"><span class="comment">// val wifiP2pDevice = mPeers?.get(address)</span></span><br><span class="line"><span class="keyword">val</span> config = WifiP2pConfig()</span><br><span class="line">config.deviceAddress = address</span><br><span class="line">config.wps.setup = WpsInfo.PBC</span><br><span class="line">mWifiP2pManager?.connect(mChannel, config, <span class="keyword">object</span> : WifiP2pManager.ActionListener &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onSuccess</span><span class="params">()</span></span> &#123;</span><br><span class="line">        Log.d(localClassName, <span class="string">"connect onSuccess"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFailure</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        Log.w(localClassName, <span class="string">"connect onFailure:<span class="variable">$reason</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+- 连接成功后，获取连接的WifiP2pInfo：
+
+    <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION -&gt; &#123;</span><br><span class="line">    Log.d(localClassName, <span class="string">"P2P连接状态发生改变"</span>)</span><br><span class="line">    <span class="comment">// 可以直接通过intent拿到WifiP2pGroup WifiP2pInfo</span></span><br><span class="line">    <span class="comment">// val group = intent.getParcelableExtra&lt;WifiP2pGroup&gt;(WifiP2pManager.EXTRA_WIFI_P2P_GROUP)</span></span><br><span class="line">    <span class="comment">// 也可以通过request去获取</span></span><br><span class="line">    <span class="comment">// mWifiP2pManager.requestNetworkInfo(mChannel) &#123; networkInfo -&gt;</span></span><br><span class="line">    <span class="comment">//     Log.d(localClassName, "networkInfo:$networkInfo")</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="keyword">val</span> networkInfo = intent.getParcelableExtra&lt;NetworkInfo&gt;(WifiP2pManager.EXTRA_NETWORK_INFO)</span><br><span class="line">    networkInfo?.takeIf &#123; it.isConnected &#125;?.let &#123;</span><br><span class="line">        mWifiP2pManager?.requestGroupInfo(mChannel) &#123; wifiP2pGroup -&gt;</span><br><span class="line">			<span class="keyword">val</span> wifiP2pDevices = wifiP2pGroup.clientList</span><br><span class="line">            <span class="keyword">val</span> wifiP2p2DeviceOwner = wifiP2pGroup.owner</span><br><span class="line">            Log.d(localClassName, <span class="string">"group p2pInfo:<span class="variable">$wifiP2pGroup</span>"</span>)</span><br><span class="line">            tv_client_connected.post &#123; tv_client_connected.text = wifiP2pGroup.networkName &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        mWifiP2pManager?.requestConnectionInfo(mChannel) &#123; wifiP2pInfo: WifiP2pInfo? -&gt;</span><br><span class="line">            mWifiP2pInfo = wifiP2pInfo</span><br><span class="line">            Log.d(localClassName, <span class="string">"wifi p2pInfo <span class="variable">$mWifiP2pInfo</span>"</span>)</span><br><span class="line">            mWifiP2pInfo?.let &#123;</span><br><span class="line">            	<span class="keyword">if</span> (it.groupFormed &amp;&amp; it.isGroupOwner) &#123;</span><br><span class="line">                   Toast.makeText(<span class="keyword">this</span><span class="symbol">@WifiP2PClientActivity</span>, <span class="string">"can be connected"</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">               	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (it.groupFormed) &#123;</span><br><span class="line">                   Log.d(localClassName, <span class="string">"The other device acts as the client. In this case, we enable the get file button"</span>)</span><br><span class="line">                &#125;</span><br><span class="line">           	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+- 获取IP，创建Socket进行连接Server端：
+
+    <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> fileUri = extras?.getString(EXTRAS_FILE_PATH)</span><br><span class="line"><span class="keyword">val</span> host = extras?.getString(EXTRAS_GROUP_OWNER_ADDRESS)</span><br><span class="line"><span class="keyword">val</span> port = extras?.getInt(EXTRAS_GROUP_OWNER_PORT)</span><br><span class="line"><span class="keyword">if</span> (fileUri == <span class="literal">null</span> || host == <span class="literal">null</span> || port == <span class="literal">null</span>) &#123;</span><br><span class="line">    Log.e(javaClass.name, <span class="string">"fileUri: <span class="variable">$fileUri</span>, host: <span class="variable">$host</span>, port: <span class="variable">$port</span>"</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> socket = Socket()</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Log.d(javaClass.name, <span class="string">"opening client socket"</span>)</span><br><span class="line">    socket.bind(<span class="literal">null</span>)</span><br><span class="line">    socket.connect(InetSocketAddress(host, port), SOCKET_TIME_OUT)</span><br><span class="line">    Log.d(javaClass.name, <span class="string">"client socket:<span class="subst">$&#123;socket.isConnected&#125;</span>"</span>)</span><br><span class="line">    <span class="keyword">val</span> outputStream = socket.getOutputStream()</span><br><span class="line">    <span class="keyword">val</span> contentResolver = applicationContext.contentResolver</span><br><span class="line">    <span class="keyword">var</span> inputStream: InputStream? = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        inputStream = contentResolver.openInputStream(Uri.parse(fileUri))</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: FileNotFoundException) &#123;</span><br><span class="line">        Log.e(javaClass.name, <span class="string">"file not found exception"</span>, e)</span><br><span class="line">    &#125;</span><br><span class="line">    inputStream?.let &#123;</span><br><span class="line">        StreamUtil.copyFile(it,outputStream)</span><br><span class="line">    &#125;</span><br><span class="line">    Log.d(javaClass.name, <span class="string">"Client data written"</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">    Log.e(javaClass.name, <span class="string">"client socket error"</span>, e)</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    socket.takeIf &#123; it.isConnected &#125;?.apply &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            close()</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">            Log.e(javaClass.name, <span class="string">"client socket close error"</span>, e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+- 断开连接：
+
+    <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mWifiP2pManager?.removeGroup(mChannel, <span class="keyword">object</span> : WifiP2pManager.ActionListener &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onSuccess</span><span class="params">()</span></span> &#123;</span><br><span class="line">        Log.d(localClassName, <span class="string">"disconnect success"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFailure</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        Log.w(localClassName, <span class="string">"disconnect failed:<span class="variable">$reason</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></code></pre><h3 id="Server端"><a href="#Server端" class="headerlink" title="Server端"></a>Server端</h3><ul>
+<li><p>权限申请：</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_COARSE_LOCATION"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_FINE_LOCATION"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--Wifi P2P 权限一定要有，不然获取不到--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_WIFI_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CHANGE_WIFI_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.CHANGE_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_PHONE_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">"android.hardware.wifi.direct"</span> <span class="attr">android:required</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>  同样部分权限需要主动申请</p>
+</li>
+<li><p>初始化P2P：</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> intentFilter = IntentFilter().apply &#123;</span><br><span class="line">    addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION)</span><br><span class="line">    addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)</span><br><span class="line">    addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION)</span><br><span class="line">    addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION)</span><br><span class="line">&#125;</span><br><span class="line">registerReceiver(mReceiver, intentFilter)</span><br><span class="line">mWifiP2pManager = getSystemService(Context.WIFI_P2P_SERVICE) <span class="keyword">as</span> WifiP2pManager</span><br><span class="line"><span class="comment">// 用这个通道来查找和连接P2P设备 在 WLAN P2P 框架中注册您的应用</span></span><br><span class="line">mChannel = mWifiP2pManager?.initialize(<span class="keyword">this</span>, mainLooper) &#123; Log.d(localClassName, <span class="string">"channel disconnected"</span>) &#125;</span><br><span class="line">mWifiP2pManager?.discoverPeers(mChannel, <span class="keyword">object</span> : WifiP2pManager.ActionListener &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onSuccess</span><span class="params">()</span></span> &#123;</span><br><span class="line">        Log.d(localClassName, <span class="string">"discover success"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFailure</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        Log.w(localClassName, <span class="string">"discover failed"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 用于创建GroupOwner，决定谁是Group的主导者</span></span><br><span class="line">mWifiP2pManager?.createGroup(mChannel, <span class="keyword">object</span> : WifiP2pManager.ActionListener &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onSuccess</span><span class="params">()</span></span> &#123;</span><br><span class="line">        Log.d(localClassName, <span class="string">"createGroup success"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFailure</span><span class="params">(reason: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        Log.w(localClassName, <span class="string">"create group failed: <span class="variable">$reason</span>"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>  Server可以不用去扫描设备，只需要在P2P中注册就可以了，等待被发现</p>
+</li>
+<li><p>创建ServerSocket，监听：</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inner</span> <span class="class"><span class="keyword">class</span> <span class="title">ListenThread</span> : <span class="type">Thread</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mServerSocket: ServerSocket = ServerSocket(WIFI_P2P_PORT)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">run</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            Log.d(javaClass.name, <span class="string">"server socket bg"</span>)</span><br><span class="line">            <span class="keyword">val</span> client = mServerSocket.accept()</span><br><span class="line">            mHandler?.takeIf &#123; mFilePath != <span class="literal">null</span> &#125;?.apply &#123;</span><br><span class="line">                ServerAsyncTask(<span class="keyword">this</span>, mFilePath!!).execute(client)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  在子线程不断监听某个端口，等待连接就可以了</p>
+</li>
+<li><p>accept成功，通信：</p>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> client = params[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">return</span> client?.use &#123; socket -&gt;</span><br><span class="line">	<span class="keyword">val</span> f = File(mFilePath, <span class="string">"wifip2pshared-<span class="subst">$&#123;System.currentTimeMillis()&#125;</span>.jpg"</span>)</span><br><span class="line">	<span class="keyword">val</span> dirs = File(f.parent?:mFilePath)</span><br><span class="line">	dirs.takeIf &#123; !it.exists() &#125;?.apply &#123; mkdirs() &#125;</span><br><span class="line">	f.createNewFile()</span><br><span class="line">	<span class="keyword">val</span> inputStream = socket.getInputStream()</span><br><span class="line">	StreamUtil.copyFile(inputStream, FileOutputStream(f))</span><br><span class="line">	socket.close()</span><br><span class="line">	f.absolutePath</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://developer.android.com/guide/topics/connectivity/wifip2p?hl=zh-cn" target="_blank" rel="noopener">WLAN 直连（对等连接或 P2P）概览</a></p>
+<p><a href="https://www.jianshu.com/p/e9a23dfda330" target="_blank" rel="noopener">Android WiFi P2P开发实践笔记</a></p>
+<p><a href="https://blog.csdn.net/Innost/article/details/8474683" target="_blank" rel="noopener">Android Wi-Fi Display（Miracast）介绍</a></p>
+<p><a href="https://blog.csdn.net/u011897062/article/details/79445560" target="_blank" rel="noopener">多屏互动技术研究（二）之WifiDisplay(Miracast)技术原理及实现</a></p>
+<h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><ol>
+<li><p>socket连接失败：</p>
+<p> 原因：由于server端对客户端的监听只是用了一个AyncTask，所以导致一次socket通信完成后，后续的再无法进行通信</p>
+</li>
+<li><p>设备一会查找得到，一会查找不到：</p>
+<p> 原因：server端没有去初始化P2P，也就没有在WiFi P2P框架中去注册，导致无法client端就无法发现设备，同时server端也要启动discoverPeers，这样才能确保能够被发现，并且GroupOwner也是Server端所持有（并不绝对，可以通过createGroup来决定，最好是在Server端）</p>
+</li>
+<li><p>在UI线程更新UI导致的NetworkOnMainThreadException：</p>
+<p> 原因：<code>mWifiP2pInfo?.groupOwnerAddress?.hostAddress</code>，直接通过WiFiP2PInfo去获取了GroupOwnerAddress，然后去获取HostAddress，这个调用过程产生了网络请求？？</p>
+</li>
+</ol>
+<hr>
+<h2 id="SDK包装SaaS"><a href="#SDK包装SaaS" class="headerlink" title="SDK包装SaaS"></a>SDK包装SaaS</h2><p>如何使用到云服务？？？</p>
+<p>安装（可以考虑云）</p>
+<p>投射播放的信息？？</p>
+<p>语音？？（增加流量）</p>
+<p>遥控（局域网内，或者走云进行下发（延迟太高））</p>
+<p>投射本地/在线，本地走局域网，没有云</p>
+<p>腾讯云短视频SDK（类比？？？）</p>
+<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><ul>
+<li>Projection：</li>
+<li>remote_help：</li>
+</ul>
+<h3 id="TV："><a href="#TV：" class="headerlink" title="TV："></a>TV：</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/20/Android Bluetooth/" rel="next" title="Android Bluetooth">
+                <i class="fa fa-chevron-left"></i> Android Bluetooth
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/07/Android Activity的启动过程（API27 源码分析）/" rel="prev" title="Android Activity的启动过程（API27 源码分析）">
+                Android Activity的启动过程（API27 源码分析） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/24489804?s=460&v=4" alt="PHS1024">
+            
+              <p class="site-author-name" itemprop="name">PHS1024</p>
+              <p class="site-description motion-element" itemprop="description">黑色的眼睛在黑夜里前行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/MinorPeng" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-WiFi-Display-Miracast"><span class="nav-number">1.</span> <span class="nav-text">Android WiFi Display (Miracast)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术体系："><span class="nav-number">1.1.</span> <span class="nav-text">技术体系：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流媒体协议"><span class="nav-number">1.2.</span> <span class="nav-text">流媒体协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P2P使用demo"><span class="nav-number">1.3.</span> <span class="nav-text">P2P使用demo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#client端"><span class="nav-number">1.3.1.</span> <span class="nav-text">client端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server端"><span class="nav-number">1.3.2.</span> <span class="nav-text">Server端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.3.3.</span> <span class="nav-text">参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题记录"><span class="nav-number">1.4.</span> <span class="nav-text">问题记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDK包装SaaS"><span class="nav-number">1.5.</span> <span class="nav-text">SDK包装SaaS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android"><span class="nav-number">1.5.1.</span> <span class="nav-text">Android</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TV："><span class="nav-number">1.5.2.</span> <span class="nav-text">TV：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PHS1024</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
