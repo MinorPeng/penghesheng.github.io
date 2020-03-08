@@ -26,7 +26,7 @@ category: Android
     >
     > Data：8字节，数据
     >
-    > Mode：DES工作模式，有EBC（电子密码本模式）、CBC（加密分组链接模式  ）、CFB（加密反馈模式）、OFB（输出反馈模式）、CTR（计数器模式）；NoPadding（不填充）、Zeros填充（0填充）、PKCS5Padding填充
+    > Mode：DES工作模式，有ECB（电子密码本模式）、CBC（加密分组链接模式  ）、CFB（加密反馈模式）、OFB（输出反馈模式）、CTR（计数器模式）；NoPadding（不填充）、Zeros填充（0填充）、PKCS5Padding填充
 
     示例：
 
@@ -87,23 +87,56 @@ category: Android
     Advanced Encryption Standard，高级加密标准，取代DES而出现
 
     ```kotlin
-    fun aesEncrypt(data: ByteArray, key: ByteArray): ByteArray {
-        val keygen = KeyGenerator.getInstance("AES")
-        keygen.init(128, SecureRandom(key))
-        val cipher = Cipher.getInstance("AES")
-        cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(keygen.generateKey().encoded, "AES"))
+    private const val AES_ITERATION_COUNT = 1000
+    private const val AES_SALT_LEN = 32  // bytes 128 / 8 --> AES 128
+    private const val IV = "0000000000000000"
+    private var salt: ByteArray  //此处的盐值需要自己保存，或者自己保存密钥
+    
+    init {
+        val random = SecureRandom()
+        salt = ByteArray(AES_SALT_LEN)
+        random.nextBytes(salt)
+    }
+    
+    private fun getRawKey(key: CharArray): ByteArray {
+        val keySpec = PBEKeySpec(key, salt, AES_ITERATION_COUNT, AES_SALT_LEN * 8)
+        val keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
+        return keyFactory.generateSecret(keySpec).encoded
+    }
+
+    fun aesEncrypt(data: ByteArray, key: CharArray, iv: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+        val keys = getRawKey(key)
+        cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(keys, "AES"), IvParameterSpec(iv))
         return cipher.doFinal(data)
     }
     
-    fun aesDecrypt(data: ByteArray, key: ByteArray): ByteArray {
-        val keygen = KeyGenerator.getInstance("AES")
-        keygen.init(128, SecureRandom(key))
-        val cipher = Cipher.getInstance("AES")
-        cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(keygen.generateKey().encoded, "AES"))
+    fun aesDecrypt(data: ByteArray, key: CharArray, iv: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+        val keys = getRawKey(key)
+        cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(keys, "AES"), IvParameterSpec(iv))
         return cipher.doFinal(data)
     }
     ```
-
+    
+    由于AES在Android N开始，移除了`"SHA1PRNG"`算法和`"Crypto"`provider，不能通过这两者来获取随机数进而获取密钥，所以在N后的系统运行都会出错，官方推荐使用以上的方式[ Security "Crypto" provider deprecated in Android N ](https://android-developers.googleblog.com/2016/06/security-crypto-provider-deprecated-in.html)，获取密钥。
+    
+    也可以采用一些第三方的库或者自己实现`CryptoProvider `类——>参考[Android AES加解密（兼容Android7.0）](http://www.appblog.cn/2018/08/16/Android%20AES%E5%8A%A0%E8%A7%A3%E5%AF%86%EF%BC%88%E5%85%BC%E5%AE%B9Android7.0%EF%BC%89/)，或者直接用密码作为key（这种方式需要保证password为16位）
+    
+    ```kotlin
+    fun aesEncrypt(data: ByteArray, key: ByteArray, iv: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+        cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key, "AES"), IvParameterSpec(iv))
+        return cipher.doFinal(data)
+    }
+    
+    fun aesDecrypt(data: ByteArray, key: ByteArray, iv: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+        cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), IvParameterSpec(iv))
+        return cipher.doFinal(data)
+    }
+    ```
+    
     
 
 ## 非对称加密
@@ -168,4 +201,5 @@ category: Android
 - [JAVA AES加密与解密](https://blog.csdn.net/u011781521/article/details/77932321)
 - [常用加密解密算法【RSA、AES、DES、MD5】介绍和使用](https://blog.csdn.net/u013565368/article/details/53081195)
 - [DSA加密算法以及破解](https://blog.csdn.net/happen_if/article/details/85219306)
+- [Android AES 加密、解密](https://blog.csdn.net/q4878802/article/details/76690493)
 
