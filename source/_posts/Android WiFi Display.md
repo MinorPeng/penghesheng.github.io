@@ -441,31 +441,3 @@ Wifi P2P：[Android wifi探究三：Wifi P2P 连接附近设备]( https://blog.c
     原因：`mWifiP2pInfo?.groupOwnerAddress?.hostAddress`，直接通过WiFiP2PInfo去获取了GroupOwnerAddress，然后去获取HostAddress，这个调用过程产生了网络请求？？
 
 
-
----
-
-
-
-## SDK包装SaaS
-
-如何使用到云服务？？？
-
-安装（可以考虑云）
-
-投射播放的信息？？
-
-语音？？（增加流量）
-
-遥控（局域网内，或者走云进行下发（延迟太高））
-
-投射本地/在线，本地走局域网，没有云
-
-腾讯云短视频SDK（类比？？？）
-
-### Android
-
-- Projection：
-- remote_help：
-
-### TV：
-
